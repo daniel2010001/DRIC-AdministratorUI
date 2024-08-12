@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    },
+    "target": "esnext",
+    "module": "esnext",
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src",
+    "vite-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

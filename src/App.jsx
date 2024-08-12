@@ -1,10 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { loadCareers } from './services';
+import { createCareer } from './adapters';
+import { useAsync } from './hooks';
 
 function App() {
   const [count, setCount] = useState(0)
+
+  const handleSuccess = (data) => {
+    const adaptedCareers = data.map(createCareer);
+    console.log(adaptedCareers);
+  };
+
+  useAsync(loadCareers(), handleSuccess);
 
   return (
     <>
