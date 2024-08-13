@@ -6,13 +6,15 @@ import { EndpointApplicant, Applicant } from "@/models";
  * @returns Solicitante formateado
  */
 export const createApplicant = (applicant: EndpointApplicant): Applicant => {
-  const formatInstitute: Applicant = {
-    id: applicant.id_solicitante,
-    name: applicant.nombre_solicitante,
-    shortName: applicant.nombre_corto_sigla,
-    jurisdiction: applicant.juridiccion,
-    type: applicant.tipo_solicitante,
-  };
+    const formatInstitute: Applicant = {
+        id: applicant.id_solicitante,
+        name: applicant.nombre_solicitante,
+        shortName: applicant.nombre_corto_sigla,
+        jurisdiction: applicant.juridiccion,
+        type: applicant.tipo_solicitante,
+        createdAt: new Date(applicant.createdAt),
+        updatedAt: new Date(applicant.updatedAt)
+    };
 
-  return formatInstitute;
+    return formatInstitute;
 };

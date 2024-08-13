@@ -7,6 +7,8 @@ export interface Applicant {
     shortName: string;
     jurisdiction: string;
     type: 'INSTITUCION' | 'MUNICIPIO';
+    createdAt: Date;
+    updatedAt: Date;
 };
 
 /**
@@ -18,4 +20,6 @@ export interface EndpointApplicant {
     nombre_corto_sigla: string;
     juridiccion: string;
     tipo_solicitante: 'INSTITUCION' | 'MUNICIPIO';
+    createdAt: string;
+    updatedAt: string;
 };

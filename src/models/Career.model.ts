@@ -6,6 +6,8 @@ export interface Career {
     name: string;
     shortName: string;
     faculty: string;
+    createdAt: Date;
+    updatedAt: Date;
 };
 
 /**
@@ -16,4 +18,6 @@ export interface EndpointCareer {
     nombre_carrera: string;
     nombre_corto: string;
     facultad: string;
+    createdAt: string;
+    updatedAt: string;
 };

@@ -1,20 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { loadCareers } from './services';
-import { createCareer } from './adapters';
+import { loadApplicants, loadCareers, loadProblems, searchProblem } from './services';
+import { createApplicant, createCareer, createProblematic } from './adapters';
 import { useAsync } from './hooks';
 
 function App() {
+  useAsync(loadApplicants(), (data) => { console.log("Applicants: ", data.map(createApplicant)); });
+  useAsync(loadCareers(), (data) => { console.log("Careers: ", data.map(createCareer)); });
+  useAsync(loadProblems(), (data) => { console.log("Problems: ", data.map(createProblematic)); });
+  const idProblem = 4;
+  useAsync(searchProblem(idProblem), (data) => { console.log(`Problem whit id ${idProblem}: `, createProblematic(data)); });
+
   const [count, setCount] = useState(0)
-
-  const handleSuccess = (data) => {
-    const adaptedCareers = data.map(createCareer);
-    console.log(adaptedCareers);
-  };
-
-  useAsync(loadCareers(), handleSuccess);
 
   return (
     <>
