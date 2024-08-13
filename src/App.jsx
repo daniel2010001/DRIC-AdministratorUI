@@ -9,7 +9,7 @@ import { createApplicant, createCareer, createProblematic } from "./adapters";
 import { useAsync } from "./hooks";
 import { Route, Routes } from "react-router-dom";
 
-import { ViewProblematics } from "./pages/problematicas/problematicas";
+import { Problematicas } from "./pages/problematicas/problematicas";
 
 function App() {
   /* useAsync(loadApplicants(), (data) => {
@@ -17,19 +17,19 @@ function App() {
   });
   useAsync(loadCareers(), (data) => {
     console.log("Careers: ", data.map(createCareer));
-  });
-  useAsync(loadProblems(), (data) => {
+  }); */
+  /* useAsync(loadProblems(), (data) => {
     console.log("Problems: ", data.map(createProblematic));
-  });
-  const idProblem = 4;
+  }); */
+  /* const idProblem = 4;
   useAsync(searchProblem(idProblem), (data) => {
     console.log(`Problem whit id ${idProblem}: `, createProblematic(data));
-  }); */
-
+  });
+ */
   return (
     <>
       <Routes>
-        <Route path="/problematicas" element={<ViewProblematics />}></Route>
+        <Route path="/problematicas" element={<Problematicas />}></Route>
       </Routes>
     </>
   );

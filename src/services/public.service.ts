@@ -1,4 +1,4 @@
-import { EndpointApplicant, EndpointCareer, EndpointProblem, FormEndpointTemplate } from "@/models";
+import { EndpointApplicant, EndpointCareer, EndpointProblem, EndpointProblemTable, FormEndpointTemplate } from "@/models";
 import axios, { AxiosResponse } from "axios";
 
 const api = import.meta.env.VITE_BACKEND;
@@ -25,6 +25,14 @@ export const loadCareers = (): Promise<AxiosResponse<EndpointCareer[]>> => {
  */
 export const loadProblems = (): Promise<AxiosResponse<EndpointProblem[]>> => {
     return axios.get(api + "/problematicas");
+};
+
+/**
+ * Servicio para obtener las problematicas
+ * @returns Petición de axios para obtener las problemáticas
+ */
+export const loadProblemsTable = (): Promise<AxiosResponse<EndpointProblemTable[]>> => {
+    return axios.get(api + "/problematicas/tabla");
 };
 
 /**

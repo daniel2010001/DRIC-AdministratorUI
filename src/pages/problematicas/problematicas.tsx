@@ -1,30 +1,40 @@
 import { Table } from "@/components";
-import { TableHeader } from "@/models";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const problematics = [
-  [1, "Problema 1", "Descripción 1", "2021-09-01"],
-  [2, "Problema 2", "Descripción 2", "2021-09-02"],
-  [3, "Problema 3", "Descripción 3", "2021-09-03"],
-  [4, "Problema 4", "Descripción 4", "2021-09-04"],
-  [5, "Problema 5", "Descripción 5", "2021-09-05"],
-];
+export const Problematicas = () => {
+  const [problems, setProblems] = useState([]);
 
-export const ViewProblematics = () => {
+  /* useAsync(loadProblemsTable(), (data) => {
+    console.log("Problems: ", data.map(createProblematic));
+  }); */
+
+  useEffect(() => {
+    const loadProblematicsTable = async () => {
+      const data = await axios.get(
+        "http://localhost:4000/api/problematicas/tabla"
+      );
+      setProblems(data.data);
+    };
+
+    loadProblematicsTable();
+  }, []);
+
   return (
     <div>
       <h1>Problematicas</h1>
       {/* Search por institucion, titulo y carrera */}
       <Table
         columns={[
-          "ID",
+          "id_problematica",
           "titulo",
-          "institución",
-          "Fecha de actualización",
+          /*  "solicitante", */
+          "actualizado",
           "Fecha de publicación",
-          "Estado de publicación",
+          "publicado",
           "Acciones",
         ]}
-        data={problematics}
+        data={problems}
         pageSize={3}
         pageIndex={0}
         width="100%"
