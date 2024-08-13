@@ -10,7 +10,9 @@ export const createCareer = (career: EndpointCareer): Career => {
         id: career.id_carrera,
         name: career.nombre_carrera,
         shortName: career.nombre_corto,
-        faculty: career.facultad
+        faculty: career.facultad,
+        createdAt: new Date(career.createdAt),
+        updatedAt: new Date(career.updatedAt)
     };
 
     return formatCarrera;
