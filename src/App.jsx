@@ -12,7 +12,7 @@ import { Route, Routes } from "react-router-dom";
 import { ViewProblematics } from "./pages/problematicas/problematicas";
 
 function App() {
-  useAsync(loadApplicants(), (data) => {
+  /* useAsync(loadApplicants(), (data) => {
     console.log("Applicants: ", data.map(createApplicant));
   });
   useAsync(loadCareers(), (data) => {
@@ -24,7 +24,7 @@ function App() {
   const idProblem = 4;
   useAsync(searchProblem(idProblem), (data) => {
     console.log(`Problem whit id ${idProblem}: `, createProblematic(data));
-  });
+  }); */
 
   return (
     <>
