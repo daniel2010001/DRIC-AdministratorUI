@@ -11,25 +11,13 @@ import { Route, Routes } from "react-router-dom";
 import { Problematicas } from "./pages/problematicas/problematicas";
 
 function App() {
-  /* useAsync(loadApplicants(), (data) => {
-    console.log("Applicants: ", data.map(createApplicant));
-  });
-  useAsync(loadCareers(), (data) => {
-    console.log("Careers: ", data.map(createCareer));
-  }); */
-  /* useAsync(loadProblems(), (data) => {
-    console.log("Problems: ", data.map(createProblematic));
-  }); */
-  /* const idProblem = 4;
-  useAsync(searchProblem(idProblem), (data) => {
-    console.log(`Problem whit id ${idProblem}: `, createProblematic(data));
-  });
- */
   return (
     <>
+      <Background>
       <Routes>
         <Route path="/problematicas" element={<Problematicas />}></Route>
       </Routes>
+      </Background>
     </>
   );
 }
