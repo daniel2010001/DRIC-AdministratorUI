@@ -1,4 +1,3 @@
-import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,100 +7,84 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
+import { createProblematic } from "@/adapters";
+import { useAsync } from "@/hooks";
+import { EndpointProblem, Problem } from "@/models";
+import { loadProblemsTable } from "@/services";
+import { ChangeEvent, useState } from "react";
+import { TableView } from "@mui/icons-material";
+
 interface Column {
-  id:
-    | "id"
-    | "titulo"
-    | "solicitante"
-    | "actualizado"
-    | "publicado"
-    | "acciones";
+  id: "id" | "title" | "solicitante" | "updatedAt" | "publishedAt" | "acciones";
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
+  format?: (value: Date) => string;
 }
 
 const columns: readonly Column[] = [
   { id: "id", label: "ID", minWidth: 170 },
-  { id: "titulo", label: "Títuto", minWidth: 100 },
+  { id: "title", label: "Títuto", minWidth: 100 },
   {
     id: "solicitante",
     label: "Solicitante",
     minWidth: 170,
     align: "right",
-    format: (value: number) => value.toLocaleString("en-US"),
   },
   {
-    id: "actualizado",
+    id: "updatedAt",
     label: "Actualizado",
     minWidth: 170,
     align: "right",
-    format: (value: number) => value.toLocaleString("en-US"),
+    format: (value: Date) => value.toDateString(),
   },
   {
-    id: "publicado",
+    id: "publishedAt",
     label: "Publicado",
     minWidth: 170,
     align: "right",
-    format: (value: number) => value.toFixed(2),
+    format: (value: Date) => value.toDateString(),
   },
   {
     id: "acciones",
     label: "Acciones",
     minWidth: 170,
     align: "right",
-    format: (value: number) => value.toFixed(2),
   },
 ];
 
-interface Data {
-  name: string;
-  code: string;
-  population: number;
-  size: number;
-  density: number;
-}
-
-function createData(
-  name: string,
-  code: string,
-  population: number,
-  size: number
-): Data {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
-
-const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
-];
-
 export const ProblematicasTable = () => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [problems, setProblems] = useState<Problem[]>([]);
+  useAsync(loadProblemsTable(), (data: EndpointProblem[]) => {
+    setProblems(data.map(createProblematic));
+  });
+
+  const rows = problems.map((problem) => {
+    return {
+      ...problem,
+      acciones: (
+        <>
+          <button className="me-2 underline underline-offset-2 text-blue-600">
+            Ver
+          </button>
+          <button className="underline underline-offset-2 text-blue-600">
+            Editar
+          </button>
+        </>
+      ),
+    };
+  });
+
+  console.log("Formating>>>>", rows);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
@@ -130,17 +113,12 @@ export const ProblematicasTable = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
-                    >
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
+                            {column.format && typeof value === "object"
                               ? column.format(value)
                               : value}
                           </TableCell>
