@@ -1,4 +1,4 @@
-import { DashboardIcon, DocumentListIcon } from "@/assets";
+import { DashboardIcon, DocumentListIcon, HomeIcon } from "@/assets";
 import clsx from "clsx";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -39,13 +39,22 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
       <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul className="space-y-2 font-medium">
           <li>
-            <a
-              href="/dashboard"
+            <Link
+              to="/"
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            >
+              <HomeIcon className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              <span className="ms-3">Inicio</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/dashboard"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <DashboardIcon className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               <span className="ms-3">Panel de control</span>
-            </a>
+            </Link>
           </li>
           <li>
             <button
@@ -76,20 +85,20 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
             {isOpenState && (
               <ul id="dropdown-example" className="py-2 space-y-2">
                 <li>
-                  <a
-                    href="/forms"
+                  <Link
+                    to="/forms"
                     className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                   >
                     Formulario
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/problems"
+                  <Link
+                    to="/problems"
                     className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                   >
                     Lista de Problemáticas
-                  </a>
+                  </Link>
                 </li>
               </ul>
             )}
