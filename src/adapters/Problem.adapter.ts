@@ -16,6 +16,7 @@ import { shorFormatDate } from "@/utilities";
 export const createProblematic = (problematic: EndpointProblem): Problem => {
   const formatProblematic: Problem = {
     id: problematic.id_problematica,
+    active: problematic.activo,
 
     title: problematic.titulo,
     approach: problematic.planteamiento,
