@@ -21,8 +21,8 @@ export const Problematicas = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Problematicas</h1>
+    <div className="container mx-auto">
+      <div className="text-4xl">Problematicas</div>
       {/* Search por institucion, titulo y carrera */}
       <Table
         columns={[
@@ -30,12 +30,11 @@ export const Problematicas = () => {
           "titulo",
           /*  "solicitante", */
           "actualizado",
-          "Fecha de publicación",
           "publicado",
           "Acciones",
         ]}
         data={problems}
-        pageSize={3}
+        pageSize={4}
         pageIndex={0}
         width="100%"
       />
