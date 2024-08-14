@@ -5,12 +5,11 @@ export interface SidebarOption {
   link: string;
 }
 
-export interface SidebarMenuOption {
+export interface SidebarSubOption {
   id: string;
   title: string;
   icon: string;
   link: string;
-  children?: SidebarMenuOption[];
 }
 
 export interface Sidebar {

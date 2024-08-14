@@ -1,10 +1,14 @@
 import clsx from "clsx";
 
-export function Header({ idSideBar }: { idSideBar: string }) {
+interface HeaderProps {
+  toggleSidebar: () => void;
+}
+
+export function Header({ toggleSidebar }: HeaderProps) {
   return (
     <nav
       className={clsx(
-        "fixed top-0 z-50 w-full bg-white border-b border-gray-200",
+        "fixed top-0 h-16 z-50 w-full bg-white border-b border-gray-200",
         "dark:bg-gray-800 dark:border-gray-700"
       )}
     >
@@ -13,13 +17,13 @@ export function Header({ idSideBar }: { idSideBar: string }) {
           <div className="flex items-center justify-start rtl:justify-end">
             <button
               type="button"
+              data-hover="true"
               className={clsx(
                 "inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden",
                 "hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200",
                 "dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               )}
-              onClick={() => console.log("clicked")}
-              onFocusCapture={() => console.log("focus")}
+              onClick={toggleSidebar}
             >
               <span className="sr-only">Open sidebar</span>
               <svg
@@ -36,16 +40,6 @@ export function Header({ idSideBar }: { idSideBar: string }) {
                 ></path>
               </svg>
             </button>
-            <a href="https://flowbite.com" className="flex ms-2 md:me-24">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8 me-3"
-                alt="FlowBite Logo"
-              />
-              <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                Flowbite
-              </span>
-            </a>
           </div>
         </div>
       </div>
