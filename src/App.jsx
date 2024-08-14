@@ -9,6 +9,7 @@ import { useAsync } from "./hooks";
 import { Route, Routes } from "react-router-dom";
 
 import { Problematicas } from "./pages/problematicas/problematicas";
+import { EnhancedTable } from "./pages/problematicas/EnhancedTable";
 
 function App() {
   /* useAsync(loadApplicants(), (data) => {
@@ -29,6 +30,7 @@ function App() {
     <>
       <Routes>
         <Route path="/problematicas" element={<Problematicas />}></Route>
+        <Route path="/" element={<EnhancedTable />}></Route>
       </Routes>
     </>
   );
