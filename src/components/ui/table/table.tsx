@@ -1,5 +1,5 @@
 interface TableProps {
-  columns: string[];
+  columns: any[];
   data: any[];
   pageSize: number;
   pageIndex: number;
