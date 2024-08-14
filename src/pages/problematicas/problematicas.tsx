@@ -1,24 +1,15 @@
+import { createProblematic } from "@/adapters";
 import { Table } from "@/components";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useAsync } from "@/hooks";
+import { EndpointProblem, Problem } from "@/models";
+import { loadProblemsTable } from "@/services";
+import { useState } from "react";
 
 export const Problematicas = () => {
-  const [problems, setProblems] = useState([]);
-
-  /* useAsync(loadProblemsTable(), (data) => {
-    console.log("Problems: ", data.map(createProblematic));
-  }); */
-
-  useEffect(() => {
-    const loadProblematicsTable = async () => {
-      const data = await axios.get(
-        "http://localhost:4000/api/problematicas/tabla"
-      );
-      setProblems(data.data);
-    };
-
-    loadProblematicsTable();
-  }, []);
+  const [problems, setProblems] = useState<Problem[]>([]);
+  useAsync(loadProblemsTable(), (data: EndpointProblem[]) => {
+    setProblems(data.map(createProblematic));
+  });
 
   return (
     <div className="container mx-auto">

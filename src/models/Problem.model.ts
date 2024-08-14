@@ -28,6 +28,7 @@ export interface FormTemplate {
  */
 export interface Problem extends FormTemplate {
   id: number;
+  active: boolean;
 
   publishedAt: Date;
   updatedAt: Date;
@@ -62,6 +63,7 @@ export interface FormEndpointTemplate {
  */
 export interface EndpointProblem extends FormEndpointTemplate {
   id_problematica: number;
+  activo: boolean;
 
   publicado: string;
   actualizado: string;
@@ -69,7 +71,4 @@ export interface EndpointProblem extends FormEndpointTemplate {
 
   solicitante: EndpointApplicant;
   carreras: EndpointCareer[];
-}
-export interface EndpointProblemTable extends EndpointProblem {
-  activo: boolean;
 }
