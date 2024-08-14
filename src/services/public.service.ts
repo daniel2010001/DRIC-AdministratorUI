@@ -1,4 +1,9 @@
-import { EndpointApplicant, EndpointCareer, EndpointProblem, FormEndpointTemplate } from "@/models";
+import {
+  EndpointApplicant,
+  EndpointCareer,
+  EndpointProblem,
+  FormEndpointTemplate,
+} from "@/models";
 import axios, { AxiosResponse } from "axios";
 
 const api = import.meta.env.VITE_BACKEND;
@@ -7,8 +12,10 @@ const api = import.meta.env.VITE_BACKEND;
  * Servicio para obtener los solicitantes
  * @returns Petición de axios para obtener los solicitantes
  */
-export const loadApplicants = (): Promise<AxiosResponse<EndpointApplicant[]>> => {
-    return axios.get(api + "/solicitantes");
+export const loadApplicants = (): Promise<
+  AxiosResponse<EndpointApplicant[]>
+> => {
+  return axios.get(api + "/solicitantes");
 };
 
 /**
@@ -16,7 +23,7 @@ export const loadApplicants = (): Promise<AxiosResponse<EndpointApplicant[]>> =>
  * @returns Petición de axios para obtener las carreras
  */
 export const loadCareers = (): Promise<AxiosResponse<EndpointCareer[]>> => {
-    return axios.get(api + "/carreras");
+  return axios.get(api + "/carreras");
 };
 
 /**
@@ -24,7 +31,17 @@ export const loadCareers = (): Promise<AxiosResponse<EndpointCareer[]>> => {
  * @returns Petición de axios para obtener las problemáticas
  */
 export const loadProblems = (): Promise<AxiosResponse<EndpointProblem[]>> => {
-    return axios.get(api + "/problematicas");
+  return axios.get(api + "/problematicas");
+};
+
+/**
+ * Servicio para obtener las problematicas
+ * @returns Petición de axios para obtener las problemáticas
+ */
+export const loadProblemsTable = (): Promise<
+  AxiosResponse<EndpointProblem[]>
+> => {
+  return axios.get(api + "/problematicas/tabla");
 };
 
 /**
@@ -32,8 +49,10 @@ export const loadProblems = (): Promise<AxiosResponse<EndpointProblem[]>> => {
  * @id Id de la problemática
  * @returns Petición de axios para obtener una problemática dado el id
  */
-export const searchProblem = (id: number): Promise<AxiosResponse<EndpointProblem>> => {
-    return axios.get(api + "/problematicas/" + id);
+export const searchProblem = (
+  id: number
+): Promise<AxiosResponse<EndpointProblem>> => {
+  return axios.get(api + "/problematicas/" + id);
 };
 
 /**
@@ -41,6 +60,8 @@ export const searchProblem = (id: number): Promise<AxiosResponse<EndpointProblem
  * @param formEndpointTemplate Plantilla del formulario para la creación de las problemáticas
  * @returns Petición de axios para la creación de una nueva problemática
  */
-export const saveProblem = (formEndpointTemplate: FormEndpointTemplate): Promise<AxiosResponse<EndpointProblem>> => {
-    return axios.post(api + "/problematicas", formEndpointTemplate);
+export const saveProblem = (
+  formEndpointTemplate: FormEndpointTemplate
+): Promise<AxiosResponse<EndpointProblem>> => {
+  return axios.post(api + "/problematicas", formEndpointTemplate);
 };
