@@ -1,11 +1,7 @@
 import { Header, Sidebar } from "@/components";
 import React from "react";
 
-export default function Background({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function Background({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState<boolean>(false);
 
   const toggleSidebar = () => {
@@ -26,3 +22,5 @@ export default function Background({
     </>
   );
 }
+
+export default Background;

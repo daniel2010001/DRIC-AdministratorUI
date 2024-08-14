@@ -1,24 +1,15 @@
-import {
-  loadApplicants,
-  loadCareers,
-  loadProblems,
-  searchProblem,
-} from "./services";
-import { createApplicant, createCareer, createProblematic } from "./adapters";
-import { useAsync } from "./hooks";
+import { Background, Problematicas, AddProblematicaPage } from "./pages";
 import { Route, Routes } from "react-router-dom";
-
-import { Problematicas } from "./pages/problematicas/problematicas";
 
 function App() {
   return (
-    <>
-      <Background>
+    <Background>
       <Routes>
-        <Route path="/problematicas" element={<Problematicas />}></Route>
+        <Route path="/" element={<Problematicas />} />
+        <Route path="/problems" element={<Problematicas />} />
+        <Route path="/forms" element={<AddProblematicaPage />} />
       </Routes>
-      </Background>
-    </>
+    </Background>
   );
 }
 
