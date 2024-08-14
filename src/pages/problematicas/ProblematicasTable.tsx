@@ -6,13 +6,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { Link } from "react-router-dom";
 
 import { createProblematic } from "@/adapters";
 import { useAsync } from "@/hooks";
 import { Applicant, EndpointProblem, Problem } from "@/models";
 import { loadProblemsTable } from "@/services";
 import { ChangeEvent, useState } from "react";
-import { TableView } from "@mui/icons-material";
 
 interface Column {
   id: "id" | "title" | "applicant" | "updatedAt" | "publishedAt" | "acciones";
@@ -66,12 +66,18 @@ export const ProblematicasTable = () => {
       ...problem,
       acciones: (
         <>
-          <button className="me-2 underline underline-offset-2 text-blue-600">
+          <Link
+            to={`/view/${problem.id}`}
+            className="me-2 underline underline-offset-2 text-blue-600"
+          >
             Ver
-          </button>
-          <button className="underline underline-offset-2 text-blue-600">
+          </Link>
+          <Link
+            to={`/edit/${problem.id}`}
+            className="underline underline-offset-2 text-blue-600"
+          >
             Editar
-          </button>
+          </Link>
         </>
       ),
     };
@@ -113,24 +119,24 @@ export const ProblematicasTable = () => {
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.formatObjet
-                              ? column.formatObjet(value as Applicant)
-                              : column.format
-                              ? column.format(value as Date)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
+                .map((row) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.id === "acciones"
+                            ? value
+                            : column.formatObjet
+                            ? column.formatObjet(value as Applicant)
+                            : column.format
+                            ? column.format(value as Date)
+                            : String(value)}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
