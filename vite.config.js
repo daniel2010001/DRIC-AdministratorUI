@@ -9,6 +9,7 @@ export default defineConfig({
       '@/adapters': path.resolve(__dirname, './src/adapters'),
       '@/assets': path.resolve(__dirname, './src/assets'),
       '@/components': path.resolve(__dirname, './src/components'),
+      '@/hooks': path.resolve(__dirname, './src/hooks'),
       '@/interceptors': path.resolve(__dirname, './src/interceptors'),
       '@/models': path.resolve(__dirname, './src/models'),
       '@/pages': path.resolve(__dirname, './src/pages'),
