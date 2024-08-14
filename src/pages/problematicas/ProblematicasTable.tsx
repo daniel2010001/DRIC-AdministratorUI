@@ -9,27 +9,29 @@ import TableRow from "@mui/material/TableRow";
 
 import { createProblematic } from "@/adapters";
 import { useAsync } from "@/hooks";
-import { EndpointProblem, Problem } from "@/models";
+import { Applicant, EndpointProblem, Problem } from "@/models";
 import { loadProblemsTable } from "@/services";
 import { ChangeEvent, useState } from "react";
 import { TableView } from "@mui/icons-material";
 
 interface Column {
-  id: "id" | "title" | "solicitante" | "updatedAt" | "publishedAt" | "acciones";
+  id: "id" | "title" | "applicant" | "updatedAt" | "publishedAt" | "acciones";
   label: string;
   minWidth?: number;
   align?: "right";
   format?: (value: Date) => string;
+  formatObjet?: (value: Applicant) => string;
 }
 
 const columns: readonly Column[] = [
   { id: "id", label: "ID", minWidth: 170 },
   { id: "title", label: "Títuto", minWidth: 100 },
   {
-    id: "solicitante",
+    id: "applicant",
     label: "Solicitante",
     minWidth: 170,
     align: "right",
+    formatObjet: (value: Applicant) => value.name,
   },
   {
     id: "updatedAt",
@@ -118,8 +120,10 @@ export const ProblematicasTable = () => {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "object"
-                              ? column.format(value)
+                            {column.formatObjet
+                              ? column.formatObjet(value as Applicant)
+                              : column.format
+                              ? column.format(value as Date)
                               : value}
                           </TableCell>
                         );
