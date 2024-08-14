@@ -15,11 +15,11 @@ export const Problematicas = () => {
     <div className="container mx-auto">
       <div className="text-4xl">Problematicas</div>
       {/* Search por institucion, titulo y carrera */}
-      <Table
+      {/* <Table
         columns={[
           "id_problematica",
           "titulo",
-          /*  "solicitante", */
+          "solicitante",
           "actualizado",
           "publicado",
           "Acciones",
@@ -28,7 +28,7 @@ export const Problematicas = () => {
         pageSize={4}
         pageIndex={0}
         width="100%"
-      />
+      /> */}
     </div>
   );
 };

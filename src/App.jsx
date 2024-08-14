@@ -1,14 +1,7 @@
-import {
-  loadApplicants,
-  loadCareers,
-  loadProblems,
-  searchProblem,
-} from "./services";
-import { createApplicant, createCareer, createProblematic } from "./adapters";
-import { useAsync } from "./hooks";
 import { Route, Routes } from "react-router-dom";
 
 import { Problematicas } from "./pages/problematicas/problematicas";
+import { ProblematicasTable } from "./pages/problematicas/ProblematicasTable";
 
 function App() {
   return (
@@ -16,6 +9,7 @@ function App() {
       <Background>
       <Routes>
         <Route path="/problematicas" element={<Problematicas />}></Route>
+        <Route path="/" element={<ProblematicasTable />}></Route>
       </Routes>
       </Background>
     </>
