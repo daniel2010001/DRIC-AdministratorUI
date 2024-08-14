@@ -1,11 +1,3 @@
-import {
-  loadApplicants,
-  loadCareers,
-  loadProblems,
-  searchProblem,
-} from "./services";
-import { createApplicant, createCareer, createProblematic } from "./adapters";
-import { useAsync } from "./hooks";
 import { Route, Routes } from "react-router-dom";
 
 import { Problematicas } from "./pages/problematicas/problematicas";
