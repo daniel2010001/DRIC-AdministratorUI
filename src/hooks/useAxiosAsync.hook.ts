@@ -9,19 +9,19 @@ import { useEffect } from "react";
  * @param dependencies Array de depencias que se pasa al useEffect
  */
 export const useAsync = (
-    asyncFn: Promise<AxiosResponse<any, any>>,
-    successFuntion: Function,
-    returnFuntion: Function = () => {},
-    dependencies: any[] = []
+  asyncFn: Promise<AxiosResponse<any, any>>,
+  successFuntion: Function,
+  returnFuntion: Function = () => {},
+  dependencies: any[] = []
 ) => {
-    useEffect(() => {
-        let isActive = true;
-        asyncFn.then(({ data }) => {
-            if (isActive) successFuntion(data);
-        });
-        return () => {
-            returnFuntion && returnFuntion();
-            isActive = false;
-        };
-    }, dependencies);
+  useEffect(() => {
+    let isActive = true;
+    asyncFn.then(({ data }) => {
+      if (isActive) successFuntion(data);
+    });
+    return () => {
+      returnFuntion && returnFuntion();
+      isActive = false;
+    };
+  }, dependencies);
 };

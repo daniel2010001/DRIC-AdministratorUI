@@ -1,12 +1,7 @@
-import {
-  EndpointProblem,
-  Problem,
-  FormTemplate,
-  FormEndpointTemplate,
-} from "@/models";
+import { EndpointProblem, Problem } from "@/models";
 import { createApplicant } from "./Applicant.adapter";
 import { createCareer } from "./Career.adapter";
-import { shorFormatDate } from "@/utilities";
+
 /**
  * Función para adaptar una problemática recibida desde la API
  * @param problematic Problematica recuperada de la API
@@ -42,30 +37,4 @@ export const createProblematic = (problematic: EndpointProblem): Problem => {
   };
 
   return formatProblematic;
-};
-
-/**
- * Función par adaptar la plantilla del formulario de creación de problemáticas para la API
- * @param formTemplate Plantilla del formulario para crear nuevas problemáticas
- * @returns Plantilla formateada
- */
-export const createFormEndpointTemplate = (formTemplate: FormTemplate) => {
-  const formatFormEndpointTemplate: FormEndpointTemplate = {
-    titulo: formTemplate.title,
-    planteamiento: formTemplate.approach,
-    causas: formTemplate.causes,
-    efectos: formTemplate.effects,
-    que: formTemplate.what,
-    como: formTemplate.who,
-    para_que: formTemplate.why,
-    cuando: formTemplate.when,
-    contacto: formTemplate.contact,
-    telefono: formTemplate.phone,
-    fecha: shorFormatDate(formTemplate.date),
-    zona: formTemplate.zone,
-    id_solicitante: formTemplate.applicant.id,
-    id_carrera: formTemplate.careers.map((career) => career.id),
-  };
-
-  return formatFormEndpointTemplate;
 };

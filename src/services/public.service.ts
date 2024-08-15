@@ -60,8 +60,31 @@ export const searchProblem = (
  * @param formEndpointTemplate Plantilla del formulario para la creación de las problemáticas
  * @returns Petición de axios para la creación de una nueva problemática
  */
-export const saveProblem = (
+export const createProblem = (
   formEndpointTemplate: FormEndpointTemplate
 ): Promise<AxiosResponse<EndpointProblem>> => {
   return axios.post(api + "/problematicas", formEndpointTemplate);
+};
+
+/**
+ * Servicio para la actualización de una problemática
+ * @param formEndpointTemplate Plantilla del formulario para la actualización de las problemáticas
+ * @returns Petición de axios para la actualización de una problemática
+ */
+export const updateProblem = (
+  id: number,
+  formEndpointTemplate: FormEndpointTemplate
+): Promise<AxiosResponse<EndpointProblem>> => {
+  return axios.put(api + "/problematicas/" + id, formEndpointTemplate);
+};
+
+/**
+ * Servicio para la eliminación de una problemática
+ * @param id Id de la problemática
+ * @returns Petición de axios para la eliminación de una problemática
+ */
+export const deleteProblem = (
+  id: number
+): Promise<AxiosResponse<EndpointProblem>> => {
+  return axios.delete(api + "/problematicas/" + id);
 };

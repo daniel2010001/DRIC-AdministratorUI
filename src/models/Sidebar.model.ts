@@ -1,64 +1,51 @@
+import { DashboardIcon, DocumentListIcon, HomeIcon } from "@/assets";
+
 export interface SidebarOption {
-  id: string;
   title: string;
-  icon: string;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
   link: string;
 }
 
-export interface SidebarSubOption {
-  id: string;
+export interface SidebarDropdownOption {
   title: string;
-  icon: string;
   link: string;
 }
 
-export interface Sidebar {
-  options: (SidebarOption | SidebarOption[])[];
+export interface SidebarDropdown {
+  title: string;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  options: SidebarDropdownOption[];
 }
 
-export const Sidebar: Sidebar = {
+interface Sidebar {
+  options: (SidebarOption | SidebarDropdown)[];
+}
+
+export const SidebarOptions: Sidebar = {
   options: [
     {
-      id: "dashboard",
-      title: "Dashboard",
-      icon: "mdi:view-dashboard",
+      title: "Inicio",
+      icon: HomeIcon,
+      link: "/",
+    },
+    {
+      title: "Panel de control",
+      icon: DashboardIcon,
       link: "/dashboard",
     },
     {
-      id: "kanban",
-      title: "Kanban",
-      icon: "mdi:view-parallel",
-      link: "/kanban",
-    },
-    {
-      id: "inbox",
-      title: "Inbox",
-      icon: "mdi:inbox",
-      link: "/inbox",
-    },
-    {
-      id: "users",
-      title: "Users",
-      icon: "mdi:account-multiple",
-      link: "/users",
-    },
-    {
-      id: "products",
-      title: "Products",
-      icon: "mdi:store",
-      link: "/products",
-    },
-    {
-      id: "sign-in",
-      title: "Sign In",
-      icon: "mdi:login",
-      link: "/sign-in",
-    },
-    {
-      id: "sign-up",
-      title: "Sign Up",
-      icon: "mdi:account-plus",
-      link: "/sign-up",
+      title: "Problemáticas",
+      icon: DocumentListIcon,
+      options: [
+        {
+          title: "Lista de Problemáticas",
+          link: "/problems",
+        },
+        {
+          title: "Formulario",
+          link: "/forms",
+        },
+      ],
     },
   ],
 };

@@ -1,1 +1,2 @@
-export * from './localDateFormat.utilitie';
+export * from "./formatLocalDate.utilitie";
+export * from "./formatString.utilitie";
