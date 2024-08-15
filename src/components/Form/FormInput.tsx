@@ -28,7 +28,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     } = useFormContext();
 
     const className =
-      "bg-white block w-full rounded-md border-0 mt-1 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6";
+      "bg-white block w-full rounded-md border-0 mt-1 py-1.5 px-3 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6";
 
     return (
       <Field
@@ -38,7 +38,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       >
         <Label
           htmlFor={name}
-          className="flex justify-between text-sm font-medium leading-6 text-gray-900"
+          className="flex justify-between text-sm font-medium leading-6"
         >
           {label}
         </Label>

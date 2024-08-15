@@ -1,12 +1,12 @@
-import React from "react";
-import { useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { ReactNode } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface FormWrapperProps {
   onSubmit: (data: any) => void;
   schema: any;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const FormWrapper = ({
