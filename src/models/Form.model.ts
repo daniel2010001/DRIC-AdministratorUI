@@ -4,7 +4,7 @@ import { ProblemFormTemplate } from "./ProblemForm.model";
  * Interfaz para los campos de un formulario de creación de problemáticas
  */
 export interface FieldConfig {
-  label: string;
+  label: string | JSX.Element;
   description?: string;
   type: string;
   maxLength?: number;
@@ -16,12 +16,12 @@ export interface FieldConfig {
 /**
  * Interfaz para las secciones de un formulario de creación de problemáticas
  */
-export interface FormSectionProps {
+export interface FormSectionProps<T> {
   title: string;
   description: string;
   inputs: {
-    /** La clave de `FormTemplate` que se usará para buscar en `formConfig` */
-    key: keyof ProblemFormTemplate;
+    /** La clave del campo en el objeto T */
+    key: keyof T;
     /** Indica cuántas columnas ocupa el input (por ejemplo, 1 para medio ancho, 2 para ancho completo) */
     colSpan: number;
   }[];

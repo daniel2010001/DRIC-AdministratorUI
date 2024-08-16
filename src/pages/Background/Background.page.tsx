@@ -5,10 +5,13 @@ export function Background({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState<boolean>(false);
 
   const toggleSidebar = () => {
+    console.log("toggleSidebar");
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   const closeSidebar = () => {
+    if (!isSidebarOpen) return;
+    console.log("closeSidebar");
     setIsSidebarOpen(false);
   };
 
@@ -17,7 +20,7 @@ export function Background({ children }: { children: React.ReactNode }) {
       <Header toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />
       <main className="lg:ml-64 mt-16 flex flex-col justify-center items-center -z-10 light-secondary dark:dark-secondary">
-        <div className="p-4 w-full">{children}</div>
+        <div className="p-4 w-full min-h-[calc(100vh-64px)]">{children}</div>
       </main>
     </>
   );

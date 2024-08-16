@@ -8,13 +8,14 @@ import clsx from "clsx";
 export interface FormInputProps extends InputHTMLAttributes<any> {
   name: string;
   type: string;
+  colSpan?: number;
   label: string | React.JSX.Element;
   description?: string | React.JSX.Element;
   datalist?: string[];
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  ({ name, type, label, description, datalist, ...props }, ref) => {
+  ({ name, type, label, description, colSpan, datalist, ...props }, ref) => {
     const {
       control,
       formState: { errors },
@@ -30,7 +31,9 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     return (
       <Field
         className={clsx(
-          type === "checkbox" ? "flex items-center gap-x-4" : "flex-col"
+          type === "checkbox" ? "flex items-center gap-x-4" : "flex-col",
+          "relative text-light-primary dark:text-dark-primary",
+          colSpan ? `sm:col-span-${colSpan * 3}` : "col-span-full"
         )}
       >
         <Label

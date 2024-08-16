@@ -30,14 +30,16 @@ export const SimpleComboBox = forwardRef(
         <div className={clsx("!relative flex flex-wrap", props["className"])}>
           {value?.length > 0 && (
             <ul className="flex flex-wrap min-w-fit">
-              {value.map((option) => (
-                <li
-                  key={`${option.name}-${option.id}-selected`}
-                  className="border-2 my-auto me-2 px-1 h-7 text-sm flex items-center border-solid rounded-lg"
-                >
-                  {option.nameRecorted.toUpperCase()}
-                </li>
-              ))}
+              {value.map(
+                (option: { id: number; name: string; shorName: string }) => (
+                  <li
+                    key={`${option.name}-${option.id}-selected`}
+                    className="border-2 my-auto me-2 px-1 h-7 text-sm flex items-center border-solid rounded-lg"
+                  >
+                    {option.shorName?.toUpperCase()}
+                  </li>
+                )
+              )}
             </ul>
           )}
           <ComboboxInput
@@ -48,7 +50,7 @@ export const SimpleComboBox = forwardRef(
               "w-full rounded-lg border-none bg-white/5 pr-8 text-sm/6 text-black",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
             )}
-            displayValue={(option) => option?.name}
+            displayValue={(option: { name: string }) => option?.name}
             onChange={(event) => {
               setQuery(event.target.value);
               event.target.value = event.target.value.toUpperCase();
@@ -66,16 +68,18 @@ export const SimpleComboBox = forwardRef(
             "transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 absolute overflow-y-scroll z-10"
           )}
         >
-          {filteredPeople.map((option) => (
-            <ComboboxOption
-              key={`${option.name}-${option.id}-option`}
-              value={option}
-              className="group flex cursor-default items-center gap-1 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-black/10"
-            >
-              <CheckIcon className="invisible size-4 fill-black group-data-[selected]:visible" />
-              <div className="text-sm/6 text-black">{option.name}</div>
-            </ComboboxOption>
-          ))}
+          {filteredPeople?.map(
+            (option: { id: number; name: string; shorName: string }) => (
+              <ComboboxOption
+                key={`${option.name}-${option.id}-option`}
+                value={option}
+                className="group flex cursor-default items-center gap-1 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-black/10"
+              >
+                <CheckIcon className="invisible size-4 fill-black group-data-[selected]:visible" />
+                <div className="text-sm/6 text-black">{option.name}</div>
+              </ComboboxOption>
+            )
+          )}
         </ComboboxOptions>
       </Combobox>
     );
