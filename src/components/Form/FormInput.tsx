@@ -7,14 +7,7 @@ import clsx from "clsx";
 
 export interface FormInputProps extends InputHTMLAttributes<any> {
   name: string;
-  type:
-    | "text"
-    | "quill"
-    | "date"
-    | "tel"
-    | "textarea"
-    | "combobox"
-    | "checkbox";
+  type: string;
   label: string | React.JSX.Element;
   description?: string | React.JSX.Element;
   datalist?: string[];
@@ -27,8 +20,12 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       formState: { errors },
     } = useFormContext();
 
-    const className =
-      "bg-white block w-full rounded-md border-0 mt-1 py-1.5 px-3 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6";
+    const className = clsx(
+      "block w-full mt-1 py-1.5 px-3 sm:text-sm sm:leading-6",
+      "rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300",
+      "focus:ring-2 focus:ring-inset focus:ring-indigo-400",
+      "ligth-secondary dark:dark-secondary"
+    );
 
     return (
       <Field

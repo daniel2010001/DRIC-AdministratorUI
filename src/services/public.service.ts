@@ -2,7 +2,7 @@ import {
   EndpointApplicant,
   EndpointCareer,
   EndpointProblem,
-  FormEndpointTemplate,
+  ProblemFormEndpointTemplate,
 } from "@/models";
 import axios, { AxiosResponse } from "axios";
 
@@ -61,7 +61,7 @@ export const searchProblem = (
  * @returns Petición de axios para la creación de una nueva problemática
  */
 export const createProblem = (
-  formEndpointTemplate: FormEndpointTemplate
+  formEndpointTemplate: ProblemFormEndpointTemplate
 ): Promise<AxiosResponse<EndpointProblem>> => {
   return axios.post(api + "/problematicas", formEndpointTemplate);
 };
@@ -73,7 +73,7 @@ export const createProblem = (
  */
 export const updateProblem = (
   id: number,
-  formEndpointTemplate: FormEndpointTemplate
+  formEndpointTemplate: ProblemFormEndpointTemplate
 ): Promise<AxiosResponse<EndpointProblem>> => {
   return axios.put(api + "/problematicas/" + id, formEndpointTemplate);
 };
