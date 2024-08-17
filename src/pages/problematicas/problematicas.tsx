@@ -20,6 +20,7 @@ import { HeadCell } from "@/models/Table.model";
 import { stableSort, getComparator } from "@/utilities/shorting";
 import { TableHeader } from "@/components/ui/table/header-table";
 import { BodyTable } from "@/components/ui/table/body-table";
+import { PaginationTable } from "@/components/ui/table/pagination-table";
 
 const headCells: readonly HeadCell<Problems>[] = [
   {
@@ -119,7 +120,9 @@ export const EnhancedTable = () => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -171,9 +174,8 @@ export const EnhancedTable = () => {
               />
             </Table>
           </TableContainer>
-          <TablePagination
+          <PaginationTable
             rowsPerPageOptions={[5, 10, 25]}
-            component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}

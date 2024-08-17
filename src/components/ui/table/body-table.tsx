@@ -28,8 +28,6 @@ export const BodyTable = <T,>({
   dense,
   actions,
 }: GenericTableBodyProps<T>) => {
-  console.log(">>>>", visibleRows);
-
   const renderActions = (id: number) => {
     return (
       <>
@@ -52,8 +50,6 @@ export const BodyTable = <T,>({
   return (
     <TableBody>
       {visibleRows.map((row, index) => {
-        console.log(row);
-
         return (
           <TableRow hover role="checkbox" tabIndex={-1} key={index}>
             {headCells.map((headCell) => {
