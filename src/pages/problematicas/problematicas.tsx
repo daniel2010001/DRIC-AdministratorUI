@@ -1,3 +1,4 @@
+import { createTheme } from "@mui/material/styles";
 import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -23,6 +24,7 @@ import { Order } from "@/models/Table.model";
 import { EnhancedTableProps } from "@/models/Table.model";
 import { HeadCell } from "@/models/Table.model";
 import { stableSort, getComparator } from "@/utilities/shorting";
+import { TableHeader } from "@/components/ui/table/header-table";
 
 const headCells: readonly HeadCell<Problems>[] = [
   {
@@ -66,49 +68,6 @@ const headCells: readonly HeadCell<Problems>[] = [
     isAction: true,
   },
 ];
-
-const EnhancedTableHead = (props: EnhancedTableProps<Problems>) => {
-  const { order, orderBy, onRequestSort } = props;
-
-  const createSortHandler =
-    (property: keyof Problems) => (event: MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.property}
-            align={headCell.align ? headCell.align : "left"}
-            style={{ minWidth: "auto" }}
-            sortDirection={orderBy === headCell.property ? order : false}
-          >
-            {headCell.isAction ? (
-              headCell.label
-            ) : (
-              <TableSortLabel
-                active={orderBy === headCell.property}
-                direction={orderBy === headCell.property ? order : "asc"}
-                onClick={createSortHandler(headCell.property)}
-              >
-                {headCell.label}
-                {orderBy === headCell.property ? (
-                  <span style={visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </span>
-                ) : null}
-              </TableSortLabel>
-            )}
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-};
 
 export const EnhancedTable = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
@@ -203,7 +162,7 @@ export const EnhancedTable = () => {
               aria-labelledby="tableTitle"
               size={dense ? "small" : "medium"}
             >
-              <EnhancedTableHead
+              <TableHeader
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
