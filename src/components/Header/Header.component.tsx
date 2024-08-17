@@ -68,7 +68,7 @@ export function Header({ toggleSidebar }: HeaderProps) {
 
             <button
               onClick={toggleTheme}
-              className="p-2 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              className="mx-2 p-2 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
             >
               Cambiar a {isDarkMode ? "Claro" : "Oscuro"}
             </button>

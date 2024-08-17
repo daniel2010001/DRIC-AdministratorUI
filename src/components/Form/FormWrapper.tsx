@@ -1,29 +1,36 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { createObjectSchema } from "@/pages/ProblemForm/utilities";
+import { FieldConfig } from "@/models";
 
-interface FormWrapperProps {
-  onSubmit: (data: any) => void;
-  schema: any;
+interface FormWrapperProps<T> {
+  onSubmit: (data: T) => void;
+  formConfig: { [K in keyof T]: FieldConfig };
+  defaultValues: T;
   children: ReactNode;
 }
 
-export const FormWrapper = ({
+export const FormWrapper = <T extends Object>({
   onSubmit,
-  schema,
+  formConfig,
+  defaultValues,
   children,
-}: FormWrapperProps) => {
+}: FormWrapperProps<T>) => {
+  const schemaObject = createObjectSchema<T>(formConfig, defaultValues);
   const methods = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: schema.describe().default,
+    resolver: yupResolver(schemaObject),
+    defaultValues: defaultValues as any,
   });
-
+  useEffect(() => {
+    methods.reset(defaultValues as any); // Resetea los valores cuando cambian
+  }, [defaultValues as any]);
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="px-4 pb-6 max-w-7xl mx-auto sm:px-6 sm:pb-8 md:px-8"
+        className="px-4 pb-6 max-w-7xl mx-auto sm:px-6 sm:pb-8 md:px-8 bg-light-secondary dark:bg-dark-secondary"
       >
         {children}
 

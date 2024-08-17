@@ -1,16 +1,18 @@
 import {
   EndpointApplicant,
   EndpointCareer,
-  FormEndpointTemplate,
-  FormTemplate,
+  ProblemFormEndpointTemplate,
+  ProblemFormTemplate,
+  defaultEndpointApplicant,
+  defaultProblemFormEndpointTemplate,
+  defaultProblemFormTemplate,
 } from "@/models";
 
 /**
  * Interfaz de las Problemáticas adaptada para el front end.
  */
-export interface Problem extends FormTemplate {
+export interface Problem extends ProblemFormTemplate {
   id: number;
-
   publishedAt: Date;
   updatedAt: Date;
   createdAt: Date;
@@ -19,13 +21,11 @@ export interface Problem extends FormTemplate {
 /**
  * Interfaz para las Problemáticas recividos desde la API
  */
-export interface EndpointProblem extends FormEndpointTemplate {
+export interface EndpointProblem extends ProblemFormEndpointTemplate {
   id_problematica: number;
-
   publicado: string;
   actualizado: string;
   creado: string;
-
   solicitante: EndpointApplicant;
   carreras: EndpointCareer[];
 }
