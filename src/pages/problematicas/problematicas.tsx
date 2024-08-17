@@ -26,7 +26,7 @@ interface Data {
   // updatedAt Type date is not assignable to type string
   updatedAt: string;
   publishedAt: string;
-  acciones: number;
+  acciones: string;
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -60,7 +60,7 @@ function getComparator<Key extends keyof any>(
 function stableSort<T>(
   array: readonly T[],
   comparator: (a: T, b: T) => number
-) {
+): T[] {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -79,6 +79,7 @@ interface HeadCell {
   disablePadding: boolean;
   align?: "right" | "center" | "left";
   minWidth?: string;
+  isAction?: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
@@ -120,6 +121,7 @@ const headCells: readonly HeadCell[] = [
     label: "Acciones",
     numeric: false,
     disablePadding: false,
+    isAction: true,
   },
 ];
 
@@ -147,18 +149,24 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             style={{ minWidth: "auto" }}
             sortDirection={orderBy === headCell.property ? order : false}
           >
-            <TableSortLabel
-              active={orderBy === headCell.property}
-              direction={orderBy === headCell.property ? order : "asc"}
-              onClick={createSortHandler(headCell.property)}
-            >
-              {headCell.label}
-              {orderBy === headCell.property ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
+            {headCell.isAction ? (
+              headCell.label
+            ) : (
+              <TableSortLabel
+                active={orderBy === headCell.property}
+                direction={orderBy === headCell.property ? order : "asc"}
+                onClick={createSortHandler(headCell.property)}
+              >
+                {headCell.label}
+                {orderBy === headCell.property ? (
+                  <span style={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </span>
+                ) : null}
+              </TableSortLabel>
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -185,11 +193,9 @@ export const EnhancedTable = () => {
       applicant: problem.applicant.name,
       updatedAt: problem.updatedAt.toDateString(),
       publishedAt: problem.publishedAt.toDateString(),
-      acciones: 0,
+      acciones: "ver, editar",
     };
   });
-
-  console.log(rows);
 
   /*  const rows = problems.map((problem) => {
     return {
