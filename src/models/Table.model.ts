@@ -47,3 +47,13 @@ export interface EnhancedTableProps {
   onSelectAllClick?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   rowCount?: number;
 }
+
+export interface HeadCell<T> {
+  property: keyof T;
+  label: string;
+  numeric: boolean;
+  disablePadding: boolean;
+  align?: "right" | "center" | "left";
+  minWidth?: string;
+  isAction?: boolean;
+}

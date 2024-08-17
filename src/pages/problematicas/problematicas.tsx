@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 import { Problems } from "@/models/Table.model";
 import { Order } from "@/models/Table.model";
 import { EnhancedTableProps } from "@/models/Table.model";
+import { HeadCell } from "@/models/Table.model";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -63,17 +64,7 @@ function stableSort<T>(
   return stabilizedThis.map((el) => el[0]);
 }
 
-interface HeadCell {
-  property: keyof Problems;
-  label: string;
-  numeric: boolean;
-  disablePadding: boolean;
-  align?: "right" | "center" | "left";
-  minWidth?: string;
-  isAction?: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
+const headCells: readonly HeadCell<Problems>[] = [
   {
     property: "id",
     label: "ID",
@@ -116,7 +107,7 @@ const headCells: readonly HeadCell[] = [
   },
 ];
 
-function EnhancedTableHead(props: EnhancedTableProps) {
+const EnhancedTableHead = (props: EnhancedTableProps) => {
   const { order, orderBy, onRequestSort } = props;
 
   const createSortHandler =
@@ -157,7 +148,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       </TableRow>
     </TableHead>
   );
-}
+};
 
 export const EnhancedTable = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
