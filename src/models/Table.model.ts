@@ -35,13 +35,11 @@ export interface ColumnTable {
 
 export type Order = "asc" | "desc";
 
-export interface EnhancedTableProps {
+export interface EnhancedTableProps<T> {
   order: Order;
-  orderBy: string;
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof Problems
-  ) => void;
+  orderBy: keyof T;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
+  headCells: readonly HeadCell<T>[];
   // propiedas futuras que se pueden agregar
   numSelected?: number;
   onSelectAllClick?: (event: React.ChangeEvent<HTMLInputElement>) => void;
