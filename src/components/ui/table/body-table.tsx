@@ -1,14 +1,11 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
 
-type Actions = "Ver" | "Editar" | "Eliminar";
-
 export interface GenericTableBodyProps<T> {
   headCells: readonly HeadCell<T>[];
   visibleRows: T[];
   emptyRows: number;
   dense: boolean;
-  actions?: Actions[];
 }
 
 export interface HeadCell<T> {
@@ -26,7 +23,6 @@ export const BodyTable = <T,>({
   visibleRows,
   emptyRows,
   dense,
-  actions,
 }: GenericTableBodyProps<T>) => {
   const renderActions = (id: number) => {
     return (
