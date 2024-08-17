@@ -13,49 +13,21 @@ import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
+import { EndpointProblem, Problem } from "@/models";
+import { useAsync } from "@/hooks";
+import { loadProblemsTable } from "@/services";
+import { createProblematic } from "@/adapters";
+import Link from "@mui/material/Link";
 
 interface Data {
   id: number;
-  calories: number;
-  carbs: number;
-  fat: number;
-  name: string;
-  protein: number;
+  title: string;
+  applicant: string;
+  // updatedAt Type date is not assignable to type string
+  updatedAt: string;
+  publishedAt: string;
+  acciones: number;
 }
-
-function createData(
-  id: number,
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-): Data {
-  return {
-    id,
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-  };
-}
-
-const rows = [
-  createData(1, "Cupcake", 305, 3.7, 67, 4.3),
-  createData(2, "Donut", 452, 25.0, 51, 4.9),
-  createData(3, "Eclair", 262, 16.0, 24, 6.0),
-  createData(4, "Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData(5, "Gingerbread", 356, 16.0, 49, 3.9),
-  createData(6, "Honeycomb", 408, 3.2, 87, 6.5),
-  createData(7, "Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData(8, "Jelly Bean", 375, 0.0, 94, 0.0),
-  createData(9, "KitKat", 518, 26.0, 65, 7.0),
-  createData(10, "Lollipop", 392, 0.2, 98, 0.0),
-  createData(11, "Marshmallow", 318, 0, 81, 2.0),
-  createData(12, "Nougat", 360, 19.0, 9, 37.0),
-  createData(13, "Oreo", 437, 18.0, 63, 4.0),
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -106,37 +78,46 @@ interface HeadCell {
   numeric: boolean;
   disablePadding: boolean;
   align?: "right" | "center" | "left";
+  minWidth?: string;
 }
 
 const headCells: readonly HeadCell[] = [
   {
-    property: "name",
+    property: "id",
     label: "ID",
     numeric: true,
     disablePadding: true,
     align: "left",
+    minWidth: "auto",
   },
   {
-    property: "calories",
+    property: "title",
     label: "Títuto",
     numeric: false,
     disablePadding: false,
   },
   {
-    property: "fat",
+    property: "applicant",
     label: "Solicitante",
     numeric: false,
     disablePadding: false,
+    align: "center",
   },
   {
-    property: "carbs",
+    property: "updatedAt",
     label: "Actualizado",
     numeric: false,
     disablePadding: false,
   },
   {
-    property: "protein",
+    property: "publishedAt",
     label: "Publicado",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    property: "acciones",
+    label: "Acciones",
     numeric: false,
     disablePadding: false,
   },
@@ -162,7 +143,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.property}
-            align={headCell.align ? headCell.align : "center"}
+            align={headCell.align ? headCell.align : "left"}
+            style={{ minWidth: "auto" }}
             sortDirection={orderBy === headCell.property ? order : false}
           >
             <TableSortLabel
@@ -185,11 +167,48 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 export const EnhancedTable = () => {
+  const [problems, setProblems] = useState<Problem[]>([]);
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof Data>("calories");
+  const [orderBy, setOrderBy] = useState<keyof Data>("title");
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  useAsync(loadProblemsTable(), (data: EndpointProblem[]) => {
+    setProblems(data.map(createProblematic));
+  });
+
+  const rows = problems.map((problem) => {
+    return {
+      id: problem.id,
+      title: problem.title,
+      applicant: problem.applicant.name,
+      updatedAt: problem.updatedAt.toDateString(),
+      publishedAt: problem.publishedAt.toDateString(),
+      acciones: 0,
+    };
+  });
+  /*  const rows = problems.map((problem) => {
+    return {
+      ...problem,
+      acciones: (
+        <>
+          <Link
+            to={`/view/${problem.id}`}
+            className="me-2 underline underline-offset-2 text-blue-600"
+          >
+            Ver
+          </Link>
+          <Link
+            to={`/edit/${problem.id}`}
+            className="underline underline-offset-2 text-blue-600"
+          >
+            Editar
+          </Link>
+        </>
+      ),
+    };
+  }); */
 
   const handleRequestSort = (
     event: MouseEvent<unknown>,
@@ -254,12 +273,18 @@ export const EnhancedTable = () => {
                   return (
                     <TableRow hover tabIndex={-1} key={index}>
                       <TableCell component="th" scope="row">
-                        {row.name}
+                        {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="left">{row.title}</TableCell>
+                      <TableCell align="left">{row.applicant}</TableCell>
+                      <TableCell align="left">{row.updatedAt}</TableCell>
+                      <TableCell align="left">{row.publishedAt}</TableCell>
+                      <TableCell align="left">
+                        <Link marginRight={1} href="/ver">
+                          Ver
+                        </Link>
+                        <Link href="/editar">Editar</Link>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
