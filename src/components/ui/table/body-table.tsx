@@ -1,11 +1,14 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
 
+type Actions = "Ver" | "Editar" | "Eliminar";
+
 export interface GenericTableBodyProps<T> {
   headCells: readonly HeadCell<T>[];
   visibleRows: T[];
   emptyRows: number;
   dense: boolean;
+  actions?: Actions[];
 }
 
 export interface HeadCell<T> {
@@ -23,8 +26,11 @@ export const BodyTable = <T,>({
   visibleRows,
   emptyRows,
   dense,
+  actions,
 }: GenericTableBodyProps<T>) => {
-  const actions = (id: number) => {
+  console.log(">>>>", visibleRows);
+
+  const renderActions = (id: number) => {
     return (
       <>
         <Link
@@ -46,6 +52,8 @@ export const BodyTable = <T,>({
   return (
     <TableBody>
       {visibleRows.map((row, index) => {
+        console.log(row);
+
         return (
           <TableRow hover role="checkbox" tabIndex={-1} key={index}>
             {headCells.map((headCell) => {
@@ -56,7 +64,7 @@ export const BodyTable = <T,>({
                   align={headCell.align ? headCell.align : "left"}
                 >
                   {headCell.isAction
-                    ? actions(value as number)
+                    ? renderActions((row as { id: number })["id"])
                     : headCell.property === "updatedAt" ||
                       headCell.property === "publishedAt"
                     ? new Date(value as string).toLocaleDateString()

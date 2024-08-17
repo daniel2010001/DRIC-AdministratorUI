@@ -78,7 +78,7 @@ export const EnhancedTable = () => {
     setProblems(data.map(createProblematic));
   });
 
-  const rows = problems.map((problem) => {
+  const rows: Problems[] = problems.map((problem) => {
     return {
       id: problem.id,
       title: problem.title,
