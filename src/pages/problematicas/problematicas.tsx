@@ -17,17 +17,10 @@ import { EndpointProblem, Problem } from "@/models";
 import { useAsync } from "@/hooks";
 import { loadProblemsTable } from "@/services";
 import { createProblematic } from "@/adapters";
-import Link from "@mui/material/Link";
-
-interface Data {
-  id: number;
-  title: string;
-  applicant: string;
-  // updatedAt Type date is not assignable to type string
-  updatedAt: string;
-  publishedAt: string;
-  acciones: string;
-}
+import { Link } from "react-router-dom";
+import { Problems } from "@/models/Table.model";
+import { Order } from "@/models/Table.model";
+import { EnhancedTableProps } from "@/models/Table.model";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -38,8 +31,6 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   }
   return 0;
 }
-
-type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
   order: Order,
@@ -73,7 +64,7 @@ function stableSort<T>(
 }
 
 interface HeadCell {
-  property: keyof Data;
+  property: keyof Problems;
   label: string;
   numeric: boolean;
   disablePadding: boolean;
@@ -117,7 +108,7 @@ const headCells: readonly HeadCell[] = [
     disablePadding: false,
   },
   {
-    property: "acciones",
+    property: "actions",
     label: "Acciones",
     numeric: false,
     disablePadding: false,
@@ -125,17 +116,11 @@ const headCells: readonly HeadCell[] = [
   },
 ];
 
-interface EnhancedTableProps {
-  order: Order;
-  orderBy: string;
-  onRequestSort: (event: MouseEvent<unknown>, property: keyof Data) => void;
-}
-
 function EnhancedTableHead(props: EnhancedTableProps) {
   const { order, orderBy, onRequestSort } = props;
 
   const createSortHandler =
-    (property: keyof Data) => (event: MouseEvent<unknown>) => {
+    (property: keyof Problems) => (event: MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
@@ -177,7 +162,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 export const EnhancedTable = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof Data>("title");
+  const [orderBy, setOrderBy] = useState<keyof Problems>("title");
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -193,35 +178,32 @@ export const EnhancedTable = () => {
       applicant: problem.applicant.name,
       updatedAt: problem.updatedAt.toDateString(),
       publishedAt: problem.publishedAt.toDateString(),
-      acciones: "ver, editar",
+      actions: "ver, editar",
     };
   });
 
-  /*  const rows = problems.map((problem) => {
-    return {
-      ...problem,
-      acciones: (
-        <>
-          <Link
-            to={`/view/${problem.id}`}
-            className="me-2 underline underline-offset-2 text-blue-600"
-          >
-            Ver
-          </Link>
-          <Link
-            to={`/edit/${problem.id}`}
-            className="underline underline-offset-2 text-blue-600"
-          >
-            Editar
-          </Link>
-        </>
-      ),
-    };
-  }); */
+  const actions = (id: number) => {
+    return (
+      <>
+        <Link
+          to={`/view/${id}`}
+          className="me-2 underline underline-offset-2 text-blue-600"
+        >
+          Ver
+        </Link>
+        <Link
+          to={`/edit/${id}`}
+          className="underline underline-offset-2 text-blue-600"
+        >
+          Editar
+        </Link>
+      </>
+    );
+  };
 
   const handleRequestSort = (
     event: MouseEvent<unknown>,
-    property: keyof Data
+    property: keyof Problems
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -278,20 +260,23 @@ export const EnhancedTable = () => {
               <TableBody>
                 {visibleRows.map((row, index) => {
                   return (
-                    <TableRow hover tabIndex={-1} key={index}>
-                      <TableCell component="th" scope="row">
-                        {row.id}
-                      </TableCell>
-                      <TableCell align="left">{row.title}</TableCell>
-                      <TableCell align="left">{row.applicant}</TableCell>
-                      <TableCell align="left">{row.updatedAt}</TableCell>
-                      <TableCell align="left">{row.publishedAt}</TableCell>
-                      <TableCell align="left">
-                        <Link marginRight={1} href="/ver">
-                          Ver
-                        </Link>
-                        <Link href="/editar">Editar</Link>
-                      </TableCell>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      {headCells.map((headCell) => {
+                        const value = row[headCell.property];
+                        return (
+                          <TableCell
+                            key={headCell.property}
+                            align={headCell.align ? headCell.align : "left"}
+                          >
+                            {headCell.isAction
+                              ? actions(row.id)
+                              : headCell.property === "updatedAt" ||
+                                headCell.property === "publishedAt"
+                              ? new Date(value).toLocaleDateString()
+                              : value}
+                          </TableCell>
+                        );
+                      })}
                     </TableRow>
                   );
                 })}
