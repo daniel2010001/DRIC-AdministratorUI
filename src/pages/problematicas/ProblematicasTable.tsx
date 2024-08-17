@@ -15,42 +15,50 @@ import { loadProblemsTable } from "@/services";
 import { ChangeEvent, useState } from "react";
 
 interface Column {
-  id: "id" | "title" | "applicant" | "updatedAt" | "publishedAt" | "acciones";
+  id: string;
   label: string;
-  minWidth?: number;
+  minWidth?: number | string;
   align?: "right";
   format?: (value: Date) => string;
   formatObjet?: (value: Applicant) => string;
 }
 
 const columns: readonly Column[] = [
-  { id: "id", label: "ID", minWidth: 170 },
-  { id: "title", label: "Títuto", minWidth: 100 },
+  {
+    id: "id",
+    label: "ID",
+    minWidth: "auto",
+  },
+  {
+    id: "title",
+    label: "Títuto",
+    minWidth: "auto",
+  },
   {
     id: "applicant",
     label: "Solicitante",
-    minWidth: 170,
+    minWidth: "auto",
     align: "right",
     formatObjet: (value: Applicant) => value.name,
   },
   {
     id: "updatedAt",
     label: "Actualizado",
-    minWidth: 170,
+    minWidth: "auto",
     align: "right",
     format: (value: Date) => value.toDateString(),
   },
   {
     id: "publishedAt",
     label: "Publicado",
-    minWidth: 170,
+    minWidth: "auto",
     align: "right",
     format: (value: Date) => value.toDateString(),
   },
   {
     id: "acciones",
     label: "Acciones",
-    minWidth: 170,
+    minWidth: "auto",
     align: "right",
   },
 ];
