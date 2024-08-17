@@ -5,15 +5,12 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { visuallyHidden } from "@mui/utils";
 import { EndpointProblem, Problem } from "@/models";
 import { useAsync } from "@/hooks";
 import { loadProblemsTable } from "@/services";
@@ -21,10 +18,10 @@ import { createProblematic } from "@/adapters";
 import { Link } from "react-router-dom";
 import { Problems } from "@/models/Table.model";
 import { Order } from "@/models/Table.model";
-import { EnhancedTableProps } from "@/models/Table.model";
 import { HeadCell } from "@/models/Table.model";
 import { stableSort, getComparator } from "@/utilities/shorting";
 import { TableHeader } from "@/components/ui/table/header-table";
+import { BodyTable } from "@/components/ui/table/body-table";
 
 const headCells: readonly HeadCell<Problems>[] = [
   {
@@ -168,39 +165,12 @@ export const EnhancedTable = () => {
                 onRequestSort={handleRequestSort}
                 headCells={headCells}
               />
-              <TableBody>
-                {visibleRows.map((row, index) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                      {headCells.map((headCell) => {
-                        const value = row[headCell.property];
-                        return (
-                          <TableCell
-                            key={headCell.property}
-                            align={headCell.align ? headCell.align : "left"}
-                          >
-                            {headCell.isAction
-                              ? actions(row.id)
-                              : headCell.property === "updatedAt" ||
-                                headCell.property === "publishedAt"
-                              ? new Date(value).toLocaleDateString()
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-                {emptyRows > 0 && (
-                  <TableRow
-                    style={{
-                      height: (dense ? 33 : 53) * emptyRows,
-                    }}
-                  >
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
+              <BodyTable
+                headCells={headCells}
+                visibleRows={visibleRows}
+                emptyRows={emptyRows}
+                dense={dense}
+              />
             </Table>
           </TableContainer>
           <TablePagination
