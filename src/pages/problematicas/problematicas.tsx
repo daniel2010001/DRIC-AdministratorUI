@@ -188,6 +188,9 @@ export const EnhancedTable = () => {
       acciones: 0,
     };
   });
+
+  console.log(rows);
+
   /*  const rows = problems.map((problem) => {
     return {
       ...problem,
@@ -236,14 +239,12 @@ export const EnhancedTable = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage]
-  );
+  const visibleRows = useMemo(() => {
+    return stableSort(rows, getComparator(order, orderBy)).slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    );
+  }, [order, orderBy, page, rowsPerPage, rows]);
 
   return (
     <div className="container mx-auto py-10">
