@@ -24,7 +24,7 @@ export const createProblematic = (problematic: EndpointProblem): Problem => {
     when: problematic.cuando,
 
     contact: problematic.contacto,
-    phone: problematic.telefono,
+    phone: problematic.telefono.toString(),
     date: new Date(problematic.fecha),
     zone: problematic.zona,
 

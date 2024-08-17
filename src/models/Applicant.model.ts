@@ -1,7 +1,9 @@
+import { ComboBoxOption } from ".";
+
 /**
  * Interfaz de los Solicitantes adaptada para el front end.
  */
-export interface Applicant {
+export interface Applicant extends ComboBoxOption {
   id: number;
   name: string;
   shortName: string;

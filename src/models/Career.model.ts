@@ -1,7 +1,9 @@
+import { ComboBoxOption } from ".";
+
 /**
  * Interfaz de las Carrera adaptada para el front end.
  */
-export interface Career {
+export interface Career extends ComboBoxOption {
   id: number;
   name: string;
   shortName: string;

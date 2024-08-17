@@ -26,10 +26,10 @@ export interface ProblemFormTemplate {
 
   contact: string;
   phone: string;
-  date: Date;
+  date: Date | "";
   zone: string;
 
-  applicant: Applicant;
+  applicant: Applicant | null;
   careers: Career[];
 }
 /**

@@ -92,6 +92,9 @@ export const problemFormConfig: {
   careers: {
     label: "CARRERA:",
     type: "combobox",
+    minLength: 1,
+    maxLength: 3,
+    multiple: true,
     required: true,
   },
 };

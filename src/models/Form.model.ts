@@ -1,16 +1,27 @@
 import { ProblemFormTemplate } from "./ProblemForm.model";
 
 /**
+ * Interfaz para las opciones de un combobox
+ */
+export interface ComboBoxOption {
+  id: number;
+  name: string;
+  shortName: string;
+}
+
+/**
  * Interfaz para los campos de un formulario de creación de problemáticas
  */
 export interface FieldConfig {
   label: string | JSX.Element;
   description?: string;
   type: string;
+  minLength?: number;
   maxLength?: number;
   required?: boolean;
-  options?: any[];
+  options?: ComboBoxOption[];
   defaultValue?: any;
+  multiple?: boolean;
 }
 
 /**

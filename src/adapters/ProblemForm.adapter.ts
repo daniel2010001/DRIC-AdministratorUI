@@ -22,11 +22,11 @@ export const createFormEndpointTemplate = (
     cuando: formTemplate.when,
 
     contacto: formTemplate.contact,
-    telefono: formTemplate.phone,
-    fecha: formatDate_YYYY_MM_DD(formTemplate.date),
+    telefono: parseInt(formTemplate.phone || "0"),
+    fecha: formatDate_YYYY_MM_DD(formTemplate.date || new Date()),
     zona: formTemplate.zone,
 
-    id_solicitante: formTemplate.applicant.id,
+    id_solicitante: formTemplate.applicant?.id || 0,
     id_carrera: formTemplate.careers.map((career) => career.id),
   };
 

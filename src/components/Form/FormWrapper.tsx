@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,22 +7,25 @@ import { FieldConfig } from "@/models";
 
 interface FormWrapperProps<T> {
   onSubmit: (data: T) => void;
-  schema: { [K in keyof T]: FieldConfig };
+  formConfig: { [K in keyof T]: FieldConfig };
   defaultValues: T;
   children: ReactNode;
 }
 
 export const FormWrapper = <T extends Object>({
   onSubmit,
-  schema,
+  formConfig,
   defaultValues,
   children,
 }: FormWrapperProps<T>) => {
-  const schemaObject = createObjectSchema<T>(schema, defaultValues);
-  const methods = useForm<T>({
+  const schemaObject = createObjectSchema<T>(formConfig, defaultValues);
+  const methods = useForm({
     resolver: yupResolver(schemaObject),
     defaultValues: defaultValues as any,
   });
+  useEffect(() => {
+    methods.reset(defaultValues as any); // Resetea los valores cuando cambian
+  }, [defaultValues as any]);
   return (
     <FormProvider {...methods}>
       <form

@@ -22,7 +22,7 @@ export const ToggleWithText = ({
     >
       <span
         aria-hidden="true"
-        className={`translate-x-0 inline-block h-5 w-24 rounded-full shadow transform ring-0 transition ease-in-out duration-200 bg-light-secondary dark:bg-dark-secondary ${
+        className={`translate-x-0 inline-block h-5 w-24 rounded-full shadow transform ring-0 transition ease-in-out duration-200 bg-light-primary dark:bg-dark-secondary ${
           isOn ? "translate-x-7" : "translate-x-0"
         }`}
       >

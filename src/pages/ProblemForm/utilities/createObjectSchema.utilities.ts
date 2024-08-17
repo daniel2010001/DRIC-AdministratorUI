@@ -28,7 +28,7 @@ const createYupSchemaFromType = <T>(
       acc[subKey] = createYupSchemaFromType(key, (value as any)[subKey]);
       return acc;
     }, {} as Record<string, Yup.Schema<any>>);
-    return Yup.object().shape(shape);
+    return Yup.object().shape(shape).typeError("Seleccione una opción válida");
   }
   return Yup.mixed(); // Por defecto, retorna mixed para tipos no manejados
 };
@@ -54,6 +54,20 @@ const applyFieldConfigToSchema = <T>(
       configuredSchema = (configuredSchema as Yup.ArraySchema<any, any>).max(
         config.maxLength,
         `El número máximo de elementos es de ${config.maxLength}`
+      );
+    }
+  }
+  if (config.minLength !== undefined) {
+    if (schema instanceof Yup.StringSchema) {
+      configuredSchema = (configuredSchema as Yup.StringSchema).min(
+        config.minLength,
+        `El tamaño mínimo es de ${config.minLength}`
+      );
+    }
+    if (schema instanceof Yup.ArraySchema) {
+      configuredSchema = (configuredSchema as Yup.ArraySchema<any, any>).min(
+        config.minLength,
+        `El número mínimo de elementos es de ${config.minLength}`
       );
     }
   }
