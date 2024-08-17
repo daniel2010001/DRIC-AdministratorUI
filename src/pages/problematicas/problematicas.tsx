@@ -101,42 +101,44 @@ function stableSort<T>(
 }
 
 interface HeadCell {
-  disablePadding: boolean;
-  id: keyof Data;
+  property: keyof Data;
   label: string;
   numeric: boolean;
+  disablePadding: boolean;
+  align?: "right" | "center" | "left";
 }
 
 const headCells: readonly HeadCell[] = [
   {
-    id: "name",
-    numeric: false,
+    property: "name",
+    label: "ID",
+    numeric: true,
     disablePadding: true,
-    label: "Dessert (100g serving)",
+    align: "left",
   },
   {
-    id: "calories",
-    numeric: true,
+    property: "calories",
+    label: "Títuto",
+    numeric: false,
     disablePadding: false,
-    label: "Calories",
   },
   {
-    id: "fat",
-    numeric: true,
+    property: "fat",
+    label: "Solicitante",
+    numeric: false,
     disablePadding: false,
-    label: "Fat (g)",
   },
   {
-    id: "carbs",
-    numeric: true,
+    property: "carbs",
+    label: "Actualizado",
+    numeric: false,
     disablePadding: false,
-    label: "Carbs (g)",
   },
   {
-    id: "protein",
-    numeric: true,
+    property: "protein",
+    label: "Publicado",
+    numeric: false,
     disablePadding: false,
-    label: "Protein (g)",
   },
 ];
 
@@ -159,17 +161,17 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            sortDirection={orderBy === headCell.id ? order : false}
+            key={headCell.property}
+            align={headCell.align ? headCell.align : "center"}
+            sortDirection={orderBy === headCell.property ? order : false}
           >
             <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+              active={orderBy === headCell.property}
+              direction={orderBy === headCell.property ? order : "asc"}
+              onClick={createSortHandler(headCell.property)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
+              {orderBy === headCell.property ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
