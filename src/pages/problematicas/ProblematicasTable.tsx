@@ -1,3 +1,5 @@
+import { ChangeEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,57 +8,46 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Link } from "react-router-dom";
-
 import { createProblematic } from "@/adapters";
 import { useAsync } from "@/hooks";
-import { Applicant, EndpointProblem, Problem } from "@/models";
 import { loadProblemsTable } from "@/services";
-import { ChangeEvent, useState } from "react";
+import { Applicant, EndpointProblem, Problem } from "@/models";
+import { ColumnTable } from "@/models";
 
-interface Column {
-  id: string;
-  label: string;
-  minWidth?: number | string;
-  align?: "right";
-  format?: (value: Date) => string;
-  formatObjet?: (value: Applicant) => string;
-}
-
-const columns: readonly Column[] = [
+const columns: ColumnTable[] = [
   {
-    id: "id",
+    property: "id",
     label: "ID",
     minWidth: "auto",
   },
   {
-    id: "title",
+    property: "title",
     label: "Títuto",
     minWidth: "auto",
   },
   {
-    id: "applicant",
+    property: "applicant",
     label: "Solicitante",
     minWidth: "auto",
     align: "right",
     formatObjet: (value: Applicant) => value.name,
   },
   {
-    id: "updatedAt",
+    property: "updatedAt",
     label: "Actualizado",
     minWidth: "auto",
     align: "right",
     format: (value: Date) => value.toDateString(),
   },
   {
-    id: "publishedAt",
+    property: "publishedAt",
     label: "Publicado",
     minWidth: "auto",
     align: "right",
     format: (value: Date) => value.toDateString(),
   },
   {
-    id: "acciones",
+    property: "acciones",
     label: "Acciones",
     minWidth: "auto",
     align: "right",
@@ -65,6 +56,9 @@ const columns: readonly Column[] = [
 
 export const ProblematicasTable = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   useAsync(loadProblemsTable(), (data: EndpointProblem[]) => {
     setProblems(data.map(createProblematic));
   });
@@ -91,11 +85,6 @@ export const ProblematicasTable = () => {
     };
   });
 
-  console.log("Formating>>>>", rows);
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -113,9 +102,9 @@ export const ProblematicasTable = () => {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {columns.map((column, index) => (
                   <TableCell
-                    key={column.id}
+                    key={index}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
                   >
@@ -127,13 +116,13 @@ export const ProblematicasTable = () => {
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
+                .map((row, index) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    {columns.map((column, index) => {
+                      const value = row[column.property];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.id === "acciones"
+                        <TableCell key={index} align={column.align}>
+                          {column.property === "acciones"
                             ? value
                             : column.formatObjet
                             ? column.formatObjet(value as Applicant)
