@@ -1,4 +1,5 @@
 export * from "./BoldIcon";
+export * from "./CheckIcon";
 export * from "./DashboardIcon";
 export * from "./DocumentListIcon";
 export * from "./DropdownIcon";

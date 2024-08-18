@@ -38,8 +38,8 @@ export const EditorInput = ({
     editorProps: {
       attributes: {
         class: clsx(
-          className,
-          "!min-h-16 h-auto bg-light-primary dark:bg-dark-secondary"
+          "!min-h-16 h-auto bg-white dark:bg-dark-secondary",
+          className
         ),
       },
     },
@@ -70,7 +70,7 @@ export const EditorInput = ({
   return (
     <StrictMode>
       <BubbleMenu
-        className="bg-light-primary dark:bg-dark-primary px-2 py-1 rounded-md flex items-center gap-x-1"
+        className="bg-light-primary dark:bg-dark-primary px-2 py-1 rounded-md flex items-center gap-x-1 border-2"
         tippyOptions={{ duration: 100 }}
         editor={editor}
       >

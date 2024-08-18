@@ -5,3 +5,4 @@ export * from "./Problem.model";
 export * from "./ProblemForm.model";
 export * from "./Sidebar.model";
 export * from "./Table.model";
+export * from "./User.model";

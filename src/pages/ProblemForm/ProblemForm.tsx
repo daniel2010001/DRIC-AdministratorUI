@@ -5,7 +5,7 @@ import {
   EndpointApplicant,
   EndpointCareer,
   ProblemFormTemplate,
-  defaultProblemFormTemplate,
+  inicialProblemFormTemplate,
 } from "@/models";
 import { useEffect, useState } from "react";
 import { formLayout, problemFormConfig } from ".";
@@ -22,7 +22,7 @@ export function ProblemForm() {
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
   const [defaultValues, setDefaultValues] = useState(
-    defaultProblemFormTemplate
+    inicialProblemFormTemplate
   );
 
   useAsync(loadApplicants(), (data: EndpointApplicant[]) => {
@@ -58,7 +58,7 @@ export function ProblemForm() {
   };
 
   return (
-    <div className="mx-auto max-w-screen-lg border-2 border-light-primary dark:border-dark-primary rounded-lg">
+    <div className="mx-auto max-w-screen-lg border-2 border-light-primary dark:border-dark-primary rounded-lg bg-light-secondary dark:bg-dark-secondary">
       <h1 className="font-semibold text-xl md:text-2xl md:max-w-screen-md mx-auto p-8 pb-0 text-center text-light-primary dark:text-dark-primary">
         FORMULARIO DE PROBLEMATICAS PARA EL DESARROLLO DE UN PROYECTO DE TESIS O
         PROYECTO DE GRADO
