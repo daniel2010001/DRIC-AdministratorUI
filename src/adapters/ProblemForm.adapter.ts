@@ -1,4 +1,4 @@
-import { FormEndpointTemplate, FormTemplate } from "@/models";
+import { ProblemFormEndpointTemplate, ProblemFormTemplate } from "@/models";
 import { formatDate_YYYY_MM_DD } from "@/utilities";
 
 /**
@@ -6,8 +6,10 @@ import { formatDate_YYYY_MM_DD } from "@/utilities";
  * @param formTemplate Plantilla del formulario para crear nuevas problemáticas
  * @returns Plantilla formateada
  */
-export const createFormEndpointTemplate = (formTemplate: FormTemplate) => {
-  const formatFormEndpointTemplate: FormEndpointTemplate = {
+export const createFormEndpointTemplate = (
+  formTemplate: ProblemFormTemplate
+) => {
+  const formatFormEndpointTemplate: ProblemFormEndpointTemplate = {
     titulo: formTemplate.title,
     planteamiento: formTemplate.approach,
     causas: formTemplate.causes,
@@ -20,11 +22,11 @@ export const createFormEndpointTemplate = (formTemplate: FormTemplate) => {
     cuando: formTemplate.when,
 
     contacto: formTemplate.contact,
-    telefono: formTemplate.phone,
-    fecha: formatDate_YYYY_MM_DD(formTemplate.date),
+    telefono: parseInt(formTemplate.phone || "0"),
+    fecha: formatDate_YYYY_MM_DD(formTemplate.date || new Date()),
     zona: formTemplate.zone,
 
-    id_solicitante: formTemplate.applicant.id,
+    id_solicitante: formTemplate.applicant?.id || 0,
     id_carrera: formTemplate.careers.map((career) => career.id),
   };
 

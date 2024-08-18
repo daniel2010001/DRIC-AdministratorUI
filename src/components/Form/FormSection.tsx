@@ -14,11 +14,11 @@ export const FormSection: React.FC<FormSectionProps> = ({
   return (
     <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b pb-12 mt-12 md:grid-cols-3">
       <div className="">
-        <h2 className="text-base font-semibold leading-7 grid-cols-4">
+        <h2 className="text-base font-semibold leading-7 grid-cols-4 text-ligth-primary dark:text-dark-primary">
           {title}
         </h2>
         {description && (
-          <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
+          <p className="mt-1 text-sm leading-6 text-light-secondary dark:text-dark-secondary">
             {description}
           </p>
         )}
