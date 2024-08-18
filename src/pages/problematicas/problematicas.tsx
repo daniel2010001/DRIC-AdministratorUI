@@ -4,7 +4,6 @@ import { EndpointProblem, Problem } from "@/models";
 import { useAsync } from "@/hooks";
 import { loadProblemsTable } from "@/services";
 import { createProblematic } from "@/adapters";
-import { Problems } from "@/models/Table.model";
 import { HeadCell } from "@/models/Table.model";
 import { Table } from "@/components/ui/table/table";
 
@@ -62,7 +61,7 @@ export const Problematicas = () => {
     return {
       id: problem.id,
       title: problem.title,
-      applicant: problem.applicant.name,
+      applicant: problem.applicant?.name || "",
       updatedAt: problem.updatedAt.toDateString(),
       publishedAt: problem.publishedAt.toDateString(),
       actions: "ver, editar",

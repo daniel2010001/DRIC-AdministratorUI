@@ -1,6 +1,5 @@
 import { Background, Login, Problematicas, ProblemForm } from "./pages";
 import { Route, Routes } from "react-router-dom";
-import { Problematicas } from "./pages/problematicas/problematicas";
 
 function App() {
   return (
