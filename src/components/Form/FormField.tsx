@@ -1,3 +1,4 @@
+import { CheckIcon } from "@/assets";
 import { FieldConfig } from "@/models";
 import {
   Checkbox,
@@ -27,11 +28,12 @@ export const FormField = <T extends Object>({
   } = useFormContext();
 
   const className = clsx(
-    "block w-full mt-1 py-1.5 px-3 sm:text-sm sm:leading-6 min-h-8 h-auto",
-    "rounded-md border-0 shadow-sm ring-1 ring-inset ring-gray-300",
-    "focus:ring-2 focus:ring-inset focus:ring-indigo-400",
-    "ligth-secondary dark:dark-secondary"
+    "block w-full mt-1 py-1.5 px-3 sm:text-sm sm:leading-6 h-auto",
+    "rounded-md border-[1px] shadow-sm ring-1 ring-inset ring-gray-300 font-medium",
+    "focus:ring-2 focus:ring-inset focus:ring-indigo-400 dark:focus:ring-indigo-400",
+    "bg-ligth-secondary text-ligth-primary border-light-primary dark:bg-dark-secondary dark:text-dark-primary"
   );
+  clsx("sm:col-span-3 sm:col-span-6 col-span-full");
   return (
     <Field
       className={clsx(
@@ -77,8 +79,14 @@ export const FormField = <T extends Object>({
           ) : config.type === "checkbox" ? (
             <Checkbox
               {...field}
-              className="group size-6 rounded-md bg-dark-secondary/50 p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white"
-            />
+              className={clsx(
+                className,
+                "group !size-6 !p-0 rounded-md border-2 flex items-center justify-center bg-white",
+                "data-[checked]:dark-secondary data-[checked]:dark:light-primary"
+              )}
+            >
+              <CheckIcon className="invisible size-4 group-data-[checked]:visible fill-transparent" />
+            </Checkbox>
           ) : (
             <Input
               {...field}

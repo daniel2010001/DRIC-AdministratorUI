@@ -25,9 +25,9 @@ export interface EndpointCareer {
 }
 
 /**
- * Default Career
+ * Inicial Career
  */
-export const defaultCareer: Career = {
+export const inicialCareer: Career = {
   id: 0,
   name: "",
   shortName: "",
@@ -37,9 +37,9 @@ export const defaultCareer: Career = {
 };
 
 /**
- * Default EndpointCareer
+ * Inicial EndpointCareer
  */
-export const defaultEndpointCareer: EndpointCareer = {
+export const inicialEndpointCareer: EndpointCareer = {
   id_carrera: 0,
   nombre_carrera: "",
   nombre_corto: "",

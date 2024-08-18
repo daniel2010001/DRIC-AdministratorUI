@@ -27,9 +27,9 @@ export interface EndpointApplicant {
 }
 
 /**
- * Default Applicant
+ * Inicial Applicant
  */
-export const defaultApplicant: Applicant = {
+export const inicialApplicant: Applicant = {
   id: 0,
   name: "",
   shortName: "",
@@ -42,7 +42,7 @@ export const defaultApplicant: Applicant = {
 /**
  * Default EndpointApplicant
  */
-export const defaultEndpointApplicant: EndpointApplicant = {
+export const inicialEndpointApplicant: EndpointApplicant = {
   id_solicitante: 0,
   nombre_solicitante: "",
   nombre_corto_sigla: "",

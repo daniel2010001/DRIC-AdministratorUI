@@ -30,7 +30,7 @@ export const FormWrapper = <T extends Object>({
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="px-4 pb-6 max-w-7xl mx-auto sm:px-6 sm:pb-8 md:px-8 bg-light-secondary dark:bg-dark-secondary"
+        className="px-4 pb-6 max-w-7xl mx-auto sm:px-6 sm:pb-8 md:px-8"
       >
         {children}
 

@@ -14,6 +14,7 @@ export default defineConfig({
       '@/interceptors': path.resolve(__dirname, './src/interceptors'),
       '@/models': path.resolve(__dirname, './src/models'),
       '@/pages': path.resolve(__dirname, './src/pages'),
+      '@/redux': path.resolve(__dirname, './src/redux/store'),
       '@/services': path.resolve(__dirname, './src/services'),
       '@/styles': path.resolve(__dirname, './src/styles'),
       '@/utilities': path.resolve(__dirname, './src/utilities')

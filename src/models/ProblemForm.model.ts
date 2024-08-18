@@ -3,9 +3,9 @@ import {
   Career,
   EndpointProblem,
   Problem,
-  defaultApplicant,
-  defaultCareer,
-  defaultEndpointApplicant,
+  inicialApplicant,
+  inicialCareer,
+  inicialEndpointApplicant,
 } from "@/models";
 
 /**
@@ -32,10 +32,10 @@ export interface ProblemFormTemplate {
   applicant: Applicant | null;
   careers: Career[];
 }
+
 /**
  * Interfaz para el formulario de creación de problemáticas para la API
  */
-
 export interface ProblemFormEndpointTemplate {
   titulo: string;
   planteamiento: string;
@@ -58,9 +58,9 @@ export interface ProblemFormEndpointTemplate {
 }
 
 /**
- * Default ProblemFormTemplate
+ * Inicial ProblemFormTemplate
  */
-export const defaultProblemFormTemplate: ProblemFormTemplate = {
+export const inicialProblemFormTemplate: ProblemFormTemplate = {
   title: "",
   approach: "",
   causes: "",
@@ -77,14 +77,14 @@ export const defaultProblemFormTemplate: ProblemFormTemplate = {
   date: new Date(),
   zone: "",
 
-  applicant: defaultApplicant,
-  careers: [defaultCareer],
+  applicant: inicialApplicant,
+  careers: [inicialCareer],
 };
 
 /**
- * Default ProblemFormEndpointTemplate
+ * Inicial ProblemFormEndpointTemplate
  */
-export const defaultProblemFormEndpointTemplate: ProblemFormEndpointTemplate = {
+export const inicialProblemFormEndpointTemplate: ProblemFormEndpointTemplate = {
   titulo: "",
   planteamiento: "",
   causas: "",
@@ -106,25 +106,25 @@ export const defaultProblemFormEndpointTemplate: ProblemFormEndpointTemplate = {
 };
 
 /**
- * Default Problem
+ * Inicial Problem
  */
-export const defaultProblem: Problem = {
+export const inicialProblem: Problem = {
   id: 0,
   publishedAt: new Date(),
   updatedAt: new Date(),
   createdAt: new Date(),
-  ...defaultProblemFormTemplate,
+  ...inicialProblemFormTemplate,
 };
 
 /**
- * Default EndpointProblem
+ * Inicial EndpointProblem
  */
-export const defaultEndpointProblem: EndpointProblem = {
+export const inicialEndpointProblem: EndpointProblem = {
   id_problematica: 0,
   publicado: "",
   actualizado: "",
   creado: "",
-  solicitante: defaultEndpointApplicant,
+  solicitante: inicialEndpointApplicant,
   carreras: [],
-  ...defaultProblemFormEndpointTemplate,
+  ...inicialProblemFormEndpointTemplate,
 };
