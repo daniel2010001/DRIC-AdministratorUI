@@ -1,36 +1,96 @@
+/* NO TOCAR esto, porque se rompe xd */
 import { createTheme } from "@mui/material/styles";
 import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
-import TableMUI from "@mui/material/Table";
+import Table from "@mui/material/Table";
+import TableContainer from "@mui/material/TableContainer";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import { EndpointProblem, Problem } from "@/models";
+import { useAsync } from "@/hooks";
+import { loadProblemsTable } from "@/services";
+import { createProblematic } from "@/adapters";
+import { Link } from "react-router-dom";
+import { Problems } from "@/models/Table.model";
+import { Order } from "@/models/Table.model";
+import { HeadCell } from "@/models/Table.model";
+import { stableSort, getComparator } from "@/utilities/shorting";
 import { TableHeader } from "@/components/ui/table/header-table";
 import { BodyTable } from "@/components/ui/table/body-table";
 import { PaginationTable } from "@/components/ui/table/pagination-table";
-import { HeadCell, Order } from "@/models";
-import { getComparator, stableSort } from "@/utilities/shorting";
-import { TableContainer } from "@mui/material";
 
-interface EnhancedTableProps<T extends { [key: string]: string | number }> {
-  headCells: readonly HeadCell<T>[];
-  rows: T[];
-  title: string;
-}
+const headCells: readonly HeadCell<Problems>[] = [
+  {
+    property: "id",
+    label: "ID",
+    numeric: true,
+    disablePadding: true,
+    align: "left",
+    minWidth: "auto",
+  },
+  {
+    property: "title",
+    label: "Títuto",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    property: "applicant",
+    label: "Solicitante",
+    numeric: false,
+    disablePadding: false,
+    align: "center",
+  },
+  {
+    property: "updatedAt",
+    label: "Actualizado",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    property: "publishedAt",
+    label: "Publicado",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    property: "actions",
+    label: "Acciones",
+    numeric: false,
+    disablePadding: false,
+    isAction: true,
+  },
+];
 
-export const Table = <T extends { [key: string]: string | number }>({
-  headCells,
-  rows,
-  title,
-}: EnhancedTableProps<T>) => {
+export const Problematicas = () => {
+  const [problems, setProblems] = useState<Problem[]>([]);
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof T>(headCells[0].property);
+  const [orderBy, setOrderBy] = useState<keyof Problems>("title");
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleRequestSort = (event: MouseEvent<unknown>, property: keyof T) => {
+  useAsync(loadProblemsTable(), (data: EndpointProblem[]) => {
+    setProblems(data.map(createProblematic));
+  });
+
+  const rows: Problems[] = problems.map((problem) => {
+    return {
+      id: problem.id,
+      title: problem.title,
+      applicant: problem.applicant.name,
+      updatedAt: problem.updatedAt.toDateString(),
+      publishedAt: problem.publishedAt.toDateString(),
+      actions: "ver, editar",
+    };
+  });
+
+  const handleRequestSort = (
+    event: MouseEvent<unknown>,
+    property: keyof Problems
+  ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
@@ -51,6 +111,7 @@ export const Table = <T extends { [key: string]: string | number }>({
     setDense(event.target.checked);
   };
 
+  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -69,12 +130,12 @@ export const Table = <T extends { [key: string]: string | number }>({
         id="tableTitle"
         component="div"
       >
-        {title}
+        Lista de problematicas
       </Typography>
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <TableContainer>
-            <TableMUI
+            <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
               size={dense ? "small" : "medium"}
@@ -91,7 +152,7 @@ export const Table = <T extends { [key: string]: string | number }>({
                 emptyRows={emptyRows}
                 dense={dense}
               />
-            </TableMUI>
+            </Table>
           </TableContainer>
           <PaginationTable
             rowsPerPageOptions={[5, 10, 25]}

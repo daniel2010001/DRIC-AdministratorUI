@@ -1,34 +1,77 @@
-import { createProblematic } from "@/adapters";
-import { Table } from "@/components";
-import { useAsync } from "@/hooks";
-import { EndpointProblem, Problem } from "@/models";
-import { loadProblemsTable } from "@/services";
+/* NO TOCAR esto, porque se rompe xd */
 import { useState } from "react";
+import { EndpointProblem, Problem } from "@/models";
+import { useAsync } from "@/hooks";
+import { loadProblemsTable } from "@/services";
+import { createProblematic } from "@/adapters";
+import { Problems } from "@/models/Table.model";
+import { HeadCell } from "@/models/Table.model";
+import { Table } from "@/components/ui/table/table";
+
+const headCells: readonly HeadCell<{ [key: string]: string | number }>[] = [
+  {
+    property: "id",
+    label: "ID",
+    numeric: true,
+    disablePadding: true,
+    align: "left",
+    minWidth: "auto",
+  },
+  {
+    property: "title",
+    label: "Títuto",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    property: "applicant",
+    label: "Solicitante",
+    numeric: false,
+    disablePadding: false,
+    align: "center",
+  },
+  {
+    property: "updatedAt",
+    label: "Actualizado",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    property: "publishedAt",
+    label: "Publicado",
+    numeric: false,
+    disablePadding: false,
+  },
+  {
+    property: "actions",
+    label: "Acciones",
+    numeric: false,
+    disablePadding: false,
+    isAction: true,
+  },
+];
 
 export const Problematicas = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
+
   useAsync(loadProblemsTable(), (data: EndpointProblem[]) => {
     setProblems(data.map(createProblematic));
   });
 
+  const rows: { [key: string]: string | number }[] = problems.map((problem) => {
+    return {
+      id: problem.id,
+      title: problem.title,
+      applicant: problem.applicant.name,
+      updatedAt: problem.updatedAt.toDateString(),
+      publishedAt: problem.publishedAt.toDateString(),
+      actions: "ver, editar",
+    };
+  });
+
   return (
-    <div className="container mx-auto">
-      <div className="text-4xl">Problematicas</div>
-      {/* Search por institucion, titulo y carrera */}
-      {/* <Table
-        columns={[
-          "id_problematica",
-          "titulo",
-          "solicitante",
-          "actualizado",
-          "publicado",
-          "Acciones",
-        ]}
-        data={problems}
-        pageSize={4}
-        pageIndex={0}
-        width="100%"
-      /> */}
+    <div className="container mx-auto py-10">
+      <Table headCells={headCells} rows={rows} title="Problemas" />
     </div>
   );
 };
