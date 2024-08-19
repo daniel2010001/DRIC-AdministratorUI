@@ -29,7 +29,7 @@ export interface ProblemFormTemplate {
   date: Date | "";
   zone: string;
 
-  applicant: Applicant | null;
+  applicant: Applicant;
   careers: Career[];
 }
 

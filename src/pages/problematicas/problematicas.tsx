@@ -7,7 +7,9 @@ import { createProblematic } from "@/adapters";
 import { HeadCell } from "@/models/Table.model";
 import { Table } from "@/components/ui/table/table";
 
-const headCells: readonly HeadCell<{ [key: string]: string | number }>[] = [
+type ProblemTable = { [key: string]: string | number };
+
+const headCells: readonly HeadCell<ProblemTable>[] = [
   {
     property: "id",
     label: "ID",
@@ -27,7 +29,7 @@ const headCells: readonly HeadCell<{ [key: string]: string | number }>[] = [
     label: "Solicitante",
     numeric: false,
     disablePadding: false,
-    align: "center",
+    align: "left",
   },
   {
     property: "updatedAt",
