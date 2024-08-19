@@ -16,7 +16,7 @@ export interface TableHeader {
 /**
  * Modelo para cada dato de la tabla
  */
-export interface Problems {
+export interface ProblemTable {
   id: number;
   title: string;
   applicant: string;

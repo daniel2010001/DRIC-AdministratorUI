@@ -12,16 +12,15 @@ import { EndpointProblem, Problem } from "@/models";
 import { useAsync } from "@/hooks";
 import { loadProblemsTable } from "@/services";
 import { createProblematic } from "@/adapters";
-import { Link } from "react-router-dom";
-import { Problems } from "@/models/Table.model";
+import { ProblemTable } from "@/models/Table.model";
 import { Order } from "@/models/Table.model";
-import { HeadCell } from "@/models/Table.model";
+import { HeadCell } from "@/models";
 import { stableSort, getComparator } from "@/utilities/shorting";
 import { TableHeader } from "@/components/ui/table/header-table";
 import { BodyTable } from "@/components/ui/table/body-table";
 import { PaginationTable } from "@/components/ui/table/pagination-table";
 
-const headCells: readonly HeadCell<Problems>[] = [
+const headCells: readonly HeadCell<ProblemTable>[] = [
   {
     property: "id",
     label: "ID",
@@ -64,10 +63,11 @@ const headCells: readonly HeadCell<Problems>[] = [
   },
 ];
 
+
 export const Problematicas = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof Problems>("title");
+  const [orderBy, setOrderBy] = useState<keyof ProblemTable>("title");
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -76,7 +76,7 @@ export const Problematicas = () => {
     setProblems(data.map(createProblematic));
   });
 
-  const rows: Problems[] = problems.map((problem) => {
+  const rows: ProblemTable[] = problems.map((problem) => {
     return {
       id: problem.id,
       title: problem.title,
@@ -89,7 +89,7 @@ export const Problematicas = () => {
 
   const handleRequestSort = (
     event: MouseEvent<unknown>,
-    property: keyof Problems
+    property: keyof ProblemTable
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
