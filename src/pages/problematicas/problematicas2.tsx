@@ -1,5 +1,4 @@
-/* NO TOCAR esto, porque se rompe xd */
-import { createTheme } from "@mui/material/styles";
+/* import { createTheme } from "@mui/material/styles";
 import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -171,3 +170,4 @@ export const Problematicas = () => {
     </div>
   );
 };
+ */

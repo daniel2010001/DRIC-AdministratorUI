@@ -6,7 +6,6 @@ function App() {
     <Background>
       <Routes>
         <Route path="/" element={<Problematicas />} />
-        <Route path="/problems" element={<Problematicas />} />
         <Route path="/forms" element={<ProblemForm />} />
         <Route path="/login" element={<Login />} />
       </Routes>
