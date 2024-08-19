@@ -1,5 +1,6 @@
 import { User } from "@/models";
 import { configureStore } from "@reduxjs/toolkit";
+import { userSlice } from "./states";
 
 export interface AppState {
   user: User;
@@ -7,8 +8,6 @@ export interface AppState {
 
 export default configureStore<AppState>({
   reducer: {
-    user: (state, action) => {
-      return action.payload;
-    },
+    user: userSlice.reducer,
   },
 });
