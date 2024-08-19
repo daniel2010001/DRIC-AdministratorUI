@@ -11,16 +11,22 @@ export default {
         'jacques': ['"Jacques Francois Shadow"', 'serif'],
       },
       backgroundColor: {
-        'light-primary': '#fff',
-        'light-secondary': '#f7f7f7',
-        'dark-primary': '#1a1a1a',
-        'dark-secondary': '#2d2d2d',
+        'light-primary': '#f7f7f7',
+        'light-secondary': '#dedede',
+        'dark-primary': '#3c3c3c',
+        'dark-secondary': '#4c4c4c',
       },
       textColor: {
         'light-primary': '#333',
         'light-secondary': '#555',
         'dark-primary': '#ddd',
-        'dark-secondary': '#aaa',
+        'dark-secondary': '#ccc',
+      },
+      borderColor: {
+        'light-primary': '#bbb',
+        'light-secondary': '#ccc',
+        'dark-primary': '#f3f3f3',
+        'dark-secondary': '#7f7f7f',
       },
     },
   },
@@ -28,16 +34,16 @@ export default {
     function({ addComponents }) {
       const themes = {
         '.light-primary': {
-          '@apply text-light-primary bg-light-primary': {},
+          '@apply text-light-primary bg-light-primary border-light-primary': {},
         },
         '.light-secondary': {
-          '@apply text-light-secondary bg-light-secondary': {},
+          '@apply text-light-secondary bg-light-secondary border-light-secondary': {},
         },
         '.dark-primary': {
-          '@apply text-dark-primary bg-dark-primary': {},
+          '@apply text-dark-primary bg-dark-primary border-dark-primary': {},
         },
         '.dark-secondary': {
-          '@apply text-dark-secondary bg-dark-secondary': {},
+          '@apply text-dark-secondary bg-dark-secondary border-dark-secondary': {},
         },
       };
 
