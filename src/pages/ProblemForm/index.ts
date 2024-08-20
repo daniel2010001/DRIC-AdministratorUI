@@ -1,4 +1,2 @@
-export * from "./models/ProblemFormConfig.model";
-export * from "./ProblemForm";
-export * from "./utilities/countHtmlLines.utilitie";
-export * from "./utilities/createObjectSchema.utilities";
+export { default as EditProblem } from "./EditProblem";
+export { default as ProblemForm } from "./ProblemForm";

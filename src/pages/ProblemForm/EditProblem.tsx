@@ -17,7 +17,7 @@ import { loadApplicants, loadCareers } from "@/services";
 import { useEffect, useState } from "react";
 import { formLayout, problemFormConfig } from "./models";
 
-export function ProblemForm() {
+export function EditProblem() {
   const [isOn, setIsOn] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
@@ -105,4 +105,4 @@ export function ProblemForm() {
   );
 }
 
-export default ProblemForm;
+export default EditProblem;

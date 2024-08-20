@@ -1,6 +1,6 @@
 export interface User {
   id: number;
-  name: string;
+  username: string;
   password: string;
   email: string;
   enabled: boolean;
@@ -24,15 +24,9 @@ export interface UserCreate {
   email: string;
 }
 
-export interface UserUpdate {
-  name?: string;
-  password?: string;
-  email?: string;
-}
-
 export const inicialUser: User = {
   id: 0,
-  name: "",
+  username: "",
   password: "",
   email: "",
   enabled: false,

@@ -1,15 +1,39 @@
-import { Background, Login, Problematicas, ProblemForm } from "./pages";
-import { Route, Routes } from "react-router-dom";
+// import { Background, Login, Problematicas, ProblemForm } from "./pages";
+import { lazy } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { PrivateLayout, PublicLayout } from "./components/Layout";
+
+// Simulación de componentes de página y layouts
+const PublicHome = lazy(() => import("./pages/Home/PublicHome"));
+const PrivateHome = lazy(() => import("./pages/Home/PrivateHome"));
+const Login = lazy(() => import("./pages/Login/Login"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const Problematicas = lazy(() => import("./pages/Problematicas/Problematicas"));
+const ProblemForm = lazy(() => import("./pages/ProblemForm/ProblemForm"));
+const EditProblem = lazy(() => import("./pages/ProblemForm/EditProblem"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 function App() {
   return (
-    <Background>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Problematicas />} />
-        <Route path="/forms" element={<ProblemForm />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<PublicHome />} />
+          {/* <Route index element={<Navigate to="/login" replace />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+
+        <Route path="/" element={<PrivateLayout />}>
+          <Route index element={<PrivateHome />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/edit/:id" element={<EditProblem />} />
+          <Route path="/form" element={<ProblemForm />} />
+          <Route path="/problems" element={<Problematicas />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
-    </Background>
+    </BrowserRouter>
   );
 }
 
