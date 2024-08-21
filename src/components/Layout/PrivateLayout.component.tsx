@@ -1,27 +1,26 @@
-import { useTimeoutError } from "@/hooks";
+import { ErrorProvider, useErrorContext } from "@/contexts";
 import { Suspense } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { ErrorFallback, LoadingFallback } from "../Fallback";
 
 // Layout para rutas privadas
 export const PrivateLayout = () => {
-  const error = useTimeoutError(5000); // Configura un timeout de 5 segundos
+  const { error } = useErrorContext(); // Usamos el contexto de error
 
-  // Simulación de lógica para proteger rutas privadas
-  const isAuthenticated = true; // Cambia esto según tu lógica de autenticación
+  // Aquí podrías añadir lógica para verificar si el usuario tiene permisos
+  // Ejemplo: const hasPermissions = useSelector(selectUserPermissions);
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
+  // Si ocurre un error, renderizamos el ErrorFallback
   return (
-    <>
+    <ErrorProvider>
       <nav>Private Navigation</nav>
       <main>
         <Suspense fallback={<LoadingFallback />}>
           {error ? <ErrorFallback error={error} /> : <Outlet />}
         </Suspense>
       </main>
-    </>
+    </ErrorProvider>
   );
 };
+
+export default PrivateLayout;

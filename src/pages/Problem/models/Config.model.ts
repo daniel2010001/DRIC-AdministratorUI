@@ -1,0 +1,110 @@
+import { FieldConfig } from "@/models";
+import { EditProblemTemplate, ProblemFormTemplate } from ".";
+
+/**
+ * Configuración de los campos de el formulario de edición de problemáticas
+ */
+export const editProblemConfig: {
+  [K in keyof EditProblemTemplate]: FieldConfig;
+} = {
+  title: {
+    label: "TÍTULO DE LA PROBLEMÁTICA:",
+    type: "text",
+    maxLength: 60,
+    required: true,
+  },
+  careers: {
+    label: "CARRERA:",
+    type: "combobox",
+    minLength: 1,
+    maxLength: 3,
+    multiple: true,
+    required: true,
+  },
+  approach: {
+    label: "PLANTEAMIENTO DEL PROBLEMA:",
+    type: "textarea",
+    maxLength: 255,
+    required: true,
+  },
+  causes: {
+    label: "CAUSAS QUE PRODUCE EL PROBLEMA:",
+    type: "editor",
+    maxLength: 500,
+    required: true,
+  },
+  effects: {
+    label: "EFECTOS QUE CAUSA EL PROBLEMA:",
+    type: "editor",
+    maxLength: 500,
+    required: true,
+  },
+  what: {
+    label: "¿QUÉ?",
+    description: "(Qué se requiere para resolver el problema)",
+    type: "editor",
+    maxLength: 100,
+    required: true,
+  },
+  who: {
+    label: "¿CÓMO?",
+    description: "(Tesistas Pregrado o Tesistas Posgrado)",
+    type: "editor",
+    maxLength: 100,
+    required: true,
+  },
+  why: {
+    label: "¿PARA QUÉ?",
+    description: "(Para que se desea realizar)",
+    type: "editor",
+    maxLength: 100,
+    required: true,
+  },
+  when: {
+    label: "¿CUÁNDO?",
+    description: "(Para cuando se tiene previsto)",
+    type: "editor",
+    required: true,
+  },
+  applicant: {
+    label: "NOMBRE DE LA INSTITUCIÓN O MUNICIPIO:",
+    type: "combobox",
+    required: true,
+  },
+  zone: {
+    label: "ZONA",
+    type: "text",
+    maxLength: 100,
+    required: true,
+  },
+  contact: {
+    label: "CONTACTO DE LA INSTITUCIÓN:",
+    type: "text",
+    required: true,
+  },
+  phone: {
+    label: "TELÉFONO INSTITUCIONAL:",
+    type: "tel",
+    maxLength: 10,
+    required: true,
+  },
+  cellPhone: {
+    label: "TELÉFONO CELLULAR:",
+    type: "tel",
+    maxLength: 10,
+    required: true,
+  },
+};
+
+/**
+ * Configuración de los campos de un formulario de creación de problemáticas
+ */
+export const problemFormConfig: {
+  [K in keyof ProblemFormTemplate]: FieldConfig;
+} = {
+  ...editProblemConfig,
+  isPublic: {
+    label: "PUBLICAR PROBLEMÁTICA EN LA PÁGINA DE PROBLEMÁTICAS:",
+    type: "checkbox",
+  },
+};

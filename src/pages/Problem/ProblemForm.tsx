@@ -1,45 +1,43 @@
-import {
-  createApplicant,
-  createCareer,
-  createFormEndpointTemplate,
-} from "@/adapters";
-import { FormField, FormSection, FormWrapper } from "@/components/Form";
-import { ToggleWithText } from "@/components/Tailwind/Toggle";
+import { createCustomApplicant, createCustomCareer } from "@/adapters";
 import { useAsync } from "@/hooks";
-import {
-  Applicant,
-  EndpointApplicant,
-  EndpointCareer,
-  ProblemFormTemplate,
-  inicialProblemFormTemplate,
-} from "@/models";
+import { Applicant, ApplicantEndpoint, CareerEndpoint } from "@/models";
 import { loadApplicants, loadCareers } from "@/services";
 import { useEffect, useState } from "react";
-import { formLayout, problemFormConfig } from "./models";
+import { createFormEndpoint } from "./adapters";
+import {
+  FormField,
+  FormSection,
+  FormWrapper,
+  ToggleWithText,
+} from "./components";
+import {
+  ProblemFormTemplate,
+  formLayout,
+  inicialProblemForm,
+  problemFormConfig,
+} from "./models";
 
 export function ProblemForm() {
-  const [isOn, setIsOn] = useState(false);
+  const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
-  const [defaultValues, setDefaultValues] = useState(
-    inicialProblemFormTemplate
-  );
+  const [defaultValues, setDefaultValues] = useState(inicialProblemForm);
 
-  useAsync(loadApplicants(), (data: EndpointApplicant[]) => {
-    setApplicants(data.map(createApplicant));
+  useAsync(loadApplicants(), (data: ApplicantEndpoint[]) => {
+    setApplicants(data.map(createCustomApplicant));
     handleChangeApplicant();
     setDefaultValues((prev) => ({ ...prev, applicant: null }));
   });
-  useAsync(loadCareers(), (data: EndpointCareer[]) => {
+  useAsync(loadCareers(), (data: CareerEndpoint[]) => {
     setFormConfig((prev) => ({
       ...prev,
-      careers: { ...prev.careers, options: data.map(createCareer) },
+      careers: { ...prev.careers, options: data.map(createCustomCareer) },
     }));
     setDefaultValues((prev) => ({ ...prev, careers: [] }));
   });
   useEffect(() => {
     handleChangeApplicant();
-  }, [isOn, applicants]);
+  }, [isInstitute, applicants]);
 
   const handleChangeApplicant = () => {
     setFormConfig((prev) => ({
@@ -47,14 +45,15 @@ export function ProblemForm() {
       applicant: {
         ...prev.applicant,
         options: applicants.filter(
-          (applicant) => applicant.type === (isOn ? "INSTITUCION" : "MUNICIPIO")
+          (applicant) =>
+            applicant.type === (isInstitute ? "INSTITUCION" : "MUNICIPIO")
         ),
       },
     }));
   };
 
   const handleSubmit = (data: ProblemFormTemplate) => {
-    console.log(createFormEndpointTemplate(data));
+    console.log(createFormEndpoint(data));
   };
 
   return (
@@ -86,11 +85,11 @@ export function ProblemForm() {
                       {formConfig[input.key].label}
                       {input.key === "applicant" && (
                         <ToggleWithText
-                          isOn={isOn}
+                          isOn={isInstitute}
                           toggleSwitch={() => {
-                            setIsOn(!isOn);
+                            setIsInstitute(!isInstitute);
                           }}
-                          switchText={isOn ? "INSTITUCIÓN" : "MUNICIPIO"}
+                          switchText={isInstitute ? "INSTITUCIÓN" : "MUNICIPIO"}
                         />
                       )}
                     </>

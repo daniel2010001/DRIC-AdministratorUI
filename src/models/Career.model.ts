@@ -15,7 +15,7 @@ export interface Career extends ComboBoxOption {
 /**
  * Interfaz para las Carrera recividos desde la API
  */
-export interface EndpointCareer {
+export interface CareerEndpoint {
   id_carrera: number;
   nombre_carrera: string;
   nombre_corto: string;
@@ -39,7 +39,7 @@ export const inicialCareer: Career = {
 /**
  * Inicial EndpointCareer
  */
-export const inicialEndpointCareer: EndpointCareer = {
+export const inicialEndpointCareer: CareerEndpoint = {
   id_carrera: 0,
   nombre_carrera: "",
   nombre_corto: "",

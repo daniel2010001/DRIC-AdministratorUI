@@ -10,8 +10,7 @@ import {
 } from "@headlessui/react";
 import clsx from "clsx";
 import { Controller, useFormContext } from "react-hook-form";
-import EditorInput from "./EditorInput";
-import SimpleComboBox from "../Tailwind/ComboBox";
+import { EditorInput, SimpleComboBox } from ".";
 
 interface FormFieldProps<T> {
   config: FieldConfig;

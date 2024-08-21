@@ -1,9 +1,9 @@
 /* NO TOCAR esto, porque se rompe xd */
 import { useState } from "react";
-import { EndpointProblem, Problem } from "@/models";
+import { ProblemEndpoint, Problem } from "@/models";
 import { useAsync } from "@/hooks";
 import { loadProblemsTable } from "@/services";
-import { createProblematic } from "@/adapters";
+import { createCustomProblem } from "@/adapters";
 import { HeadCell } from "@/models/Table.model";
 import { Table } from "@/components/ui/table/table";
 
@@ -55,8 +55,8 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
 export const Problematicas = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
 
-  useAsync(loadProblemsTable(), (data: EndpointProblem[]) => {
-    setProblems(data.map(createProblematic));
+  useAsync(loadProblemsTable(), (data: ProblemEndpoint[]) => {
+    setProblems(data.map(createCustomProblem));
   });
 
   const rows: { [key: string]: string | number }[] = problems.map((problem) => {
@@ -76,3 +76,5 @@ export const Problematicas = () => {
     </div>
   );
 };
+
+export default Problematicas;

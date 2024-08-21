@@ -10,7 +10,7 @@ import {
 import clsx from "clsx";
 import { useState } from "react";
 
-interface Props {
+interface SimpleComboBoxProps {
   value: any;
   onChange: (value: any) => void;
   multiple?: boolean;
@@ -24,7 +24,7 @@ export const SimpleComboBox = ({
   multiple = false,
   options,
   className,
-}: Props) => {
+}: SimpleComboBoxProps) => {
   const [query, setQuery] = useState("");
 
   const filteredPeople =

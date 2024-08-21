@@ -8,7 +8,7 @@ import {
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import clsx from "clsx";
-import { StrictMode } from "react";
+import { StrictMode, useEffect } from "react";
 
 interface EditorInputProps {
   content: string;
@@ -66,6 +66,11 @@ export const EditorInput = ({
       );
     },
   });
+
+  useEffect(() => {
+    editor.commands.setContent(content);
+    onChange(content);
+  }, [content]);
 
   return (
     <StrictMode>

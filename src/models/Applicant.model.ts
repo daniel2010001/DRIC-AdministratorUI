@@ -16,11 +16,11 @@ export interface Applicant extends ComboBoxOption {
 /**
  * Interfaz para los Solicitantes recividos desde la API
  */
-export interface EndpointApplicant {
+export interface ApplicantEndpoint {
   id_solicitante: number;
   nombre_solicitante: string;
   nombre_corto_sigla: string;
-  juridiccion: string;
+  jurisdiccion: string;
   tipo_solicitante: "INSTITUCION" | "MUNICIPIO";
   createdAt: string;
   updatedAt: string;
@@ -42,11 +42,11 @@ export const inicialApplicant: Applicant = {
 /**
  * Default EndpointApplicant
  */
-export const inicialEndpointApplicant: EndpointApplicant = {
+export const inicialEndpointApplicant: ApplicantEndpoint = {
   id_solicitante: 0,
   nombre_solicitante: "",
   nombre_corto_sigla: "",
-  juridiccion: "",
+  jurisdiccion: "",
   tipo_solicitante: "INSTITUCION",
   createdAt: "",
   updatedAt: "",

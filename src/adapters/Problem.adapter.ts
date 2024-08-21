@@ -1,6 +1,6 @@
-import { EndpointProblem, Problem } from "@/models";
-import { createApplicant } from "./Applicant.adapter";
-import { createCareer } from "./Career.adapter";
+import { ProblemEndpoint, Problem } from "@/models";
+import { createCustomApplicant } from "./Applicant.adapter";
+import { createCustomCareer } from "./Career.adapter";
 
 /**
  * Función para adaptar una problemática recibida desde la API
@@ -8,10 +8,9 @@ import { createCareer } from "./Career.adapter";
  * @returns Problemática formateada
  * @error Si el id del solicitante no es el mismo que el que indica la problemática se genera un error.
  */
-export const createProblematic = (problematic: EndpointProblem): Problem => {
+export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
   const formatProblematic: Problem = {
     id: problematic.id_problematica,
-    active: problematic.activo,
 
     title: problematic.titulo,
     approach: problematic.planteamiento,
@@ -25,15 +24,15 @@ export const createProblematic = (problematic: EndpointProblem): Problem => {
 
     contact: problematic.contacto,
     phone: problematic.telefono.toString(),
-    date: new Date(problematic.fecha),
+    cellPhone: problematic.telefono_institucional.toString(),
     zone: problematic.zona,
 
     publishedAt: new Date(problematic.publicado),
     updatedAt: new Date(problematic.actualizado),
     createdAt: new Date(problematic.creado),
 
-    applicant: createApplicant(problematic.solicitante),
-    careers: problematic.carreras.map(createCareer),
+    applicant: createCustomApplicant(problematic.solicitante),
+    careers: problematic.carreras.map(createCustomCareer),
   };
 
   return formatProblematic;

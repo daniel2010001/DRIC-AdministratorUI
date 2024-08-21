@@ -1,45 +1,52 @@
-import {
-  createApplicant,
-  createCareer,
-  createFormEndpointTemplate,
-} from "@/adapters";
-import { FormField, FormSection, FormWrapper } from "@/components/Form";
-import { ToggleWithText } from "@/components/Tailwind/Toggle";
+import { createCustomApplicant, createCustomCareer } from "@/adapters";
 import { useAsync } from "@/hooks";
 import {
   Applicant,
-  EndpointApplicant,
-  EndpointCareer,
-  ProblemFormTemplate,
-  inicialProblemFormTemplate,
+  ApplicantEndpoint,
+  CareerEndpoint,
+  ProblemEndpoint,
 } from "@/models";
-import { loadApplicants, loadCareers } from "@/services";
+import { loadApplicants, loadCareers, searchProblem } from "@/services";
 import { useEffect, useState } from "react";
-import { formLayout, problemFormConfig } from "./models";
+import { useParams } from "react-router-dom";
+import { crearteEditTemplate, createEditEndpoint } from "./adapters";
+import {
+  FormField,
+  FormSection,
+  FormWrapper,
+  ToggleWithText,
+} from "./components";
+import {
+  EditProblemTemplate,
+  editLayout,
+  editProblemConfig,
+  inicialEditProblem,
+} from "./models";
 
 export function EditProblem() {
-  const [isOn, setIsOn] = useState(false);
+  const idProblem = useParams().id || 0;
+  const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
-  const [formConfig, setFormConfig] = useState(problemFormConfig);
-  const [defaultValues, setDefaultValues] = useState(
-    inicialProblemFormTemplate
-  );
+  const [formConfig, setFormConfig] = useState(editProblemConfig);
+  const [defaultValues, setDefaultValues] = useState(inicialEditProblem);
 
-  useAsync(loadApplicants(), (data: EndpointApplicant[]) => {
-    setApplicants(data.map(createApplicant));
-    handleChangeApplicant();
-    setDefaultValues((prev) => ({ ...prev, applicant: null }));
+  useAsync(searchProblem(idProblem), (data: ProblemEndpoint) => {
+    setDefaultValues(crearteEditTemplate(data));
+    setIsInstitute(data.solicitante.tipo_solicitante === "INSTITUCION");
   });
-  useAsync(loadCareers(), (data: EndpointCareer[]) => {
+  useAsync(loadApplicants(), (data: ApplicantEndpoint[]) => {
+    setApplicants(data.map(createCustomApplicant));
+    handleChangeApplicant();
+  });
+  useAsync(loadCareers(), (data: CareerEndpoint[]) => {
     setFormConfig((prev) => ({
       ...prev,
-      careers: { ...prev.careers, options: data.map(createCareer) },
+      careers: { ...prev.careers, options: data.map(createCustomCareer) },
     }));
-    setDefaultValues((prev) => ({ ...prev, careers: [] }));
   });
   useEffect(() => {
     handleChangeApplicant();
-  }, [isOn, applicants]);
+  }, [isInstitute, applicants]);
 
   const handleChangeApplicant = () => {
     setFormConfig((prev) => ({
@@ -47,14 +54,15 @@ export function EditProblem() {
       applicant: {
         ...prev.applicant,
         options: applicants.filter(
-          (applicant) => applicant.type === (isOn ? "INSTITUCION" : "MUNICIPIO")
+          (applicant) =>
+            applicant.type === (isInstitute ? "INSTITUCION" : "MUNICIPIO")
         ),
       },
     }));
   };
 
-  const handleSubmit = (data: ProblemFormTemplate) => {
-    console.log(createFormEndpointTemplate(data));
+  const handleSubmit = (data: EditProblemTemplate) => {
+    console.log(createEditEndpoint(data));
   };
 
   return (
@@ -64,19 +72,19 @@ export function EditProblem() {
         PROYECTO DE GRADO
       </h1>
 
-      <FormWrapper<ProblemFormTemplate>
+      <FormWrapper<EditProblemTemplate>
         onSubmit={handleSubmit}
-        formConfig={problemFormConfig}
+        formConfig={editProblemConfig}
         defaultValues={defaultValues}
       >
-        {formLayout.map((section) => (
+        {editLayout.map((section) => (
           <FormSection
             key={section.title}
             title={section.title}
             description={section.description}
           >
             {section.inputs.map((input) => (
-              <FormField<ProblemFormTemplate>
+              <FormField<EditProblemTemplate>
                 key={input.key}
                 input={input}
                 config={{
@@ -86,11 +94,11 @@ export function EditProblem() {
                       {formConfig[input.key].label}
                       {input.key === "applicant" && (
                         <ToggleWithText
-                          isOn={isOn}
+                          isOn={isInstitute}
                           toggleSwitch={() => {
-                            setIsOn(!isOn);
+                            setIsInstitute(!isInstitute);
                           }}
-                          switchText={isOn ? "INSTITUCIÓN" : "MUNICIPIO"}
+                          switchText={isInstitute ? "INSTITUCIÓN" : "MUNICIPIO"}
                         />
                       )}
                     </>

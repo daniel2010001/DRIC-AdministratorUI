@@ -2,7 +2,6 @@ import * as Yup from "yup";
 import { FieldConfig } from "@/models";
 
 /** Función para crear el esquema base de Yup en función del tipo de <T> */
-
 const createYupSchemaFromType = <T>(
   key: keyof T,
   value: T[keyof T]
@@ -30,7 +29,7 @@ const createYupSchemaFromType = <T>(
     }, {} as Record<string, Yup.Schema<any>>);
     return Yup.object().shape(shape).typeError("Seleccione una opción válida");
   }
-  return Yup.mixed(); // Por defecto, retorna mixed para tipos no manejados
+  return Yup.mixed();
 };
 
 /** Función para aplicar configuraciones adicionales desde FieldConfig */

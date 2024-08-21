@@ -1,9 +1,9 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FieldConfig } from "@/models";
+import { createObjectSchema } from "@/pages/Problem/utilities";
 import { ReactNode, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { createObjectSchema } from "@/pages/ProblemForm/utilities";
-import { FieldConfig } from "@/models";
 
 interface FormWrapperProps<T> {
   onSubmit: (data: T) => void;

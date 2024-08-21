@@ -1,7 +1,6 @@
-import React from "react";
-import { SimpleToggleProps } from "./SimpleToggle";
-
-interface ToggleWithTextProps extends SimpleToggleProps {
+interface ToggleWithTextProps {
+  isOn: boolean;
+  toggleSwitch: () => void;
   switchText: string;
 }
 

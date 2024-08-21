@@ -9,8 +9,8 @@ const PrivateHome = lazy(() => import("./pages/Home/PrivateHome"));
 const Login = lazy(() => import("./pages/Login/Login"));
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const Problematicas = lazy(() => import("./pages/Problematicas/Problematicas"));
-const ProblemForm = lazy(() => import("./pages/ProblemForm/ProblemForm"));
-const EditProblem = lazy(() => import("./pages/ProblemForm/EditProblem"));
+const ProblemForm = lazy(() => import("./pages/Problem/ProblemForm"));
+const EditProblem = lazy(() => import("./pages/Problem/EditProblem"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 function App() {

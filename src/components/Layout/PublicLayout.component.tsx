@@ -1,11 +1,11 @@
-import { useTimeoutError } from "@/hooks";
+import { ErrorProvider, useErrorContext } from "@/contexts";
+import { Suspense } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { ErrorFallback, LoadingFallback } from "../Fallback";
-import { Suspense } from "react";
 
 // Layout para rutas públicas
 export const PublicLayout = () => {
-  const error = useTimeoutError(5000); // Configura un timeout de 5 segundos
+  const { error } = useErrorContext(); // Usamos el contexto de error
 
   // Simulación de lógica para redirigir si el usuario ya está autenticado
   const isAuthenticated = false; // Cambia esto según tu lógica de autenticación
@@ -14,14 +14,17 @@ export const PublicLayout = () => {
     return <Navigate to="/dashboard" replace />;
   }
 
+  // Si ocurre un error, renderizamos el ErrorFallback
   return (
-    <>
+    <ErrorProvider>
       <nav>Public Navigation</nav>
       <main>
         <Suspense fallback={<LoadingFallback />}>
           {error ? <ErrorFallback error={error} /> : <Outlet />}
         </Suspense>
       </main>
-    </>
+    </ErrorProvider>
   );
 };
+
+export default PublicLayout;
