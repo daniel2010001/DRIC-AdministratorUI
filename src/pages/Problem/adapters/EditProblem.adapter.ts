@@ -16,8 +16,8 @@ export const crearteEditTemplate = (editTemplate: ProblemEndpoint) => {
     applicant: createCustomApplicant(editTemplate.solicitante),
     zone: editTemplate.zona,
     contact: editTemplate.contacto,
-    cellPhone: editTemplate.telefono_institucional.toString(),
-    phone: editTemplate.telefono.toString(),
+    cellPhone: editTemplate.telefono.toString(),
+    phone: editTemplate.telefono_institucional.toString(),
   };
 
   return formatEditTemplate;

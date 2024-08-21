@@ -6,6 +6,8 @@ import { ProblemFormTemplate, ProblemFormEndpoint } from "../models";
  * @returns Plantilla formateada
  */
 export const createFormEndpoint = (formTemplate: ProblemFormTemplate) => {
+  console.log(formTemplate);
+
   const formatFormEndpointTemplate: ProblemFormEndpoint = {
     titulo: formTemplate.title,
     id_carrera: formTemplate.careers.map((career) => career.id),
@@ -16,13 +18,14 @@ export const createFormEndpoint = (formTemplate: ProblemFormTemplate) => {
     como: formTemplate.who,
     para_que: formTemplate.why,
     cuando: formTemplate.when,
-    solicitante_id: formTemplate.applicant?.id || 0,
+    solicitante_id: formTemplate.applicant.id,
     zona: formTemplate.zone,
     contacto: formTemplate.contact,
     telefono: parseInt(formTemplate.cellPhone),
     telefono_institucional: parseInt(formTemplate.phone),
     publicado: formTemplate.isPublic,
   };
+  console.log(formatFormEndpointTemplate);
 
   return formatFormEndpointTemplate;
 };

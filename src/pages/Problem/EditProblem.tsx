@@ -22,6 +22,7 @@ import {
   editProblemConfig,
   inicialEditProblem,
 } from "./models";
+import { updateProblem } from "./services";
 
 export function EditProblem() {
   const idProblem = useParams().id || 0;
@@ -62,7 +63,9 @@ export function EditProblem() {
   };
 
   const handleSubmit = (data: EditProblemTemplate) => {
-    console.log(createEditEndpoint(data));
+    useAsync(updateProblem(idProblem, createEditEndpoint(data)), (data: any) =>
+      console.log(data)
+    );
   };
 
   return (

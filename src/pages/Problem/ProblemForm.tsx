@@ -16,6 +16,7 @@ import {
   inicialProblemForm,
   problemFormConfig,
 } from "./models";
+import { createProblem } from "./services";
 
 export function ProblemForm() {
   const [isInstitute, setIsInstitute] = useState(false);
@@ -52,8 +53,10 @@ export function ProblemForm() {
     }));
   };
 
-  const handleSubmit = (data: ProblemFormTemplate) => {
-    console.log(createFormEndpoint(data));
+  const handleSubmit = async (data: ProblemFormTemplate) => {
+    await useAsync(createProblem(createFormEndpoint(data)), (data: any) =>
+      console.log(data)
+    );
   };
 
   return (

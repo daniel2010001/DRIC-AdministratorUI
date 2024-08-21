@@ -6,9 +6,6 @@ import { ErrorFallback, LoadingFallback } from "../Fallback";
 // Layout para rutas privadas
 export const PrivateLayout = () => {
   const { error } = useErrorContext(); // Usamos el contexto de error
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
 
   // Aquí podrías añadir lógica para verificar si el usuario tiene permisos
   // Ejemplo: const hasPermissions = useSelector(selectUserPermissions);

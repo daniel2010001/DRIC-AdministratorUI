@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 // Definimos el tipo para el contexto
 interface ErrorContextType {
@@ -7,7 +7,7 @@ interface ErrorContextType {
 }
 
 // Creamos el contexto con valores por defecto
-const ErrorContext = createContext<ErrorContextType>({
+export const ErrorContext = createContext<ErrorContextType>({
   error: null,
   setError: () => {},
 });
@@ -17,6 +17,9 @@ export const ErrorProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [error, setError] = useState<Error | null>(null);
+  useEffect(() => {
+    if (error) console.log(error);
+  }, [error]);
 
   return (
     <ErrorContext.Provider value={{ error, setError }}>
