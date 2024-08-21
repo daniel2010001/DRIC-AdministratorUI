@@ -1,4 +1,4 @@
-import { ErrorProvider, useErrorContext } from "@/contexts";
+import { useErrorContext } from "@/contexts";
 import { Suspense } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { ErrorFallback, LoadingFallback } from "../Fallback";
@@ -16,14 +16,14 @@ export const PublicLayout = () => {
 
   // Si ocurre un error, renderizamos el ErrorFallback
   return (
-    <ErrorProvider>
+    <>
       <nav>Public Navigation</nav>
       <main>
         <Suspense fallback={<LoadingFallback />}>
           {error ? <ErrorFallback error={error} /> : <Outlet />}
         </Suspense>
       </main>
-    </ErrorProvider>
+    </>
   );
 };
 

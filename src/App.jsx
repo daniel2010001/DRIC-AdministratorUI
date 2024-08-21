@@ -2,6 +2,7 @@
 import { lazy } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { PrivateLayout, PublicLayout } from "./components/Layout";
+import { ErrorProvider } from "./contexts";
 
 // Simulación de componentes de página y layouts
 const PublicHome = lazy(() => import("./pages/Home/PublicHome"));
@@ -16,23 +17,25 @@ const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<PublicLayout />}>
-          <Route index element={<PublicHome />} />
-          {/* <Route index element={<Navigate to="/login" replace />} /> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
+      <ErrorProvider>
+        <Routes>
+          <Route path="/" element={<PublicLayout />}>
+            <Route index element={<PublicHome />} />
+            {/* <Route index element={<Navigate to="/login" replace />} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
 
-        <Route path="/" element={<PrivateLayout />}>
-          <Route index element={<PrivateHome />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/edit/:id" element={<EditProblem />} />
-          <Route path="/form" element={<ProblemForm />} />
-          <Route path="/problems" element={<Problematicas />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+          <Route path="/" element={<PrivateLayout />}>
+            <Route index element={<PrivateHome />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/edit/:id" element={<EditProblem />} />
+            <Route path="/form" element={<ProblemForm />} />
+            <Route path="/problems" element={<Problematicas />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </ErrorProvider>
     </BrowserRouter>
   );
 }
