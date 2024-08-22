@@ -52,7 +52,7 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
   },
 ];
 
-export const Problematicas = () => {
+export function Problematicas() {
   const [problems, setProblems] = useState<Problem[]>([]);
 
   useAsync(loadProblemsTable(), (data: ProblemEndpoint[]) => {
@@ -75,6 +75,6 @@ export const Problematicas = () => {
       <Table headCells={headCells} rows={rows} title="Problemas" />
     </div>
   );
-};
+}
 
 export default Problematicas;

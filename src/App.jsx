@@ -14,6 +14,7 @@ const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const Problematicas = lazy(() => import("./pages/Problematicas/Problematicas"));
 const ProblemForm = lazy(() => import("./pages/Problem/ProblemForm"));
 const EditProblem = lazy(() => import("./pages/Problem/EditProblem"));
+const ViewProblem = lazy(() => import("./pages/Problem/ViewProblem"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
               <Route path="/home" index element={<PrivateHome />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/problem/edit/:id" element={<EditProblem />} />
+              <Route path="/problem/view/:id" element={<ViewProblem />} />
               <Route path="/problem/new" element={<ProblemForm />} />
               <Route path="/problems" element={<Problematicas />} />
               <Route path="*" element={<NotFound />} />
