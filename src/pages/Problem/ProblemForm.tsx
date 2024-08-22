@@ -53,10 +53,10 @@ export function ProblemForm() {
     }));
   };
 
-  const handleSubmit = async (data: ProblemFormTemplate) => {
-    await useAsync(createProblem(createFormEndpoint(data)), (data: any) =>
-      console.log(data)
-    );
+  const handleSubmit = (data: ProblemFormTemplate) => {
+    createProblem(createFormEndpoint(data))().then((data) => {
+      console.log(data);
+    });
   };
 
   return (

@@ -39,7 +39,7 @@ export const createEditEndpoint = (editTemplate: EditProblemTemplate) => {
     como: editTemplate.who,
     para_que: editTemplate.why,
     cuando: editTemplate.when,
-    solicitante_id: editTemplate.applicant?.id || 0,
+    id_solicitante: editTemplate.applicant?.id || 0,
     zona: editTemplate.zone,
     contacto: editTemplate.contact,
     telefono: parseInt(editTemplate.cellPhone),

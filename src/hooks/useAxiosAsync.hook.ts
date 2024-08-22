@@ -14,7 +14,7 @@ import { useErrorContext } from "@/contexts";
  * @param dependencies Array de dependencias que se pasa al useEffect
  */
 export const useAsync = (
-  asyncFn: Promise<AxiosResponse<any, any>>,
+  asyncFn: () => Promise<AxiosResponse<any, any>>,
   successFunction: Function,
   returnFunction: Function = () => {},
   dependencies: any[] = []
@@ -22,7 +22,7 @@ export const useAsync = (
   const { setError } = useErrorContext();
   useEffect(() => {
     let isActive = true;
-    asyncFn
+    asyncFn()
       .then(({ data }) => {
         if (isActive) successFunction(data);
       })

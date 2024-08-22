@@ -9,7 +9,6 @@ import {
  * Interfaz para el formulario de creación de las problemáticas
  */
 export interface ProblemFormTemplate extends EditProblemTemplate {
-  applicant: Applicant;
   isPublic: boolean;
 }
 
@@ -25,6 +24,5 @@ export interface ProblemFormEndpoint extends EditProblemEndpoint {
  */
 export const inicialProblemForm: ProblemFormTemplate = {
   ...inicialEditProblem,
-  applicant: inicialApplicant,
   isPublic: false,
 };

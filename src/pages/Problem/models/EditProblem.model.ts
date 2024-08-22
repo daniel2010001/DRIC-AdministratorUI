@@ -37,7 +37,7 @@ export interface EditProblemEndpoint {
   para_que: string;
   cuando: string;
 
-  solicitante_id: number;
+  id_solicitante: number;
   zona: string;
   contacto: string;
   telefono: number;

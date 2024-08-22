@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import { FieldConfig } from "@/models";
+import { countHtmlLines } from ".";
 
 /** Función para crear el esquema base de Yup en función del tipo de <T> */
 const createYupSchemaFromType = <T>(
@@ -43,13 +44,20 @@ const applyFieldConfigToSchema = <T>(
     configuredSchema = configuredSchema.required("Este campo es requerido");
   }
   if (config.maxLength !== undefined) {
-    if (schema instanceof Yup.StringSchema) {
+    if (config.type === "editor") {
+      configuredSchema = configuredSchema.test(
+        "maxLines",
+        "El número máximo de líneas es de " + (config.maxLength || 5),
+        (value) => {
+          return countHtmlLines(value as string) <= (config.maxLength || 5);
+        }
+      );
+    } else if (schema instanceof Yup.StringSchema) {
       configuredSchema = (configuredSchema as Yup.StringSchema).max(
         config.maxLength,
         `El tamaño máximo es de ${config.maxLength}`
       );
-    }
-    if (schema instanceof Yup.ArraySchema) {
+    } else if (schema instanceof Yup.ArraySchema) {
       configuredSchema = (configuredSchema as Yup.ArraySchema<any, any>).max(
         config.maxLength,
         `El número máximo de elementos es de ${config.maxLength}`
@@ -57,13 +65,20 @@ const applyFieldConfigToSchema = <T>(
     }
   }
   if (config.minLength !== undefined) {
-    if (schema instanceof Yup.StringSchema) {
+    if (config.type === "editor") {
+      configuredSchema = configuredSchema.test(
+        "minLines",
+        "El número mínimo de líneas es de " + (config.minLength || 5),
+        (value) => {
+          return countHtmlLines(value as string) <= (config.minLength || 5);
+        }
+      );
+    } else if (schema instanceof Yup.StringSchema) {
       configuredSchema = (configuredSchema as Yup.StringSchema).min(
         config.minLength,
         `El tamaño mínimo es de ${config.minLength}`
       );
-    }
-    if (schema instanceof Yup.ArraySchema) {
+    } else if (schema instanceof Yup.ArraySchema) {
       configuredSchema = (configuredSchema as Yup.ArraySchema<any, any>).min(
         config.minLength,
         `El número mínimo de elementos es de ${config.minLength}`

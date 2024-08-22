@@ -7,36 +7,40 @@ const api = import.meta.env.VITE_BACKEND;
  * Servicio para obtener los solicitantes
  * @returns Petición de axios para obtener los solicitantes
  */
-export const loadApplicants = (): Promise<
+export const loadApplicants = (): (() => Promise<
   AxiosResponse<ApplicantEndpoint[]>
-> => {
-  return axios.get(api + "/solicitantes");
+>) => {
+  return () => axios.get(api + "/solicitantes");
 };
 
 /**
  * Servicio para obtener las carreras
  * @returns Petición de axios para obtener las carreras
  */
-export const loadCareers = (): Promise<AxiosResponse<CareerEndpoint[]>> => {
-  return axios.get(api + "/carreras");
+export const loadCareers = (): (() => Promise<
+  AxiosResponse<CareerEndpoint[]>
+>) => {
+  return () => axios.get(api + "/carreras");
 };
 
 /**
  * Servicio para obtener las problematicas
  * @returns Petición de axios para obtener las problemáticas
  */
-export const loadProblems = (): Promise<AxiosResponse<ProblemEndpoint[]>> => {
-  return axios.get(api + "/problematicas");
-};
-
-/**
- * Servicio para obtener las problematicas
- * @returns Petición de axios para obtener las problemáticas
- */
-export const loadProblemsTable = (): Promise<
+export const loadProblems = (): (() => Promise<
   AxiosResponse<ProblemEndpoint[]>
-> => {
-  return axios.get(api + "/problematicas/tabla");
+>) => {
+  return () => axios.get(api + "/problematicas");
+};
+
+/**
+ * Servicio para obtener las problematicas
+ * @returns Petición de axios para obtener las problemáticas
+ */
+export const loadProblemsTable = (): (() => Promise<
+  AxiosResponse<ProblemEndpoint[]>
+>) => {
+  return () => axios.get(api + "/problematicas/tabla");
 };
 
 /**
@@ -46,8 +50,8 @@ export const loadProblemsTable = (): Promise<
  */
 export const searchProblem = (
   id: number | string
-): Promise<AxiosResponse<ProblemEndpoint>> => {
-  return axios.get(api + "/problematicas/" + id);
+): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
+  return () => axios.get(api + "/problematicas/" + id);
 };
 
 /**
@@ -57,6 +61,6 @@ export const searchProblem = (
  */
 export const deleteProblem = (
   id: number | string
-): Promise<AxiosResponse<ProblemEndpoint>> => {
-  return axios.delete(api + "/problematicas/" + id);
+): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
+  return () => axios.delete(api + "/problematicas/" + id);
 };

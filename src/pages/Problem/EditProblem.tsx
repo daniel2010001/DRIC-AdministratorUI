@@ -63,9 +63,9 @@ export function EditProblem() {
   };
 
   const handleSubmit = (data: EditProblemTemplate) => {
-    useAsync(updateProblem(idProblem, createEditEndpoint(data)), (data: any) =>
-      console.log(data)
-    );
+    updateProblem(idProblem, createEditEndpoint(data))().then((data) => {
+      console.log(data);
+    });
   };
 
   return (

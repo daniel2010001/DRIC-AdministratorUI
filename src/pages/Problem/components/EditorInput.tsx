@@ -68,8 +68,10 @@ export const EditorInput = ({
   });
 
   useEffect(() => {
-    editor.commands.setContent(content);
-    onChange(content);
+    if (content !== editor.getHTML()) {
+      editor.commands.setContent(content);
+      onChange(content);
+    }
   }, [content]);
 
   return (

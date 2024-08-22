@@ -18,7 +18,7 @@ export const createFormEndpoint = (formTemplate: ProblemFormTemplate) => {
     como: formTemplate.who,
     para_que: formTemplate.why,
     cuando: formTemplate.when,
-    solicitante_id: formTemplate.applicant.id,
+    id_solicitante: formTemplate.applicant.id,
     zona: formTemplate.zone,
     contacto: formTemplate.contact,
     telefono: parseInt(formTemplate.cellPhone),
