@@ -28,13 +28,13 @@ export const BodyTable = <T,>({
     return (
       <>
         <Link
-          to={`/view/${id}`}
+          to={`/problem/view/${id}`}
           className="me-2 underline underline-offset-2 text-blue-600"
         >
           Ver
         </Link>
         <Link
-          to={`/edit/${id}`}
+          to={`/problem/edit/${id}`}
           className="underline underline-offset-2 text-blue-600"
         >
           Editar

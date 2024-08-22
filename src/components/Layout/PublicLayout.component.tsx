@@ -1,27 +1,25 @@
 import { useErrorContext } from "@/contexts";
+import { resetUser } from "@/redux/states";
+import { getTokenStorage } from "@/services";
 import { Suspense } from "react";
+import { useDispatch } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { ErrorFallback, LoadingFallback } from "../Fallback";
 
-// Layout para rutas públicas
 export const PublicLayout = () => {
-  const { error } = useErrorContext(); // Usamos el contexto de error
-
-  // Simulación de lógica para redirigir si el usuario ya está autenticado
-  const isAuthenticated = false; // Cambia esto según tu lógica de autenticación
-
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
-  // Si ocurre un error, renderizamos el ErrorFallback
+  const { error } = useErrorContext();
+  const storedToken = getTokenStorage();
+  if (storedToken) return <Navigate to="/dashboard" replace />;
+  const dispatch = useDispatch();
+  dispatch(resetUser());
   return (
     <>
-      <nav>Public Navigation</nav>
-      <main>
-        <Suspense fallback={<LoadingFallback />}>
-          {error ? <ErrorFallback error={error} /> : <Outlet />}
-        </Suspense>
+      <main className="flex flex-col justify-center items-center -z-10 light-primary dark:dark-primary">
+        <div className="flex p-4 w-full min-h-screen">
+          <Suspense fallback={<LoadingFallback />}>
+            {error ? <ErrorFallback error={error} /> : <Outlet />}
+          </Suspense>
+        </div>
       </main>
     </>
   );

@@ -1,4 +1,4 @@
-import { DropdownIcon, CheckIcon } from "@/assets";
+import { DropdownIcon, CheckIcon } from "@/assets/Icons";
 import { ComboBoxOption } from "@/models";
 import {
   Combobox,

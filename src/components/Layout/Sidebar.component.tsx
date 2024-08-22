@@ -1,8 +1,9 @@
+import { DropdownIcon, LogoutIcon } from "@/assets/Icons";
+import { SidebarOptions } from "@/models";
+import { removeTokenStorage } from "@/services";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { SidebarOptions } from "@/models";
-import { DropdownIcon } from "@/assets/DropdownIcon";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -97,6 +98,19 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
               )}
             </li>
           ))}
+          <li className="flex items-center">
+            <button
+              type="button"
+              className={sidebarOptionClassName}
+              onClick={() => {
+                removeTokenStorage();
+                window.location.reload();
+              }}
+            >
+              <LogoutIcon className={iconClassName} />
+              <span className="ms-3">Cerrar Sesión</span>
+            </button>
+          </li>
         </ul>
       </div>
     </aside>

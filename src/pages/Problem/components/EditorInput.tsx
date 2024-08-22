@@ -1,4 +1,4 @@
-import * as Icons from "@/assets";
+import * as Icons from "@/assets/Icons";
 import Document from "@tiptap/extension-document";
 import {
   BubbleMenu,

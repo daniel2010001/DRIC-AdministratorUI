@@ -1,4 +1,4 @@
-import { CheckIcon } from "@/assets";
+import { CheckIcon } from "@/assets/Icons";
 import { FieldConfig } from "@/models";
 import {
   Checkbox,

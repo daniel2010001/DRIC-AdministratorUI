@@ -1,4 +1,4 @@
-import { DashboardIcon, DocumentListIcon, HomeIcon } from "@/assets";
+import { DashboardIcon, DocumentListIcon, HomeIcon } from "@/assets/Icons";
 
 /**
  * Interfaz para opciones de la barra lateral
@@ -50,7 +50,7 @@ export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
       },
       {
         title: "Formulario",
-        link: "/forms",
+        link: "/problem/new",
       },
     ],
   },

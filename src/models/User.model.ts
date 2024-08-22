@@ -1,21 +1,25 @@
+export interface AuthState {
+  auth: boolean;
+  token: string;
+}
+
+export const inicialAuth: AuthState = {
+  auth: false,
+  token: "",
+};
+
 export interface User {
   id: number;
   username: string;
-  password: string;
   email: string;
-  enabled: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  type: string;
 }
 
-export interface EndpointUser {
+export interface UserEndpoint {
   id_usuario: number;
   nombre_usuario: string;
-  contrasenia_usuario: string;
   email_usuario: string;
-  disponible: boolean;
-  createdAt: string;
-  updatedAt: string;
+  tipo_usuario: string;
 }
 
 export interface UserCreate {
@@ -27,19 +31,13 @@ export interface UserCreate {
 export const inicialUser: User = {
   id: 0,
   username: "",
-  password: "",
   email: "",
-  enabled: false,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  type: "",
 };
 
-export const inicialEndpointUser: EndpointUser = {
+export const inicialEndpointUser: UserEndpoint = {
   id_usuario: 0,
   nombre_usuario: "",
-  contrasenia_usuario: "",
   email_usuario: "",
-  disponible: false,
-  createdAt: "",
-  updatedAt: "",
+  tipo_usuario: "",
 };

@@ -1,4 +1,9 @@
-import { ApplicantEndpoint, CareerEndpoint, ProblemEndpoint } from "@/models";
+import {
+  ApplicantEndpoint,
+  CareerEndpoint,
+  ProblemEndpoint,
+  UserEndpoint,
+} from "@/models";
 import axios, { AxiosResponse } from "axios";
 
 const api = import.meta.env.VITE_BACKEND;
@@ -63,4 +68,17 @@ export const deleteProblem = (
   id: number | string
 ): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
   return () => axios.delete(api + "/problematicas/" + id);
+};
+
+/**
+ * Servicio para obtener el perfil del usuario autenticado
+ * @param token Token de autenticación
+ * @returns Petición de axios para obtener el perfil del usuario
+ */
+export const getUserProfile = (
+  token: string
+): Promise<AxiosResponse<UserEndpoint>> => {
+  return axios.get(api + "/usuarios/profile", {
+    headers: { "x-access-token": token },
+  });
 };
