@@ -17,7 +17,7 @@ export function ViewProblem() {
 
   return (
     <div className="container mx-auto pb-2 md:pb-5">
-      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32 border-t-2 border-x-2 rounded-md">
         <div className="text-base md:text-[24px] text-center font-semibold">
           DETALLE DE LA PROBLEM&Aacute;TICA PARA EL DESARROLLO DE UN PROYECTO DE
           TESIS O PROYECTO DE GRADO
@@ -81,7 +81,7 @@ export function ViewProblem() {
 
       <hr className="mx-32" />
 
-      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32 border-x-2 rounded-md">
         <div className="text-[16px] font-semibold pb-3">
           NECESIDADES PRIORITARIAS PARA RESOLVER EL PROBLEMA
         </div>
@@ -139,7 +139,7 @@ export function ViewProblem() {
 
       <hr className="mx-32" />
 
-      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32 border-b-2 border-x-2 rounded-md">
         <div className="text-[16px] font-semibold pb-3">
           DATOS DE LA INSTITUCI&Oacute;N SOLICITANTE
         </div>
