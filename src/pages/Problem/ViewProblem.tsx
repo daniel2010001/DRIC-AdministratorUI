@@ -16,7 +16,7 @@ export function ViewProblem() {
   });
 
   return (
-    <div className="container mx-auto pb-2 md:pb-5 ">
+    <div className="container mx-auto pb-2 md:pb-5">
       <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32">
         <div className="text-base md:text-[24px] text-center font-semibold">
           DETALLE DE LA PROBLEM&Aacute;TICA PARA EL DESARROLLO DE UN PROYECTO DE
@@ -63,7 +63,7 @@ export function ViewProblem() {
           <div className="pb-3">
             <div className="font-medium">CAUSAS QUE PRODUCE EL PROBLEMA:</div>
             <EditorInput
-              content={problematica?.causes || ""}
+              content={problematica?.causes || "Sin causas"}
               onChange={() => {}}
               className="text-[#4B5563] text-[14px]/6"
             />
@@ -71,7 +71,7 @@ export function ViewProblem() {
           <div className="pb-3">
             <div className="font-medium">EFECTOS QUE CAUSA EL PROBLEMA:</div>
             <EditorInput
-              content={problematica?.effects || ""}
+              content={problematica?.effects || "Sin efectos"}
               onChange={() => {}}
               className="text-[#4B5563] text-[14px]/6"
             />
@@ -95,7 +95,7 @@ export function ViewProblem() {
               (Que se requiere para resolver el problema)
             </p>
             <EditorInput
-              content={problematica?.what || ""}
+              content={problematica?.what || "sin contenido"}
               onChange={() => {}}
               className="text-[14px]/5 "
             />
@@ -106,7 +106,7 @@ export function ViewProblem() {
               (Tesistas Pregrado o Tesistas Posgrado)
             </p>
             <EditorInput
-              content={problematica?.who || ""}
+              content={problematica?.who || "sin contenido"}
               onChange={() => {}}
               className="text-[14px]/5"
             />
@@ -115,7 +115,7 @@ export function ViewProblem() {
             <div className="font-medium">¿PARA QU&Eacute;?</div>
             <p className="text-[#4B5563] pb-1">(Para que se desea realizar)</p>
             <EditorInput
-              content={problematica?.why || ""}
+              content={problematica?.why || "Sin contenido"}
               onChange={() => {}}
               className="text-[14px]/5"
             />
@@ -129,7 +129,7 @@ export function ViewProblem() {
               (Para cuando se tiene previsto)
             </p>
             <EditorInput
-              content={problematica?.when || ""}
+              content={problematica?.when || "Sin contenido"}
               onChange={() => {}}
               className="text-[14px]/5"
             />
@@ -171,10 +171,6 @@ export function ViewProblem() {
               {problematica?.zone || "Sin domicilio"}
             </p>
           </div>
-          {/* <div className="font-medium">JURISDICCI&Oacute;N</div>
-          <p className="text-[#4B5563]">
-            {problematica.solicitante?.juridiccion || "Sin jurisdicción"}
-          </p> */}
         </div>
       </div>
     </div>
