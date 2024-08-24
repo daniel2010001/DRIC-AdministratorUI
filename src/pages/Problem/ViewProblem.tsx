@@ -1,11 +1,11 @@
+import { Link, useParams } from "react-router-dom";
 import { createCustomProblem } from "@/adapters";
 import { useAsync } from "@/hooks";
 import { Problem, ProblemEndpoint } from "@/models";
 import { searchProblem } from "@/services";
-import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { EditorInput } from "./components";
+import { BackArrowIcon } from "@/assets/Icons/back-arrow-icon";
 
 export function ViewProblem() {
   const idProblem = useParams().id || 0;
@@ -17,13 +17,20 @@ export function ViewProblem() {
 
   return (
     <div className="container mx-auto pb-2 md:pb-5 ">
-      <div className="mx-0 md:mx-2 xl:mx-auto 2xl:mx-24 bg-[#F9FAFB] px-0 py-5 md:py-7 md:px-2 lg:px-24 xl:px-48">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32">
         <div className="text-base md:text-[24px] text-center font-semibold">
           DETALLE DE LA PROBLEM&Aacute;TICA PARA EL DESARROLLO DE UN PROYECTO DE
           TESIS O PROYECTO DE GRADO
         </div>
-        <div className="flex justify-end">
-          <button className="bg-[#000000] text-[14px] text-white px-7 py-1 mb-2 rounded-md mt-4">
+        <div className="flex justify-between">
+          <Link
+            to={"/problems"}
+            className="bg-[#6B7280] text-[14px] text-white px-4 py-1 mb-2 rounded-md mt-4 flex items-center"
+          >
+            <BackArrowIcon className="inline-block me-1" />
+            <span>Atr&aacute;s</span>
+          </Link>
+          <button className="bg-[#0060FF] text-[14px] text-white px-7 py-1 mb-2 rounded-md mt-4">
             Descargar
           </button>
         </div>
@@ -72,9 +79,9 @@ export function ViewProblem() {
         </div>
       </div>
 
-      <hr className="mx-4" />
+      <hr className="mx-32" />
 
-      <div className="mx-0 md:mx-2 xl:mx-auto 2xl:mx-24 bg-[#F9FAFB] px-0 py-5 md:py-7 md:px-2 lg:px-24 xl:px-48">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32">
         <div className="text-[16px] font-semibold pb-3">
           NECESIDADES PRIORITARIAS PARA RESOLVER EL PROBLEMA
         </div>
@@ -130,9 +137,9 @@ export function ViewProblem() {
         </div>
       </div>
 
-      <hr className="mx-48" />
+      <hr className="mx-32" />
 
-      <div className="mx-0 md:mx-2 xl:mx-auto 2xl:mx-24 bg-[#F9FAFB] px-0 py-5 md:py-7 md:px-2 lg:px-24 xl:px-48">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32">
         <div className="text-[16px] font-semibold pb-3">
           DATOS DE LA INSTITUCI&Oacute;N SOLICITANTE
         </div>
