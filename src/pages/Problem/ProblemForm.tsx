@@ -1,7 +1,7 @@
 import { createCustomApplicant, createCustomCareer } from "@/adapters";
-import { useAsync } from "@/hooks";
-import { Applicant, ApplicantEndpoint, CareerEndpoint } from "@/models";
-import { loadApplicants, loadCareers } from "@/services";
+import { useAsync, useFetchAndLoader } from "@/hooks";
+import { Applicant } from "@/models";
+import { getApplicants, getCareers } from "@/services";
 import { useEffect, useState } from "react";
 import { createFormEndpoint } from "./adapters";
 import {
@@ -19,17 +19,22 @@ import {
 import { createProblem } from "./services";
 
 export function ProblemForm() {
+  const { callEndpoint } = useFetchAndLoader();
+
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
   const [defaultValues, setDefaultValues] = useState(inicialProblemForm);
 
-  useAsync(loadApplicants(), (data: ApplicantEndpoint[]) => {
+  const loadApplicant = async () => callEndpoint(getApplicants());
+  const loadCareers = async () => callEndpoint(getCareers());
+
+  useAsync(loadApplicant, (data) => {
     setApplicants(data.map(createCustomApplicant));
     handleChangeApplicant();
     setDefaultValues((prev) => ({ ...prev, applicant: null }));
   });
-  useAsync(loadCareers(), (data: CareerEndpoint[]) => {
+  useAsync(loadCareers, (data) => {
     setFormConfig((prev) => ({
       ...prev,
       careers: { ...prev.careers, options: data.map(createCustomCareer) },

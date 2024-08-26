@@ -1,6 +1,7 @@
 import { Logo } from "@/assets";
+import { PrivateRoutes } from "@/models";
 import { setTokenStorage } from "@/services";
-import { setAuth } from "@/redux/states";
+import { createAuth } from "@/redux/states";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -24,8 +25,8 @@ export function Login() {
       if (!authState.auth || !authState.token)
         console.error("Error al iniciar sesión");
       setTokenStorage(authState.token);
-      dispatch(setAuth(authState));
-      navigate("/home");
+      dispatch(createAuth(authState));
+      navigate(PrivateRoutes.PRIVATE);
     });
   };
 

@@ -1,6 +1,6 @@
 import { createCustomUser } from "@/adapters";
 import { useErrorContext } from "@/contexts";
-import { setUser } from "@/redux/states";
+import { createUser } from "@/redux/states";
 import { getTokenStorage, getUserProfile } from "@/services";
 import { Suspense, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ export const PrivateLayout = () => {
   if (!storedToken) return <Navigate to="/login" replace />;
   const dispatch = useDispatch();
   getUserProfile(storedToken).then(({ data: userProfile }) => {
-    dispatch(setUser(createCustomUser(userProfile)));
+    dispatch(createUser(createCustomUser(userProfile)));
   });
 
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);

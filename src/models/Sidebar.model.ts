@@ -33,7 +33,7 @@ export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
   {
     title: "Inicio",
     icon: HomeIcon,
-    link: "/",
+    link: "/home",
   },
   {
     title: "Panel de control",

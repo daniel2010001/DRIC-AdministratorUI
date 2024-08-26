@@ -1,12 +1,7 @@
 import { createCustomApplicant, createCustomCareer } from "@/adapters";
-import { useAsync } from "@/hooks";
-import {
-  Applicant,
-  ApplicantEndpoint,
-  CareerEndpoint,
-  ProblemEndpoint,
-} from "@/models";
-import { loadApplicants, loadCareers, searchProblem } from "@/services";
+import { useAsync, useFetchAndLoader } from "@/hooks";
+import { Applicant } from "@/models";
+import { getApplicants, getCareers, searchProblem } from "@/services";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { crearteEditTemplate, createEditEndpoint } from "./adapters";
@@ -25,21 +20,26 @@ import {
 import { updateProblem } from "./services";
 
 export function EditProblem() {
+  const { callEndpoint } = useFetchAndLoader();
   const idProblem = useParams().id || 0;
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(editProblemConfig);
   const [defaultValues, setDefaultValues] = useState(inicialEditProblem);
 
-  useAsync(searchProblem(idProblem), (data: ProblemEndpoint) => {
+  const loadProblem = async () => callEndpoint(searchProblem(idProblem));
+  const loadApplicant = async () => callEndpoint(getApplicants());
+  const loadCareers = async () => callEndpoint(getCareers());
+
+  useAsync(loadProblem, (data) => {
     setDefaultValues(crearteEditTemplate(data));
     setIsInstitute(data.solicitante.tipo_solicitante === "INSTITUCION");
   });
-  useAsync(loadApplicants(), (data: ApplicantEndpoint[]) => {
+  useAsync(loadApplicant, (data) => {
     setApplicants(data.map(createCustomApplicant));
     handleChangeApplicant();
   });
-  useAsync(loadCareers(), (data: CareerEndpoint[]) => {
+  useAsync(loadCareers, (data) => {
     setFormConfig((prev) => ({
       ...prev,
       careers: { ...prev.careers, options: data.map(createCustomCareer) },
