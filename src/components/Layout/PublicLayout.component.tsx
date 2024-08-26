@@ -15,7 +15,7 @@ export const PublicLayout = () => {
   return (
     <>
       <main className="flex flex-col justify-center items-center -z-10 light-primary dark:dark-primary">
-        <div className="flex p-4 w-full min-h-screen">
+        <div className="flex p-4 w-full min-h-screen bg-white">
           <Suspense fallback={<LoadingFallback />}>
             {error ? <ErrorFallback error={error} /> : <Outlet />}
           </Suspense>

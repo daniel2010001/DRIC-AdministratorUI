@@ -1,9 +1,11 @@
+import { Link, useParams } from "react-router-dom";
 import { createCustomProblem } from "@/adapters";
 import { useAsync } from "@/hooks";
 import { Problem, ProblemEndpoint } from "@/models";
 import { searchProblem } from "@/services";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { EditorInput } from "./components";
+import { BackArrowIcon } from "@/assets/Icons/back-arrow-icon";
 
 export function ViewProblem() {
   const idProblem = useParams().id || 0;
@@ -13,61 +15,73 @@ export function ViewProblem() {
     setProblematica(createCustomProblem(data));
   });
 
-  console.log(">>>>>", problematica);
-
   return (
-    <div className="container mx-auto pb-2 md:pb-5 ">
-      <div className="mx-0 md:mx-2 xl:mx-18 2xl:mx-32 bg-[#F9FAFB] px-0 py-5 md:px-2 md:py-7 lg:px-24 xl:px-48">
+    <div className="container mx-auto pb-2 md:pb-5">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32 border-t-2 border-x-2 rounded-md">
         <div className="text-base md:text-[24px] text-center font-semibold">
           DETALLE DE LA PROBLEM&Aacute;TICA PARA EL DESARROLLO DE UN PROYECTO DE
           TESIS O PROYECTO DE GRADO
         </div>
-        <div className="flex justify-end">
-          <button className="bg-[#000000] text-[14px] text-white px-7 py-1 mb-2 rounded-md mt-4">
+        <div className="flex justify-between">
+          <Link
+            to={"/problems"}
+            className="bg-[#6B7280] text-[14px] text-white px-4 py-1 mb-2 rounded-md mt-4 flex items-center"
+          >
+            <BackArrowIcon className="inline-block me-1" />
+            <span>Atr&aacute;s</span>
+          </Link>
+          <button className="bg-[#0060FF] text-[14px] text-white px-7 py-1 mb-2 rounded-md mt-4">
             Descargar
           </button>
         </div>
         <div className="text-[16px] font-semibold pb-3">
           PLANTEAMIENTO GENERAL
         </div>
-        <div className="plant-general text-[14px]/loose p-7 bg-white rounded-xl drop-shadow">
-          <div className="font-medium">
-            NOMBRE DE LA INSTITUCI&Oacute;N O MUNICIPIO:
+        <div className="plant-general text-[14px] p-7 bg-white rounded-xl drop-shadow">
+          <div className="pb-3">
+            <div className="font-medium">
+              NOMBRE DE LA INSTITUCI&Oacute;N O MUNICIPIO:
+            </div>
+            <p className="text-[#4B5563]">
+              {problematica?.applicant.name || "Sin solicitante"}
+            </p>
           </div>
-          <p className="text-[#4B5563] pb-3">
-            {problematica?.applicant.name || "Sin solicitante"}
-          </p>
-          <div className="font-medium">CARRERA:</div>
-          <p className="text-[#4B5563] pb-3">
-            {problematica?.careers
-              ? problematica.careers.map(({ name }) => name).join(", ")
-              : "Sin carreras"}
-          </p>
-          <div className="font-medium">PLANTEAMIENTO DEL PROBLEMA:</div>
-          <p className="text-[#4B5563] text-[14px]/6 pb-3">
-            {problematica?.approach || "Sin planteamiento"}
-          </p>
-          <div className="font-medium">CAUSAS QUE PRODUCE EL PROBLEMA:</div>
-          {/* <ReactQuill
-            ref={quillRef}
-            className="text-[#4B5563]"
-            value={problematica.causas}
-            readOnly={true}
-            theme="bubble"
-          />
-          <div className="font-medium">EFECTOS QUE CAUSA EL PROBLEMA:</div>
-          <ReactQuill
-            className="text-[#4B5563]"
-            value={problematica.efectos}
-            readOnly={true}
-            theme="bubble"
-          /> */}
+          <div className="pb-3">
+            <div className="font-medium">CARRERA:</div>
+            <p className="text-[#4B5563]">
+              {problematica?.careers
+                ? problematica.careers.map(({ name }) => name).join(", ")
+                : "Sin carreras"}
+            </p>
+          </div>
+          <div className="pb-3">
+            <div className="font-medium">PLANTEAMIENTO DEL PROBLEMA:</div>
+            <p className="text-[#4B5563] text-[14px]/6">
+              {problematica?.approach || "Sin planteamiento"}
+            </p>
+          </div>
+          <div className="pb-3">
+            <div className="font-medium">CAUSAS QUE PRODUCE EL PROBLEMA:</div>
+            <EditorInput
+              content={problematica?.causes || "Sin causas"}
+              onChange={() => {}}
+              className="text-[#4B5563] text-[14px]/6"
+            />
+          </div>
+          <div className="pb-3">
+            <div className="font-medium">EFECTOS QUE CAUSA EL PROBLEMA:</div>
+            <EditorInput
+              content={problematica?.effects || "Sin efectos"}
+              onChange={() => {}}
+              className="text-[#4B5563] text-[14px]/6"
+            />
+          </div>
         </div>
       </div>
 
-      <hr className="mx-48" />
+      <hr className="mx-32" />
 
-      <div className="mx-0 md:mx-2 xl:mx-18 2xl:mx-32 bg-[#F9FAFB] px-0 py-5 md:px-2 md:py-7 lg:px-24 xl:px-48">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32 border-x-2 rounded-md">
         <div className="text-[16px] font-semibold pb-3">
           NECESIDADES PRIORITARIAS PARA RESOLVER EL PROBLEMA
         </div>
@@ -76,45 +90,34 @@ export function ViewProblem() {
             <div className="font-medium">¿QU&Eacute;?</div>
             <p
               className="
-            text-[#4B5563] text-[14px]/4"
+            text-[#4B5563] text-[14px]/4 pb-1"
             >
               (Que se requiere para resolver el problema)
             </p>
-            {/*  <ReactQuill
-              className="text-[#4B5563]"
-              value={problematica.que}
-              readOnly={true}
-              theme="bubble"
+            <EditorInput
+              content={problematica?.what || "sin contenido"}
+              onChange={() => {}}
+              className="text-[14px]/5 "
+            />
+          </div>
+          <div className="text-[14px]">
+            <div className="font-medium">¿C&Oacute;MO?</div>
+            <p className="text-[#4B5563] pb-1">
+              (Tesistas Pregrado o Tesistas Posgrado)
+            </p>
+            <EditorInput
+              content={problematica?.who || "sin contenido"}
+              onChange={() => {}}
+              className="text-[14px]/5"
             />
           </div>
           <div className="text-[14px]/6">
-            <div className="font-medium">¿C&Oacute;MO?</div>
-            <p
-              className="
-            text-[#4B5563]"
-            >
-              (Tesistas Pregrado o Tesistas Posgrado)
-            </p>
-            <ReactQuill
-              className="text-[#4B5563]"
-              value={problematica.como}
-              readOnly={true}
-              theme="bubble"
-            /> */}
-          </div>
-          <div className="text-[14px]/6">
             <div className="font-medium">¿PARA QU&Eacute;?</div>
-            <p
-              className="
-            text-[#4B5563]"
-            >
-              (Para que se desea realizar)
-            </p>
-            {/*  <ReactQuill
-              className="text-[#4B5563]"
-              value={problematica.para_que}
-              readOnly={true}
-              theme="bubble"
+            <p className="text-[#4B5563] pb-1">(Para que se desea realizar)</p>
+            <EditorInput
+              content={problematica?.why || "Sin contenido"}
+              onChange={() => {}}
+              className="text-[14px]/5"
             />
           </div>
           <div className="text-[14px]/6">
@@ -125,19 +128,18 @@ export function ViewProblem() {
             >
               (Para cuando se tiene previsto)
             </p>
-            <ReactQuill
-              className="text-[#4B5563]"
-              value={problematica.cuando}
-              readOnly={true}
-              theme="bubble"
-            /> */}
+            <EditorInput
+              content={problematica?.when || "Sin contenido"}
+              onChange={() => {}}
+              className="text-[14px]/5"
+            />
           </div>
         </div>
       </div>
 
-      <hr className="mx-48" />
+      <hr className="mx-32" />
 
-      <div className="mx-0 md:mx-2 xl:mx-18 2xl:mx-32 bg-[#F9FAFB] px-0 py-5 md:px-2 md:py-7 lg:px-24 xl:px-48">
+      <div className="mx-0 md:mx-2 xl:mx-24 2xl:mx-24 bg-[#F9FAFB] py-5 md:py-7 px-0 md:px-8 lg:px-10 xl:px-16 2xl:px-32 border-b-2 border-x-2 rounded-md">
         <div className="text-[16px] font-semibold pb-3">
           DATOS DE LA INSTITUCI&Oacute;N SOLICITANTE
         </div>
@@ -169,10 +171,6 @@ export function ViewProblem() {
               {problematica?.zone || "Sin domicilio"}
             </p>
           </div>
-          {/* <div className="font-medium">JURISDICCI&Oacute;N</div>
-          <p className="text-[#4B5563]">
-            {problematica.solicitante?.juridiccion || "Sin jurisdicción"}
-          </p> */}
         </div>
       </div>
     </div>
