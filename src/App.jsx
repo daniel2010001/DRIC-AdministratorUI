@@ -1,10 +1,10 @@
 // import { Background, Login, Problematicas, ProblemForm } from "./pages";
 import { lazy } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { PrivateLayout, PublicLayout } from "./components/Layout";
 import { ErrorProvider } from "./contexts";
 import store from "./redux/store";
 import { Provider } from "react-redux";
+import { PrivateLayout, PublicLayout } from "./components/Layout";
 
 // Simulación de componentes de página y layouts
 // const PublicHome = lazy(() => import("./pages/Home/PublicHome"));
