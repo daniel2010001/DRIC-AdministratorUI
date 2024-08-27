@@ -1,11 +1,11 @@
-import { Link, useParams } from "react-router-dom";
 import { createCustomProblem } from "@/adapters";
+import { BackArrowIcon } from "@/assets/Icons/back-arrow-icon";
 import { useAsync } from "@/hooks";
 import { Problem, ProblemEndpoint } from "@/models";
 import { searchProblem } from "@/services";
 import { useState } from "react";
-import { EditorInput } from "./components";
-import { BackArrowIcon } from "@/assets/Icons/back-arrow-icon";
+import { Link, useParams } from "react-router-dom";
+import { TipTap } from "./components";
 
 export function ViewProblem() {
   const idProblem = useParams().id || 0;
@@ -62,17 +62,15 @@ export function ViewProblem() {
           </div>
           <div className="pb-3">
             <div className="font-medium">CAUSAS QUE PRODUCE EL PROBLEMA:</div>
-            <EditorInput
+            <TipTap
               content={problematica?.causes || "Sin causas"}
-              onChange={() => {}}
               className="text-[#4B5563] text-[14px]/6"
             />
           </div>
           <div className="pb-3">
             <div className="font-medium">EFECTOS QUE CAUSA EL PROBLEMA:</div>
-            <EditorInput
+            <TipTap
               content={problematica?.effects || "Sin efectos"}
-              onChange={() => {}}
               className="text-[#4B5563] text-[14px]/6"
             />
           </div>
@@ -94,9 +92,8 @@ export function ViewProblem() {
             >
               (Que se requiere para resolver el problema)
             </p>
-            <EditorInput
+            <TipTap
               content={problematica?.what || "sin contenido"}
-              onChange={() => {}}
               className="text-[14px]/5 "
             />
           </div>
@@ -105,18 +102,16 @@ export function ViewProblem() {
             <p className="text-[#4B5563] pb-1">
               (Tesistas Pregrado o Tesistas Posgrado)
             </p>
-            <EditorInput
+            <TipTap
               content={problematica?.who || "sin contenido"}
-              onChange={() => {}}
               className="text-[14px]/5"
             />
           </div>
           <div className="text-[14px]/6">
             <div className="font-medium">¿PARA QU&Eacute;?</div>
             <p className="text-[#4B5563] pb-1">(Para que se desea realizar)</p>
-            <EditorInput
+            <TipTap
               content={problematica?.why || "Sin contenido"}
-              onChange={() => {}}
               className="text-[14px]/5"
             />
           </div>
@@ -128,9 +123,8 @@ export function ViewProblem() {
             >
               (Para cuando se tiene previsto)
             </p>
-            <EditorInput
+            <TipTap
               content={problematica?.when || "Sin contenido"}
-              onChange={() => {}}
               className="text-[14px]/5"
             />
           </div>
