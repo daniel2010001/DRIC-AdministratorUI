@@ -82,3 +82,21 @@ export const getUserProfile = (
     headers: { "x-access-token": token },
   });
 };
+
+/**
+ * Servicio para obtener los datos del dashboard
+ * @returns Petición de axios para obtener los datos del dashboard
+ */
+export const fetchDashboardData = async (): Promise<{
+  problematicas: number;
+  solicitudes: number;
+  usuarios: number;
+}> => {
+  try {
+    const response = await axios.get(api + "/contador");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching dashboard data:", error);
+    return { problematicas: 0, solicitudes: 0, usuarios: 0 };
+  }
+};
