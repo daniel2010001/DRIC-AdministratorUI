@@ -55,16 +55,20 @@ export const BodyTable = <T,>({
 
   const renderStatus = (status: string, id: number) => {
     return (
-      <div>
-        <select
-          className="bg-transparent"
-          onChange={(e) => changeStatus(Number(id), status)}
-          defaultValue={status}
-        >
-          <option value="Publicado">Publicado</option>
-          <option value="No publicado">No publicado</option>
-        </select>
-      </div>
+      <select
+        className={`bg-transparent ${
+          status === "Publicado" ? "text-green-500" : "text-red-500"
+        }`}
+        onChange={(e) => changeStatus(Number(id), status)}
+        defaultValue={status}
+      >
+        <option className="text-black" value="Publicado">
+          Publicado
+        </option>
+        <option className="text-black" value="No publicado">
+          No publicado
+        </option>
+      </select>
     );
   };
 
