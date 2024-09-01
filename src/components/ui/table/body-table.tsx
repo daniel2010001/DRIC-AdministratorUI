@@ -1,7 +1,6 @@
 import { HeadCell } from "@/models/Table.model";
 import { updateProblemPublished } from "@/services";
 import { TableBody, TableCell, TableRow } from "@mui/material";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export interface GenericTableBodyProps<T> {
@@ -50,27 +49,19 @@ export const BodyTable = <T,>({
     }
   };
 
-  const renderStatus = (initialStatus: string, id: number) => {
-    const [status, setStatus] = useState(initialStatus);
-
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const newStatus = e.target.value;
-      setStatus(newStatus);
-      changeStatus(Number(id), newStatus);
-    };
-
+  const renderStatus = (status: string, id: number) => {
     return (
       <select
         className={`bg-transparent ${
           status === "Publicado" ? "text-green-500" : "text-red-500"
         }`}
-        onChange={handleChange}
-        value={status}
+        onChange={(e) => changeStatus(Number(id), status)}
+        defaultValue={status}
       >
-        <option className="text-black" value="Publicado">
+        <option className="text-green-500" value="Publicado" id="publicado">
           Publicado
         </option>
-        <option className="text-black" value="No publicado">
+        <option className="text-red-500" value="No publicado" id="no-publicado">
           No publicado
         </option>
       </select>
