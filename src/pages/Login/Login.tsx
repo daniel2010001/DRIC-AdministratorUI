@@ -25,7 +25,7 @@ export function Login() {
         console.error("Error al iniciar sesión");
       setTokenStorage(authState.token);
       dispatch(setAuth(authState));
-      navigate("/home");
+      navigate("/dashboard");
     });
   };
 
