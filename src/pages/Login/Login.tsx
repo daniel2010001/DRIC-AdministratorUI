@@ -1,10 +1,18 @@
+import { createCustomUser } from "@/adapters";
 import { Logo } from "@/assets";
 import { PrivateRoutes } from "@/models";
-import { setTokenStorage } from "@/services";
-import { createAuth } from "@/redux/states";
+import { createAuth, createUser, resetAuth, resetUser } from "@/redux/states";
+import { AppStore } from "@/redux/store";
+import { getUserProfile } from "@/services";
+import {
+  LocalStorageKeys,
+  SnackbarUtilities,
+  clearLocalStore,
+  getLocalStore,
+} from "@/utilities";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { get, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { loginService } from "./services";
@@ -12,6 +20,13 @@ import { loginService } from "./services";
 export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // cerrar sesión si ya está autenticado
+  const auth = getLocalStore(LocalStorageKeys.AUTH);
+  if (auth?.auth) {
+    clearLocalStore();
+    dispatch(resetAuth());
+    dispatch(resetUser());
+  }
   const schema = Yup.object({
     username: Yup.string().required(),
     password: Yup.string().required(),
@@ -22,11 +37,16 @@ export function Login() {
 
   const onSubmit = (data: { username: string; password: string }) => {
     loginService(data.username, data.password).then(({ data: authState }) => {
-      if (!authState.auth || !authState.token)
-        console.error("Error al iniciar sesión");
-      setTokenStorage(authState.token);
+      if (!authState.auth) {
+        SnackbarUtilities.error("Error al iniciar sesión");
+        return;
+      }
       dispatch(createAuth(authState));
-      navigate(PrivateRoutes.PRIVATE);
+      getUserProfile().then(({ data: userProfile }) => {
+        SnackbarUtilities.success("Sesión iniciada correctamente");
+        dispatch(createUser(createCustomUser(userProfile)));
+        navigate(PrivateRoutes.PRIVATE);
+      });
     });
   };
 

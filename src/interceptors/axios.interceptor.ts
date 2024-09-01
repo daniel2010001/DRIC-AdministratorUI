@@ -23,7 +23,8 @@ export const AxiosInterceptor = () => {
   axios.interceptors.response.use(
     (response) => response,
     (error) => {
-      SnackbarUtilities.error(customAxiosError(error.code));
+      if (error.code !== "ERR_CANCELED")
+        SnackbarUtilities.error(customAxiosError(error.code));
       return Promise.reject(error);
     }
   );

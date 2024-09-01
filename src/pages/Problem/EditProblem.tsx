@@ -2,6 +2,7 @@ import { createCustomApplicant, createCustomCareer } from "@/adapters";
 import { useAsync, useFetchAndLoader } from "@/hooks";
 import { Applicant } from "@/models";
 import { getApplicants, getCareers, searchProblem } from "@/services";
+import { SnackbarUtilities } from "@/utilities";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { crearteEditTemplate, createEditEndpoint } from "./adapters";
@@ -64,7 +65,9 @@ export function EditProblem() {
 
   const handleSubmit = (data: EditProblemTemplate) => {
     updateProblem(idProblem, createEditEndpoint(data))().then((data) => {
-      console.log(data);
+      SnackbarUtilities.success(
+        "La problemática ha sido actualizada correctamente"
+      );
     });
   };
 

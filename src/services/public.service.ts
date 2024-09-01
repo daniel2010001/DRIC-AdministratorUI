@@ -99,14 +99,9 @@ export const deleteProblem = (id: string | number): AxiosCall<any> => {
 };
 
 /**
- * Función para obtener el perfil del usuario autenticado
- * @param token Token de autenticación
+ * Función para obtener el perfil del usuario autenticado (sin token)
  * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const getUserProfile = (
-  token: string
-): Promise<AxiosResponse<UserEndpoint>> => {
-  return axios.get(api + "/usuarios/profile", {
-    headers: { "x-access-token": token },
-  });
+export const getUserProfile = (): Promise<AxiosResponse<UserEndpoint>> => {
+  return axios.get(api + "/usuarios/profile");
 };
