@@ -1,13 +1,13 @@
-import { AuthState, User } from "@/models";
+import { AuthStore, User } from "@/models";
 import { configureStore } from "@reduxjs/toolkit";
 import { authSlice, userSlice } from "./states";
 
-export interface AppState {
+export interface AppStore {
   user: User;
-  auth: AuthState;
+  auth: AuthStore;
 }
 
-export default configureStore<AppState>({
+export default configureStore<AppStore>({
   reducer: {
     user: userSlice.reducer,
     auth: authSlice.reducer,

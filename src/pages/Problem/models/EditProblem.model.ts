@@ -40,8 +40,8 @@ export interface EditProblemEndpoint {
   id_solicitante: number;
   zona: string;
   contacto: string;
-  telefono: number;
-  telefono_institucional: number;
+  telefono: string;
+  telefono_institucional: string;
 }
 
 /**

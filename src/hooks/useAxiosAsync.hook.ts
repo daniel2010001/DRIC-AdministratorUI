@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 import { useEffect } from "react";
-import { useErrorContext } from "@/contexts";
 
 /**
  * Función para manejar operaciones asíncronas usando useEffect. Ejecuta la petición de
@@ -13,22 +12,17 @@ import { useErrorContext } from "@/contexts";
  * @param returnFunction Función que se ejecuta cuando el componente se desmonta o si cambian las dependencias
  * @param dependencies Array de dependencias que se pasa al useEffect
  */
-export const useAsync = (
-  asyncFn: () => Promise<AxiosResponse<any, any>>,
-  successFunction: Function,
+export const useAsync = <T>(
+  asyncFn: () => Promise<AxiosResponse<T, any>>,
+  successFunction: (data: T) => void,
   returnFunction: Function = () => {},
   dependencies: any[] = []
 ) => {
-  const { setError } = useErrorContext();
   useEffect(() => {
     let isActive = true;
-    asyncFn()
-      .then(({ data }) => {
-        if (isActive) successFunction(data);
-      })
-      .catch((err) => {
-        if (isActive) setError(err);
-      });
+    asyncFn().then((result) => {
+      if (isActive) successFunction(result.data);
+    });
     return () => {
       returnFunction && returnFunction();
       isActive = false;

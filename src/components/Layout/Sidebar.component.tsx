@@ -1,8 +1,9 @@
 import { DropdownIcon, LogoutIcon } from "@/assets/Icons";
 import { SidebarOptions } from "@/models";
-import { removeTokenStorage } from "@/services";
+import { resetAuth, resetUser } from "@/redux/states";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 interface SidebarProps {
@@ -47,6 +48,13 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
     "hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
     "group transition duration-75 rounded-lg"
   );
+
+  const dispatch = useDispatch();
+  const logout = () => {
+    dispatch(resetAuth());
+    dispatch(resetUser());
+    window.location.reload();
+  };
 
   return (
     <aside
@@ -102,10 +110,7 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
             <button
               type="button"
               className={sidebarOptionClassName}
-              onClick={() => {
-                removeTokenStorage();
-                window.location.reload();
-              }}
+              onClick={logout}
             >
               <LogoutIcon className={iconClassName} />
               <span className="ms-3">Cerrar Sesión</span>
