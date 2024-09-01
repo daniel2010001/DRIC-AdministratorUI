@@ -44,6 +44,13 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     disablePadding: false,
   },
   {
+    property: "estado",
+    label: "Estado",
+    numeric: false,
+    disablePadding: false,
+    isStatus: true,
+  },
+  {
     property: "actions",
     label: "Acciones",
     numeric: false,
@@ -63,12 +70,15 @@ export const Problematicas = () => {
     return {
       id: problem.id,
       title: problem.title,
-      applicant: problem.applicant?.name || "",
+      applicant: problem.applicant.name,
       updatedAt: problem.updatedAt.toDateString(),
       publishedAt: problem.publishedAt.toDateString(),
+      estado: problem.active ? "Publicado" : "No publicado",
       actions: "ver, editar",
     };
   });
+
+  console.log(problems);
 
   return (
     <div className="container mx-auto py-10">

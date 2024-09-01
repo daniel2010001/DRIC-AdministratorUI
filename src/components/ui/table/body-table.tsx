@@ -1,3 +1,5 @@
+import { HeadCell } from "@/models/Table.model";
+import { updateProblemPublished } from "@/services";
 import { PrivateRoutes } from "@/models";
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -9,22 +11,14 @@ export interface GenericTableBodyProps<T> {
   dense: boolean;
 }
 
-export interface HeadCell<T> {
-  property: keyof T;
-  label: string;
-  numeric: boolean;
-  disablePadding: boolean;
-  align?: "right" | "center" | "left";
-  minWidth?: string;
-  isAction?: boolean;
-}
-
 export const BodyTable = <T,>({
   headCells,
   visibleRows,
   emptyRows,
   dense,
 }: GenericTableBodyProps<T>) => {
+  const token = localStorage.getItem("token");
+
   const renderActions = (id: number) => {
     return (
       <>
@@ -44,6 +38,37 @@ export const BodyTable = <T,>({
     );
   };
 
+  const changeStatus = (id: number, status: string) => {
+    if (token !== null) {
+      updateProblemPublished(
+        id,
+        status === "Publicado" ? false : true,
+        token
+      )().then((data) => {
+        console.log(data);
+      });
+    }
+  };
+
+  const renderStatus = (status: string, id: number) => {
+    return (
+      <select
+        className={`bg-transparent ${
+          status === "Publicado" ? "text-green-500" : "text-red-500"
+        }`}
+        onChange={(e) => changeStatus(Number(id), status)}
+        value={status}
+      >
+        <option className="text-green-500" value="Publicado" id="publicado">
+          Publicado
+        </option>
+        <option className="text-red-500" value="No publicado" id="no-publicado">
+          No publicado
+        </option>
+      </select>
+    );
+  };
+
   return (
     <TableBody>
       {visibleRows.map((row, index) => {
@@ -58,6 +83,11 @@ export const BodyTable = <T,>({
                 >
                   {headCell.isAction
                     ? renderActions((row as { id: number })["id"])
+                    : headCell.isStatus && headCell.property === "estado"
+                    ? renderStatus(
+                        value as string,
+                        (row as { id: number })["id"]
+                      )
                     : headCell.property === "updatedAt" ||
                       headCell.property === "publishedAt"
                     ? new Date(value as string).toLocaleDateString()

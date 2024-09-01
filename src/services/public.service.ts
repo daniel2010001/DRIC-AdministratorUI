@@ -107,6 +107,29 @@ export const getUserProfile = (): Promise<AxiosResponse<UserEndpoint>> => {
   return axios.get(api + "/usuarios/profile");
 };
 
+export const updateProblemPublished = (
+  id: string | number,
+  published: boolean,
+  token: string
+): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
+  console.log(id, published, token);
+
+  return () =>
+    axios.put(
+      api + "/problematicas/publicacion/" + id,
+      { publicado: published },
+      { headers: { "x-access-token": token } }
+    );
+};
+
+/* export const updateProblemStatus = (
+  id: string | number,
+  active: boolean
+): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
+  return () =>
+    axios.put(api + "/problematicas/estado/" + id, { activo: active });
+}; */
+
 /**
  * Servicio para obtener los datos del dashboard
  * @returns Petición de axios para obtener los datos del dashboard
