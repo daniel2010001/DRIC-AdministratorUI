@@ -78,7 +78,7 @@ export function Dashboard() {
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-xl font-bold mb-4">Panel de control</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         {cards.map((card, index) => (
           <div
             key={index}
@@ -86,10 +86,20 @@ export function Dashboard() {
           >
             {card.link ? (
               <Link to={card.link}>
-                <Card icon={card.icon} title={card.title} number={card.number} detalles={card.detalles} />
+                <Card
+                  icon={card.icon}
+                  title={card.title}
+                  number={card.number}
+                  detalles={card.detalles}
+                />
               </Link>
             ) : (
-              <Card icon={card.icon} title={card.title} number={card.number} detalles={card.detalles} />
+              <Card
+                icon={card.icon}
+                title={card.title}
+                number={card.number}
+                detalles={card.detalles}
+              />
             )}
           </div>
         ))}
