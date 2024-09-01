@@ -28,7 +28,7 @@ export function Card({ icon, title, number, detalles }: CardProps) {
   return (
     <div
       className={clsx(
-        "grid bg-gradient-to-b from-red-50 via-red-100 to-red-200 px-8 p-4 rounded-lg shadow-md w-full h-full border-2 border-neutral-600",
+        "grid px-8 p-4 rounded-lg shadow-md w-full h-full border-2 border-neutral-600",
         detalles && detalles.length > 0
           ? "grid-cols-1 sm:grid-cols-2"
           : "grid-cols-1 place-items-center"

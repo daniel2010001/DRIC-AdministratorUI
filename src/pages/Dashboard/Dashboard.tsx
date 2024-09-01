@@ -82,7 +82,7 @@ export function Dashboard() {
         {cards.map((card, index) => (
           <div
             key={index}
-            className="transition duration-300 ease-in-out transform hover:scale-95 md:hover:scale-90"
+            className="transition duration-300 ease-in-out transform hover:scale-95 md:hover:scale-95"
           >
             {card.link ? (
               <Link to={card.link}>
