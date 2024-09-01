@@ -48,6 +48,7 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     label: "Estado",
     numeric: false,
     disablePadding: false,
+    isStatus: true,
   },
   {
     property: "actions",
