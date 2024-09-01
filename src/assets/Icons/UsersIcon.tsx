@@ -1,20 +1,24 @@
-import React from 'react';
-
-export const UsersIcon = (props: React.SVGProps<SVGSVGElement>) => (
+export const UserIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="40pt"
-    height="40pt"
-    viewBox="0 0 50 50"
-    preserveAspectRatio="xMidYMid meet"
+  {...props}
+  xmlns="http://www.w3.org/2000/svg"
+  width="40pt"
+  height="40pt"
+  viewBox="0 0 60 60"
+  preserveAspectRatio="xMidYMid meet"
+>
+  <g
+    fill="currentColor"
+    stroke="none"
   >
-    <g transform="translate(0,50) scale(0.1,-0.1)" fill="#000000" stroke="none">
-      <path d="M188 484 c-80 -43 -76 -179 6 -218 43 -20 69 -20 112 0 86 41 85 184
-      -1 220 -43 18 -82 17 -117 -2z" />
-      <path d="M180 184 c-62 -12 -122 -38 -150 -64 -25 -23 -30 -36 -30 -74 l0 -46
-      250 0 250 0 0 46 c0 38 -5 51 -30 74 -17 16 -52 35 -78 44 -49 17 -168 28
-      -212 20z" />
-    </g>
-  </svg>
+   <path d="M28.4 5.5C17.4 11.1 21.6 28 34 28c10.5 0 15.7-12.8 8.2-20.3-3.6-3.5-9.3-4.5-13.8-2.2zM24 
+31.3c-4.8 1.5-11.3 8.3-12.8 13.3-.6 2.3-1.2 6.7-1.2 9.8V60h48.3l-.5-7.3c-.8-11.5-5.6-18.5-14.7-21.6-4.2-1.4-14.4-1.3-19.1.2z" />
+    
+  </g>
+</svg>
 );
+
+
+
+
+
