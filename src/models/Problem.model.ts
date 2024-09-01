@@ -31,6 +31,9 @@ export interface Problem {
   updatedAt: Date;
   createdAt: Date;
 
+  active: boolean;
+  validate: boolean;
+
   applicant: Applicant;
   careers: Career[];
 }
@@ -58,6 +61,9 @@ export interface ProblemEndpoint {
   publicado: string;
   actualizado: string;
   creado: string;
+
+  activo: boolean;
+  validado: boolean;
 
   solicitante: ApplicantEndpoint;
   carreras: CareerEndpoint[];

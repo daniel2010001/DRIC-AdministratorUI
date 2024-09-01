@@ -54,4 +54,5 @@ export interface HeadCell<T> {
   align?: "right" | "center" | "left";
   minWidth?: string;
   isAction?: boolean;
+  isStatus?: boolean;
 }
