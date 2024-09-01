@@ -20,15 +20,15 @@ import {
 import { createProblem } from "./services";
 
 export function ProblemForm() {
-  const { callEndpoint: loadApplicants } = useFetchAndLoader();
-  const { callEndpoint: loadCareers } = useFetchAndLoader();
+  const { callEndpoint: callApplicants } = useFetchAndLoader();
+  const { callEndpoint: callCareers } = useFetchAndLoader();
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
   const [defaultValues, setDefaultValues] = useState(inicialProblemForm);
 
   useAsync(
-    async () => loadApplicants(getApplicants()),
+    async () => callApplicants(getApplicants()),
     (data) => {
       setApplicants(data.map(createCustomApplicant));
       handleChangeApplicant();
@@ -36,7 +36,7 @@ export function ProblemForm() {
     }
   );
   useAsync(
-    async () => loadCareers(getCareers()),
+    async () => callCareers(getCareers()),
     (data) => {
       setFormConfig((prev) => ({
         ...prev,
@@ -63,7 +63,7 @@ export function ProblemForm() {
   };
 
   const handleSubmit = (data: ProblemFormTemplate) => {
-    createProblem(createFormEndpoint(data))()
+    createProblem(createFormEndpoint(data))
       .then(() => {
         SnackbarUtilities.success(
           "La problemática ha sido creada correctamente"

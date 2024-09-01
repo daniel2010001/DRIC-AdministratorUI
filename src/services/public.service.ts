@@ -3,6 +3,7 @@ import {
   CareerEndpoint,
   ProblemEndpoint,
   UserEndpoint,
+  DashboardEndpoint,
 } from "@/models";
 import { loadAbort } from "@/utilities";
 import axios, { AxiosResponse } from "axios";
@@ -99,16 +100,11 @@ export const deleteProblem = (id: string | number): AxiosCall<any> => {
 };
 
 /**
- * Función para obtener el perfil del usuario autenticado
- * @param token Token de autenticación
+ * Función para obtener el perfil del usuario autenticado (sin token)
  * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const getUserProfile = (
-  token: string
-): Promise<AxiosResponse<UserEndpoint>> => {
-  return axios.get(api + "/usuarios/profile", {
-    headers: { "x-access-token": token },
-  });
+export const getUserProfile = (): Promise<AxiosResponse<UserEndpoint>> => {
+  return axios.get(api + "/usuarios/profile");
 };
 
 export const updateProblemPublished = (
@@ -133,3 +129,12 @@ export const updateProblemPublished = (
   return () =>
     axios.put(api + "/problematicas/estado/" + id, { activo: active });
 }; */
+
+/**
+ * Servicio para obtener los datos del dashboard
+ * @returns Petición de axios para obtener los datos del dashboard
+ */
+export const getDashboard = async (): Promise<DashboardEndpoint > => {
+    const response = await axios.get(api + "/contador");
+    return response.data as DashboardEndpoint;
+};

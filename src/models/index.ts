@@ -7,3 +7,4 @@ export * from "./routes";
 export * from "./Sidebar.model";
 export * from "./Table.model";
 export * from "./User.model";
+export * from "./Dashboard.model"

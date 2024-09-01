@@ -1,5 +1,6 @@
 import { HeadCell } from "@/models/Table.model";
 import { updateProblemPublished } from "@/services";
+import { PrivateRoutes } from "@/models";
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -22,13 +23,13 @@ export const BodyTable = <T,>({
     return (
       <>
         <Link
-          to={`/problem/view/${id}`}
+          to={`../${PrivateRoutes.PROBLEM_VIEW}/${id}`}
           className="me-2 underline underline-offset-2 text-blue-600"
         >
           Ver
         </Link>
         <Link
-          to={`/problem/edit/${id}`}
+          to={`../${PrivateRoutes.PROBLEM_EDIT}/${id}`}
           className="underline underline-offset-2 text-blue-600"
         >
           Editar

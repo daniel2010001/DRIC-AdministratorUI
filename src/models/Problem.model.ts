@@ -1,4 +1,10 @@
-import { Applicant, Career, ApplicantEndpoint, CareerEndpoint } from "@/models";
+import {
+  Applicant,
+  ApplicantEndpoint,
+  Career,
+  CareerEndpoint,
+  inicialApplicant,
+} from "@/models";
 
 /**
  * Interfaz de las Problemáticas adaptada para el front end.
@@ -62,3 +68,24 @@ export interface ProblemEndpoint {
   solicitante: ApplicantEndpoint;
   carreras: CareerEndpoint[];
 }
+
+export const inicialProblem: Problem = {
+  id: 0,
+  title: "",
+  approach: "",
+  causes: "",
+  effects: "",
+  what: "",
+  who: "",
+  why: "",
+  when: "",
+  zone: "",
+  contact: "",
+  cellPhone: "",
+  phone: "",
+  publishedAt: new Date(),
+  updatedAt: new Date(),
+  createdAt: new Date(),
+  applicant: inicialApplicant,
+  careers: [],
+};

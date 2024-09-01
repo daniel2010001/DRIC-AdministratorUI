@@ -13,7 +13,6 @@ export const SnackbarConfigurator: React.FC = () => {
 export const SnackbarUtilities = {
   /** Función para mostrar un toast con una variante personalizada */
   toast(msg: string, variant: VariantType = "default") {
-    console.log(msg);
     useSnackbarRef.enqueueSnackbar(msg, { variant });
   },
   /** Función para mostrar un toast con variante de éxito */

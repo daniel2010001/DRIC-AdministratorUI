@@ -2,8 +2,9 @@ import { createCustomApplicant, createCustomCareer } from "@/adapters";
 import { useAsync, useFetchAndLoader } from "@/hooks";
 import { Applicant } from "@/models";
 import { getApplicants, getCareers, searchProblem } from "@/services";
+import { SnackbarUtilities } from "@/utilities";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { crearteEditTemplate, createEditEndpoint } from "./adapters";
 import {
   FormField,
@@ -20,31 +21,38 @@ import {
 import { updateProblem } from "./services";
 
 export function EditProblem() {
-  const { callEndpoint } = useFetchAndLoader();
+  const { loading, callEndpoint: callProblem } = useFetchAndLoader();
+  const { callEndpoint: callApplicant } = useFetchAndLoader();
+  const { callEndpoint: callCareers } = useFetchAndLoader();
   const idProblem = useParams().id || 0;
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(editProblemConfig);
   const [defaultValues, setDefaultValues] = useState(inicialEditProblem);
 
-  const loadProblem = async () => callEndpoint(searchProblem(idProblem));
-  const loadApplicant = async () => callEndpoint(getApplicants());
-  const loadCareers = async () => callEndpoint(getCareers());
-
-  useAsync(loadProblem, (data) => {
-    setDefaultValues(crearteEditTemplate(data));
-    setIsInstitute(data.solicitante.tipo_solicitante === "INSTITUCION");
-  });
-  useAsync(loadApplicant, (data) => {
-    setApplicants(data.map(createCustomApplicant));
-    handleChangeApplicant();
-  });
-  useAsync(loadCareers, (data) => {
-    setFormConfig((prev) => ({
-      ...prev,
-      careers: { ...prev.careers, options: data.map(createCustomCareer) },
-    }));
-  });
+  useAsync(
+    async () => callProblem(searchProblem(idProblem)),
+    (data) => {
+      setDefaultValues(crearteEditTemplate(data));
+      setIsInstitute(data.solicitante.tipo_solicitante === "INSTITUCION");
+    }
+  );
+  useAsync(
+    async () => callApplicant(getApplicants()),
+    (data) => {
+      setApplicants(data.map(createCustomApplicant));
+      handleChangeApplicant();
+    }
+  );
+  useAsync(
+    async () => callCareers(getCareers()),
+    (data) => {
+      setFormConfig((prev) => ({
+        ...prev,
+        careers: { ...prev.careers, options: data.map(createCustomCareer) },
+      }));
+    }
+  );
   useEffect(() => {
     handleChangeApplicant();
   }, [isInstitute, applicants]);
@@ -63,10 +71,14 @@ export function EditProblem() {
   };
 
   const handleSubmit = (data: EditProblemTemplate) => {
-    updateProblem(idProblem, createEditEndpoint(data))().then((data) => {
-      console.log(data);
+    updateProblem(idProblem, createEditEndpoint(data)).then((data) => {
+      SnackbarUtilities.success(
+        "La problemática ha sido actualizada correctamente"
+      );
     });
   };
+
+  if (!loading && !defaultValues.title) return <Navigate to=".." />;
 
   return (
     <div className="mx-auto max-w-screen-lg border-2 border-light-primary dark:border-dark-primary rounded-lg bg-light-secondary dark:bg-dark-secondary">

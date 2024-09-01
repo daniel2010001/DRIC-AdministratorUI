@@ -1,5 +1,5 @@
-export const PrivateHome = () => {
+export const Home = () => {
   return <div>Private Home</div>;
 };
 
-export default PrivateHome;
+export default Home;
