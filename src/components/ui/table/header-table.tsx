@@ -1,5 +1,5 @@
 import { MouseEvent } from "react";
-import { EnhancedTableProps, HeadCell } from "@/models/Table.model";
+import { EnhancedTableProps } from "@/models/Table.model";
 import { TableCell, TableHead, TableRow, TableSortLabel } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 
