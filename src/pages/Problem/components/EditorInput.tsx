@@ -1,5 +1,4 @@
 import * as Icons from "@/assets/Icons";
-import Document from "@tiptap/extension-document";
 import {
   BubbleMenu,
   EditorContent,
@@ -16,10 +15,6 @@ interface EditorInputProps {
   className?: string;
 }
 
-const CustomDocument = Document.extend({
-  content: "heading block*",
-});
-
 export const EditorInput = ({
   content,
   onChange,
@@ -28,12 +23,7 @@ export const EditorInput = ({
   const editor = useEditor({
     immediatelyRender: true,
     shouldRerenderOnTransaction: false,
-    extensions: [
-      CustomDocument,
-      StarterKit.configure({
-        document: false,
-      }),
-    ],
+    extensions: [StarterKit],
     content: content,
     editorProps: {
       attributes: {
@@ -55,16 +45,6 @@ export const EditorInput = ({
       isItalic: ctx.editor.isActive("italic"),
       isStrike: ctx.editor.isActive("strike"),
     }),
-    equalityFn: (prev, next) => {
-      if (!next) {
-        return false;
-      }
-      return (
-        prev.isBold === next.isBold &&
-        prev.isItalic === next.isItalic &&
-        prev.isStrike === next.isStrike
-      );
-    },
   });
 
   useEffect(() => {
@@ -77,7 +57,7 @@ export const EditorInput = ({
   return (
     <StrictMode>
       <BubbleMenu
-        className="bg-light-primary dark:bg-dark-primary px-2 py-1 rounded-md flex items-center gap-x-1 border-2"
+        className=" bg-light-primary dark:bg-dark-primary px-2 py-1 rounded-md flex items-center gap-x-1 border-2"
         tippyOptions={{ duration: 100 }}
         editor={editor}
       >

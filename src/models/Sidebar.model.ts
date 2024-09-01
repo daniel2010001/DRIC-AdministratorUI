@@ -1,4 +1,5 @@
 import { DashboardIcon, DocumentListIcon, HomeIcon } from "@/assets/Icons";
+import { PrivateRoutes } from "./routes";
 
 /**
  * Interfaz para opciones de la barra lateral
@@ -33,12 +34,12 @@ export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
   {
     title: "Inicio",
     icon: HomeIcon,
-    link: "/",
+    link: PrivateRoutes.HOME,
   },
   {
     title: "Panel de control",
     icon: DashboardIcon,
-    link: "/dashboard",
+    link: PrivateRoutes.DASHBOARD,
   },
   {
     title: "Problemáticas",
@@ -46,11 +47,11 @@ export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
     options: [
       {
         title: "Lista de Problemáticas",
-        link: "/problems",
+        link: PrivateRoutes.PROBLEMS,
       },
       {
         title: "Formulario",
-        link: "/problem/new",
+        link: `${PrivateRoutes.PROBLEMS}/${PrivateRoutes.PROBLEM_FORM}`,
       },
     ],
   },

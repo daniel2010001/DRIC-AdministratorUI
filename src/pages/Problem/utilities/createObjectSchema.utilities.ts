@@ -43,16 +43,27 @@ const applyFieldConfigToSchema = <T>(
   if (config.required) {
     configuredSchema = configuredSchema.required("Este campo es requerido");
   }
-  if (config.maxLength !== undefined) {
-    if (config.type === "editor") {
+
+  if (config.type === "editor") {
+    configuredSchema = configuredSchema.test(
+      "maxLines",
+      "El número máximo de líneas es de " + (config.maxLength || 5),
+      (value) => {
+        return countHtmlLines(value as string) <= (config.maxLength || 5);
+      }
+    );
+    if (config.minLength !== undefined) {
       configuredSchema = configuredSchema.test(
-        "maxLines",
-        "El número máximo de líneas es de " + (config.maxLength || 5),
+        "minLines",
+        "El número mínimo de líneas es de " + (config.minLength || 0),
         (value) => {
-          return countHtmlLines(value as string) <= (config.maxLength || 5);
+          return countHtmlLines(value as string) <= (config.minLength || 0);
         }
       );
-    } else if (schema instanceof Yup.StringSchema) {
+    }
+  }
+  if (config.maxLength !== undefined) {
+    if (schema instanceof Yup.StringSchema) {
       configuredSchema = (configuredSchema as Yup.StringSchema).max(
         config.maxLength,
         `El tamaño máximo es de ${config.maxLength}`
@@ -65,15 +76,7 @@ const applyFieldConfigToSchema = <T>(
     }
   }
   if (config.minLength !== undefined) {
-    if (config.type === "editor") {
-      configuredSchema = configuredSchema.test(
-        "minLines",
-        "El número mínimo de líneas es de " + (config.minLength || 5),
-        (value) => {
-          return countHtmlLines(value as string) <= (config.minLength || 5);
-        }
-      );
-    } else if (schema instanceof Yup.StringSchema) {
+    if (schema instanceof Yup.StringSchema) {
       configuredSchema = (configuredSchema as Yup.StringSchema).min(
         config.minLength,
         `El tamaño mínimo es de ${config.minLength}`

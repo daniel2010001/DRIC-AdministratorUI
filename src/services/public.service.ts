@@ -5,83 +5,106 @@ import {
   UserEndpoint,
   DashboardEndpoint,
 } from "@/models";
+import { loadAbort } from "@/utilities";
 import axios, { AxiosResponse } from "axios";
+import { AxiosCall } from "../models/AxiosCall.model";
 
 const api = import.meta.env.VITE_BACKEND;
 
 /**
- * Servicio para obtener los solicitantes
- * @returns Petición de axios para obtener los solicitantes
+ * Función para obtener los solicitantes
+ * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const loadApplicants = (): (() => Promise<
-  AxiosResponse<ApplicantEndpoint[]>
->) => {
-  return () => axios.get(api + "/solicitantes");
+export const getApplicants = (): AxiosCall<ApplicantEndpoint[]> => {
+  const controller = loadAbort();
+  return {
+    call: axios.get(api + "/solicitantes", {
+      signal: controller.signal,
+    }),
+    controller,
+  };
 };
 
 /**
- * Servicio para obtener las carreras
- * @returns Petición de axios para obtener las carreras
+ * Función para obtener las carreras
+ * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const loadCareers = (): (() => Promise<
-  AxiosResponse<CareerEndpoint[]>
->) => {
-  return () => axios.get(api + "/carreras");
+export const getCareers = (): AxiosCall<CareerEndpoint[]> => {
+  const controller = loadAbort();
+  return {
+    call: axios.get(api + "/carreras", {
+      signal: controller.signal,
+    }),
+    controller,
+  };
 };
 
 /**
- * Servicio para obtener las problematicas
- * @returns Petición de axios para obtener las problemáticas
+ * Función para obtener las problematicas
+ * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const loadProblems = (): (() => Promise<
-  AxiosResponse<ProblemEndpoint[]>
->) => {
-  return () => axios.get(api + "/problematicas");
+export const getProblems = (): AxiosCall<ProblemEndpoint[]> => {
+  const controller = loadAbort();
+  return {
+    call: axios.get(api + "/problematicas", {
+      signal: controller.signal,
+    }),
+    controller,
+  };
 };
 
 /**
- * Servicio para obtener las problematicas
- * @returns Petición de axios para obtener las problemáticas
+ * Función para obtener las problematicas
+ * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const loadProblemsTable = (): (() => Promise<
-  AxiosResponse<ProblemEndpoint[]>
->) => {
-  return () => axios.get(api + "/problematicas/tabla");
+export const getProblemsTable = (): AxiosCall<ProblemEndpoint[]> => {
+  const controller = loadAbort();
+  return {
+    call: axios.get(api + "/problematicas/tabla", {
+      signal: controller.signal,
+    }),
+    controller,
+  };
 };
 
 /**
- * Servicio para obtener una problemática dado su id
- * @id Id de la problemática
- * @returns Petición de axios para obtener una problemática dado el id
+ * Función para obtener una problemática dado su id
+ * @param id Id de la problemática
+ * @returns Objeto con la petición de axios y el controller de aborto
  */
 export const searchProblem = (
-  id: number | string
-): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
-  return () => axios.get(api + "/problematicas/" + id);
+  id: string | number
+): AxiosCall<ProblemEndpoint> => {
+  const controller = loadAbort();
+  return {
+    call: axios.get(api + "/problematicas/" + id, {
+      signal: controller.signal,
+    }),
+    controller,
+  };
 };
 
 /**
- * Servicio para la eliminación de una problemática
+ * Función para la eliminación de una problemática
  * @param id Id de la problemática
- * @returns Petición de axios para la eliminación de una problemática
+ * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const deleteProblem = (
-  id: number | string
-): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
-  return () => axios.delete(api + "/problematicas/" + id);
+export const deleteProblem = (id: string | number): AxiosCall<any> => {
+  const controller = loadAbort();
+  return {
+    call: axios.delete(api + "/problematicas/" + id, {
+      signal: controller.signal,
+    }),
+    controller,
+  };
 };
 
 /**
- * Servicio para obtener el perfil del usuario autenticado
- * @param token Token de autenticación
- * @returns Petición de axios para obtener el perfil del usuario
+ * Función para obtener el perfil del usuario autenticado (sin token)
+ * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const getUserProfile = (
-  token: string
-): Promise<AxiosResponse<UserEndpoint>> => {
-  return axios.get(api + "/usuarios/profile", {
-    headers: { "x-access-token": token },
-  });
+export const getUserProfile = (): Promise<AxiosResponse<UserEndpoint>> => {
+  return axios.get(api + "/usuarios/profile");
 };
 
 /**
