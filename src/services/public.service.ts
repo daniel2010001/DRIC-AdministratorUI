@@ -109,17 +109,11 @@ export const getUserProfile = (): Promise<AxiosResponse<UserEndpoint>> => {
 
 export const updateProblemPublished = (
   id: string | number,
-  published: boolean,
-  token: string
-): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
-  console.log(id, published, token);
-
-  return () =>
-    axios.put(
-      api + "/problematicas/publicacion/" + id,
-      { publicado: published },
-      { headers: { "x-access-token": token } }
-    );
+  published: boolean
+): Promise<AxiosResponse<any>> => {
+  return axios.put(api + "/problematicas/publicacion/" + id, {
+    publicado: published,
+  });
 };
 
 /* export const updateProblemStatus = (
@@ -134,7 +128,7 @@ export const updateProblemPublished = (
  * Servicio para obtener los datos del dashboard
  * @returns Petición de axios para obtener los datos del dashboard
  */
-export const getDashboard = async (): Promise<DashboardEndpoint > => {
-    const response = await axios.get(api + "/contador");
-    return response.data as DashboardEndpoint;
+export const getDashboard = async (): Promise<DashboardEndpoint> => {
+  const response = await axios.get(api + "/contador");
+  return response.data as DashboardEndpoint;
 };

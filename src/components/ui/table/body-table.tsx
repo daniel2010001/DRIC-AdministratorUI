@@ -3,6 +3,7 @@ import { updateProblemPublished } from "@/services";
 import { PrivateRoutes } from "@/models";
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
+import { SnackbarUtilities } from "@/utilities";
 
 export interface GenericTableBodyProps<T> {
   headCells: readonly HeadCell<T>[];
@@ -39,15 +40,13 @@ export const BodyTable = <T,>({
   };
 
   const changeStatus = (id: number, status: string) => {
-    if (token !== null) {
-      updateProblemPublished(
-        id,
-        status === "Publicado" ? false : true,
-        token
-      )().then((data) => {
-        console.log(data);
-      });
-    }
+    updateProblemPublished(id, status === "Publicado" ? false : true).then(
+      () => {
+        // cambiar estado de la tabla o window.location.reload
+        // window.location.reload();
+        SnackbarUtilities.success("Cambio de estado realizado correctamente");
+      }
+    );
   };
 
   const renderStatus = (status: string, id: number) => {

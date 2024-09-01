@@ -78,8 +78,6 @@ export const Problematicas = () => {
     };
   });
 
-  console.log(problems);
-
   return (
     <div className="container mx-auto py-10">
       <Table headCells={headCells} rows={rows} title="Problemas" />
