@@ -1,16 +1,27 @@
-import { inicialUser } from "@/models";
+import { User, inicialUser } from "@/models";
+import { setLocalStore, removeLocalStore, LocalStorageKeys } from "@/utilities";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
-  name: "user",
+  name: LocalStorageKeys.USER,
   initialState: inicialUser,
   reducers: {
-    setUser: (state, action) => action.payload,
-    updateUser: (state, action) => ({ ...state, ...action.payload }),
-    resetUser: () => inicialUser,
+    createUser: (state, action) => {
+      setLocalStore<User>(LocalStorageKeys.USER, action.payload);
+      return action.payload;
+    },
+    updateUser: (state, action) => {
+      const result = { ...state, ...action.payload };
+      setLocalStore<User>(LocalStorageKeys.USER, result);
+      return result;
+    },
+    resetUser: () => {
+      removeLocalStore(LocalStorageKeys.USER);
+      return inicialUser;
+    },
   },
 });
 
-export const { setUser, updateUser, resetUser } = userSlice.actions;
+export const { createUser, updateUser, resetUser } = userSlice.actions;
 
 export default userSlice.reducer;

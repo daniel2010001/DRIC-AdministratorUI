@@ -1,19 +1,23 @@
 import { createCustomProblem } from "@/adapters";
 import { BackArrowIcon } from "@/assets/Icons/back-arrow-icon";
-import { useAsync } from "@/hooks";
-import { Problem, ProblemEndpoint } from "@/models";
+import { useAsync, useFetchAndLoader } from "@/hooks";
+import { PrivateRoutes, inicialProblem } from "@/models";
 import { searchProblem } from "@/services";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { TipTap } from "./components";
 
 export function ViewProblem() {
+  const { loading, callEndpoint: loadProblem } = useFetchAndLoader();
   const idProblem = useParams().id || 0;
-  const [problematica, setProblematica] = useState<Problem>();
+  const [problematica, setProblematica] = useState(inicialProblem);
 
-  useAsync(searchProblem(idProblem), (data: ProblemEndpoint) => {
-    setProblematica(createCustomProblem(data));
-  });
+  useAsync(
+    async () => loadProblem(searchProblem(idProblem)),
+    (data) => setProblematica(createCustomProblem(data))
+  );
+
+  if (!loading && !problematica.id) return <Navigate to=".." />;
 
   return (
     <div className="container mx-auto pb-2 md:pb-5">
@@ -24,7 +28,7 @@ export function ViewProblem() {
         </div>
         <div className="flex justify-between">
           <Link
-            to={"/problems"}
+            to={`../${PrivateRoutes.PROBLEM_ALL}`}
             className="bg-[#6B7280] text-[14px] text-white px-4 py-1 mb-2 rounded-md mt-4 flex items-center"
           >
             <BackArrowIcon className="inline-block me-1" />
@@ -43,13 +47,13 @@ export function ViewProblem() {
               NOMBRE DE LA INSTITUCI&Oacute;N O MUNICIPIO:
             </div>
             <p className="text-[#4B5563]">
-              {problematica?.applicant.name || "Sin solicitante"}
+              {problematica.applicant.name || "Sin solicitante"}
             </p>
           </div>
           <div className="pb-3">
             <div className="font-medium">CARRERA:</div>
             <p className="text-[#4B5563]">
-              {problematica?.careers
+              {problematica.careers
                 ? problematica.careers.map(({ name }) => name).join(", ")
                 : "Sin carreras"}
             </p>
@@ -57,20 +61,20 @@ export function ViewProblem() {
           <div className="pb-3">
             <div className="font-medium">PLANTEAMIENTO DEL PROBLEMA:</div>
             <p className="text-[#4B5563] text-[14px]/6">
-              {problematica?.approach || "Sin planteamiento"}
+              {problematica.approach || "Sin planteamiento"}
             </p>
           </div>
           <div className="pb-3">
             <div className="font-medium">CAUSAS QUE PRODUCE EL PROBLEMA:</div>
             <TipTap
-              content={problematica?.causes || "Sin causas"}
+              content={problematica.causes || "Sin causas"}
               className="text-[#4B5563] text-[14px]/6"
             />
           </div>
           <div className="pb-3">
             <div className="font-medium">EFECTOS QUE CAUSA EL PROBLEMA:</div>
             <TipTap
-              content={problematica?.effects || "Sin efectos"}
+              content={problematica.effects || "Sin efectos"}
               className="text-[#4B5563] text-[14px]/6"
             />
           </div>
@@ -93,7 +97,7 @@ export function ViewProblem() {
               (Que se requiere para resolver el problema)
             </p>
             <TipTap
-              content={problematica?.what || "sin contenido"}
+              content={problematica.what || "sin contenido"}
               className="text-[14px]/5 "
             />
           </div>
@@ -103,7 +107,7 @@ export function ViewProblem() {
               (Tesistas Pregrado o Tesistas Posgrado)
             </p>
             <TipTap
-              content={problematica?.who || "sin contenido"}
+              content={problematica.who || "sin contenido"}
               className="text-[14px]/5"
             />
           </div>
@@ -111,7 +115,7 @@ export function ViewProblem() {
             <div className="font-medium">¿PARA QU&Eacute;?</div>
             <p className="text-[#4B5563] pb-1">(Para que se desea realizar)</p>
             <TipTap
-              content={problematica?.why || "Sin contenido"}
+              content={problematica.why || "Sin contenido"}
               className="text-[14px]/5"
             />
           </div>
@@ -124,7 +128,7 @@ export function ViewProblem() {
               (Para cuando se tiene previsto)
             </p>
             <TipTap
-              content={problematica?.when || "Sin contenido"}
+              content={problematica.when || "Sin contenido"}
               className="text-[14px]/5"
             />
           </div>
@@ -141,20 +145,20 @@ export function ViewProblem() {
           <div className="pb-5">
             <div className="font-medium">CONTACTO DE LA INSTITUCIÓN</div>
             <p className="text-[#4B5563]">
-              {problematica?.contact || "Sin contacto"}
+              {problematica.contact || "Sin contacto"}
             </p>
           </div>
           <div className="grid grid-cols-2 pb-5">
             <div>
               <div className="font-medium">TEL&Eacute;FONO</div>
               <p className="text-[#4B5563]">
-                {problematica?.cellPhone || "Sin teléfono"}
+                {problematica.cellPhone || "Sin teléfono"}
               </p>
             </div>
             <div>
               <div className="font-medium">FECHA ACTUALIZACI&Oacute;N</div>
               <p className="text-[#4B5563]">
-                {new Date(problematica?.updatedAt ?? "").toLocaleDateString() ||
+                {new Date(problematica.updatedAt ?? "").toLocaleDateString() ||
                   "Sin fecha"}
               </p>
             </div>
@@ -162,7 +166,7 @@ export function ViewProblem() {
           <div className="pb-5">
             <div className="font-medium">ZONA</div>
             <p className="text-[#4B5563]">
-              {problematica?.zone || "Sin domicilio"}
+              {problematica.zone || "Sin domicilio"}
             </p>
           </div>
         </div>

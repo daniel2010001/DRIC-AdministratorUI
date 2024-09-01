@@ -1,4 +1,4 @@
-import { AuthState } from "@/models";
+import { AuthStore } from "@/models";
 import axios, { AxiosResponse } from "axios";
 
 const api = import.meta.env.VITE_BACKEND;
@@ -12,7 +12,7 @@ const api = import.meta.env.VITE_BACKEND;
 export const loginService = (
   nombre_usuario: string,
   contrasenia_usuario: string
-): Promise<AxiosResponse<AuthState>> => {
+): Promise<AxiosResponse<AuthStore>> => {
   return axios.post(api + "/usuarios/login", {
     nombre_usuario,
     contrasenia_usuario,

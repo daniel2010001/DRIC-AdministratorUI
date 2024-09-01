@@ -1,7 +1,8 @@
 import { createCustomApplicant, createCustomCareer } from "@/adapters";
-import { useAsync } from "@/hooks";
-import { Applicant, ApplicantEndpoint, CareerEndpoint } from "@/models";
-import { loadApplicants, loadCareers } from "@/services";
+import { useAsync, useFetchAndLoader } from "@/hooks";
+import { Applicant } from "@/models";
+import { getApplicants, getCareers } from "@/services";
+import { SnackbarUtilities } from "@/utilities";
 import { useEffect, useState } from "react";
 import { createFormEndpoint } from "./adapters";
 import {
@@ -19,23 +20,31 @@ import {
 import { createProblem } from "./services";
 
 export function ProblemForm() {
+  const { callEndpoint: callApplicants } = useFetchAndLoader();
+  const { callEndpoint: callCareers } = useFetchAndLoader();
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
   const [defaultValues, setDefaultValues] = useState(inicialProblemForm);
 
-  useAsync(loadApplicants(), (data: ApplicantEndpoint[]) => {
-    setApplicants(data.map(createCustomApplicant));
-    handleChangeApplicant();
-    setDefaultValues((prev) => ({ ...prev, applicant: null }));
-  });
-  useAsync(loadCareers(), (data: CareerEndpoint[]) => {
-    setFormConfig((prev) => ({
-      ...prev,
-      careers: { ...prev.careers, options: data.map(createCustomCareer) },
-    }));
-    setDefaultValues((prev) => ({ ...prev, careers: [] }));
-  });
+  useAsync(
+    async () => callApplicants(getApplicants()),
+    (data) => {
+      setApplicants(data.map(createCustomApplicant));
+      handleChangeApplicant();
+      setDefaultValues((prev) => ({ ...prev, applicant: null }));
+    }
+  );
+  useAsync(
+    async () => callCareers(getCareers()),
+    (data) => {
+      setFormConfig((prev) => ({
+        ...prev,
+        careers: { ...prev.careers, options: data.map(createCustomCareer) },
+      }));
+      setDefaultValues((prev) => ({ ...prev, careers: [] }));
+    }
+  );
   useEffect(() => {
     handleChangeApplicant();
   }, [isInstitute, applicants]);
@@ -54,9 +63,15 @@ export function ProblemForm() {
   };
 
   const handleSubmit = (data: ProblemFormTemplate) => {
-    createProblem(createFormEndpoint(data))().then((data) => {
-      console.log(data);
-    });
+    createProblem(createFormEndpoint(data))
+      .then(() => {
+        SnackbarUtilities.success(
+          "La problemática ha sido creada correctamente"
+        );
+      })
+      .catch(() => {
+        SnackbarUtilities.error("Error al crear la problemática");
+      });
   };
 
   return (
