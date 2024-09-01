@@ -51,7 +51,7 @@ export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
       },
       {
         title: "Formulario",
-        link: PrivateRoutes.FORM_PROBLEM,
+        link: `${PrivateRoutes.PROBLEMS}/${PrivateRoutes.PROBLEM_FORM}`,
       },
     ],
   },

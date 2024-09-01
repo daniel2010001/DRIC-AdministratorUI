@@ -11,8 +11,8 @@ const api = import.meta.env.VITE_BACKEND;
  */
 export const createProblem = (
   problemFormEndpoint: ProblemFormEndpoint
-): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
-  return () => axios.post(api + "/problematicas", problemFormEndpoint);
+): Promise<AxiosResponse<ProblemEndpoint>> => {
+  return axios.post(api + "/problematicas", problemFormEndpoint);
 };
 
 /**
@@ -24,6 +24,6 @@ export const createProblem = (
 export const updateProblem = (
   id: string | number,
   editProblemEndpoint: EditProblemEndpoint
-): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
-  return () => axios.put(api + "/problematicas/" + id, editProblemEndpoint);
+): Promise<AxiosResponse<ProblemEndpoint>> => {
+  return axios.put(api + "/problematicas/" + id, editProblemEndpoint);
 };
