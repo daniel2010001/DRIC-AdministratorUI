@@ -2,7 +2,6 @@ import { createCustomUser } from "@/adapters";
 import { Logo } from "@/assets";
 import { PrivateRoutes } from "@/models";
 import { createAuth, createUser, resetAuth, resetUser } from "@/redux/states";
-import { AppStore } from "@/redux/store";
 import { getUserProfile } from "@/services";
 import {
   LocalStorageKeys,
@@ -11,8 +10,8 @@ import {
   getLocalStore,
 } from "@/utilities";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { get, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { loginService } from "./services";
