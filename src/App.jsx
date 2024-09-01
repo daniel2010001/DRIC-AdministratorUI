@@ -1,44 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { loadApplicants, loadCareers, loadProblems, searchProblem } from './services';
-import { createApplicant, createCareer, createProblematic } from './adapters';
-import { useAsync } from './hooks';
+// import { Background, Login, Problematicas, ProblemForm } from "./pages";
+import { lazy } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ErrorProvider } from "./contexts";
+import store from "./redux/store";
+import { Provider } from "react-redux";
+import { PrivateLayout, PublicLayout } from "./components/Layout";
+
+// Simulación de componentes de página y layouts
+// const PublicHome = lazy(() => import("./pages/Home/PublicHome"));
+const PrivateHome = lazy(() => import("./pages/Home/PrivateHome"));
+const Login = lazy(() => import("./pages/Login/Login"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const Problematicas = lazy(() => import("./pages/Problematicas/Problematicas"));
+const ProblemForm = lazy(() => import("./pages/Problem/ProblemForm"));
+const EditProblem = lazy(() => import("./pages/Problem/EditProblem"));
+const ViewProblem = lazy(() => import("./pages/Problem/ViewProblem"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 function App() {
-  useAsync(loadApplicants(), (data) => { console.log("Applicants: ", data.map(createApplicant)); });
-  useAsync(loadCareers(), (data) => { console.log("Careers: ", data.map(createCareer)); });
-  useAsync(loadProblems(), (data) => { console.log("Problems: ", data.map(createProblematic)); });
-  const idProblem = 4;
-  useAsync(searchProblem(idProblem), (data) => { console.log(`Problem whit id ${idProblem}: `, createProblematic(data)); });
-
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Provider store={store}>
+      <BrowserRouter>
+        <ErrorProvider>
+          <Routes>
+            <Route path="/" element={<PublicLayout />}>
+              <Route index element={<Navigate to="/login" replace />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/form" element={<ProblemForm />} />
+            </Route>
+
+            <Route path="/" element={<PrivateLayout />}>
+              <Route path="/home" index element={<PrivateHome />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/problem/edit/:id" element={<EditProblem />} />
+              <Route path="/problem/view/:id" element={<ViewProblem />} />
+              <Route path="/problem/new" element={<ProblemForm />} />
+              <Route path="/problems" element={<Problematicas />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </ErrorProvider>
+      </BrowserRouter>
+    </Provider>
+  );
 }
 
-export default App
+export default App;
