@@ -1,11 +1,16 @@
 import { AuthStore } from "@/models";
-import { customAxiosError, getLocalStore, LocalStorageKeys } from "@/utilities";
+import {
+  customAxiosError,
+  getLocalStore,
+  LocalStorageKeys,
+  SnackbarUtilities,
+} from "@/utilities";
 import axios, { InternalAxiosRequestConfig } from "axios";
 
 export const AxiosInterceptor = () => {
   const updateHeader = (request: InternalAxiosRequestConfig) => {
     const authStore: AuthStore = getLocalStore(LocalStorageKeys.AUTH);
-    if (authStore.auth) request.headers.Authorization = authStore.token;
+    if (authStore?.auth) request.headers["x-access-token"] = authStore.token;
     request.headers["Content-Type"] = "application/json";
     return request;
   };
@@ -16,14 +21,9 @@ export const AxiosInterceptor = () => {
   });
 
   axios.interceptors.response.use(
-    (response) => {
-      console.log("response", response);
-      // SnackbarUtilities.success("Success");
-      return response;
-    },
+    (response) => response,
     (error) => {
-      // SnackbarUtilities.error(getValidationError(error.code));
-      console.log(customAxiosError(error.code));
+      SnackbarUtilities.error(customAxiosError(error.code));
       return Promise.reject(error);
     }
   );

@@ -7,7 +7,8 @@ import { Provider } from "react-redux";
 import { PrivateLayout, PublicLayout } from "./components/Layout";
 import { PrivateRoutes, PublicRoutes } from "./models";
 import { AuthGuard } from "./components/Guard";
-import { RoutesWithNotFound } from "./utilities";
+import { RoutesWithNotFound, SnackbarConfigurator } from "./utilities";
+import CustomSnackbarProvider from "./components/Snackbar/Snackbar.component";
 
 // Simulación de componentes de página y layouts
 // const PublicHome = lazy(() => import("./pages/Home/PublicHome"));
@@ -23,33 +24,36 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <RoutesWithNotFound>
-          <Route element={<PublicLayout />}>
-            <Route index element={<Navigate to="/login" replace />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/form" element={<ProblemForm />} />
-          </Route>
+        <CustomSnackbarProvider>
+          <SnackbarConfigurator />
+          <RoutesWithNotFound>
+            <Route element={<PublicLayout />}>
+              <Route index element={<Navigate to="/login" replace />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/form" element={<ProblemForm />} />
+            </Route>
 
-          <Route element={<PrivateLayout />}>
-            <Route path="/home" index element={<PrivateHome />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/problem/edit/:id" element={<EditProblem />} />
-            <Route path="/problem/new" element={<ProblemForm />} />
-            <Route path="/problems" element={<Problematicas />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
+            <Route element={<PrivateLayout />}>
+              <Route path="/home" index element={<PrivateHome />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/problem/edit/:id" element={<EditProblem />} />
+              <Route path="/problem/new" element={<ProblemForm />} />
+              <Route path="/problems" element={<Problematicas />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
 
-          <Route
-            path="/"
-            element={<Navigate to={PrivateRoutes.PRIVATE} replace />}
-          />
-          <Route path={PublicRoutes.LOGIN} element={<Login />} />
-          <Route path={PublicRoutes.FORM} element={<ProblemForm />} />
+            <Route
+              path="/"
+              element={<Navigate to={PrivateRoutes.PRIVATE} replace />}
+            />
+            <Route path={PublicRoutes.LOGIN} element={<Login />} />
+            <Route path={PublicRoutes.FORM} element={<ProblemForm />} />
 
-          <Route element={<AuthGuard />}>
-            <Route path={PrivateRoutes.PRIVATE} element={<PrivateLayout />} />
-          </Route>
-        </RoutesWithNotFound>
+            <Route element={<AuthGuard />}>
+              <Route path={PrivateRoutes.PRIVATE} element={<PrivateLayout />} />
+            </Route>
+          </RoutesWithNotFound>
+        </CustomSnackbarProvider>
       </BrowserRouter>
     </Provider>
   );

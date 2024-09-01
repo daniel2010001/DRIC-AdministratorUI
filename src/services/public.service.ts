@@ -11,7 +11,7 @@ import { AxiosCall } from "../models/AxiosCall.model";
 const api = import.meta.env.VITE_BACKEND;
 
 /**
- * Función para obtener una petición de axios
+ * Función para obtener los solicitantes
  * @returns Objeto con la petición de axios y el controller de aborto
  */
 export const getApplicants = (): AxiosCall<ApplicantEndpoint[]> => {

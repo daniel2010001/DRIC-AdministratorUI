@@ -10,5 +10,3 @@ export const RoutesWithNotFound = ({ children }: Props) => (
     <Route path="*" element={<div>404</div>} />
   </Routes>
 );
-
-export default RoutesWithNotFound;

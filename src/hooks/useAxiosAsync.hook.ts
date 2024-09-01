@@ -20,8 +20,8 @@ export const useAsync = <T>(
 ) => {
   useEffect(() => {
     let isActive = true;
-    asyncFn().then(({ data }: AxiosResponse<T, any>) => {
-      if (isActive) successFunction(data);
+    asyncFn().then((result) => {
+      if (isActive) successFunction(result.data);
     });
     return () => {
       returnFunction && returnFunction();
