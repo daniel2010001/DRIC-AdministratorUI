@@ -1,9 +1,6 @@
 import { HeadCell } from "@/models/Table.model";
-import { createEditEndpoint } from "@/pages/Problem/adapters";
-import { updateProblem } from "@/pages/Problem/services";
 import { updateProblemPublished } from "@/services";
 import { TableBody, TableCell, TableRow } from "@mui/material";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export interface GenericTableBodyProps<T> {
@@ -20,7 +17,6 @@ export const BodyTable = <T,>({
   dense,
 }: GenericTableBodyProps<T>) => {
   const token = localStorage.getItem("token");
-  const [statusItem, setStatusItem] = useState<string>("");
 
   const renderActions = (id: number) => {
     return (
