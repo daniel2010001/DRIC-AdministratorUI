@@ -59,7 +59,7 @@ export const BodyTable = <T,>({
         <select
           className="bg-transparent"
           onChange={(e) => changeStatus(Number(id), status)}
-          value={status}
+          defaultValue={status}
         >
           <option value="Publicado">Publicado</option>
           <option value="No publicado">No publicado</option>
