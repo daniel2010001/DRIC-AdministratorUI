@@ -31,6 +31,9 @@ export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
     updatedAt: new Date(problematic.actualizado),
     createdAt: new Date(problematic.creado),
 
+    active: problematic.activo,
+    validate: problematic.validado,
+
     applicant: createCustomApplicant(problematic.solicitante),
     careers: problematic.carreras.map(createCustomCareer),
   };
