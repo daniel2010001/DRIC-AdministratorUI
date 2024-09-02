@@ -4,6 +4,7 @@ import { Applicant } from "@/models";
 import { getApplicants, getCareers } from "@/services";
 import { SnackbarUtilities } from "@/utilities";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createFormEndpoint } from "./adapters";
 import {
   FormField,
@@ -20,6 +21,7 @@ import {
 import { createProblem } from "./services";
 
 export function ProblemForm() {
+  const navigate = useNavigate();
   const { callEndpoint: callApplicants } = useFetchAndLoader();
   const { callEndpoint: callCareers } = useFetchAndLoader();
   const [isInstitute, setIsInstitute] = useState(false);
@@ -68,6 +70,7 @@ export function ProblemForm() {
         SnackbarUtilities.success(
           "La problemática ha sido creada correctamente"
         );
+        navigate("..");
       })
       .catch(() => {
         SnackbarUtilities.error("Error al crear la problemática");
@@ -77,8 +80,8 @@ export function ProblemForm() {
   return (
     <div className="mx-auto max-w-screen-lg border-2 border-light-primary dark:border-dark-primary rounded-lg bg-light-secondary dark:bg-dark-secondary">
       <h1 className="font-semibold text-xl md:text-2xl md:max-w-screen-md mx-auto p-8 pb-0 text-center text-light-primary dark:text-dark-primary">
-        FORMULARIO DE PROBLEMATICAS PARA EL DESARROLLO DE UN PROYECTO DE TESIS O
-        PROYECTO DE GRADO
+        FORMULARIO DE PROBLEM&Aacute;TICAS PARA EL DESARROLLO DE UN PROYECTO DE
+        TESIS O PROYECTO DE GRADO
       </h1>
 
       <FormWrapper<ProblemFormTemplate>

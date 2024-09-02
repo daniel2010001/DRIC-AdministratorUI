@@ -1,8 +1,9 @@
 import { createCustomProblem } from "@/adapters";
 import { BackArrowIcon } from "@/assets/Icons/back-arrow-icon";
 import { useAsync, useFetchAndLoader } from "@/hooks";
-import { PrivateRoutes, inicialProblem } from "@/models";
+import { inicialProblem } from "@/models";
 import { searchProblem } from "@/services";
+import { SnackbarUtilities } from "@/utilities";
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { TipTap } from "./components";
@@ -17,7 +18,10 @@ export function ViewProblem() {
     (data) => setProblematica(createCustomProblem(data))
   );
 
-  if (!loading && !problematica.id) return <Navigate to=".." />;
+  if (!loading && !problematica.id) {
+    SnackbarUtilities.error("No se encontró la problemática");
+    return <Navigate to=".." />;
+  }
 
   return (
     <div className="container mx-auto pb-2 md:pb-5">
@@ -28,7 +32,7 @@ export function ViewProblem() {
         </div>
         <div className="flex justify-between">
           <Link
-            to={`../${PrivateRoutes.PROBLEM_ALL}`}
+            to=".."
             className="bg-[#6B7280] text-[14px] text-white px-4 py-1 mb-2 rounded-md mt-4 flex items-center"
           >
             <BackArrowIcon className="inline-block me-1" />

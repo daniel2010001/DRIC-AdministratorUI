@@ -88,4 +88,6 @@ export const inicialProblem: Problem = {
   createdAt: new Date(),
   applicant: inicialApplicant,
   careers: [],
+  active: false,
+  validate: false,
 };
