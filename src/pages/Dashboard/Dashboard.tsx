@@ -44,7 +44,7 @@ export function Dashboard() {
       icon: <ProblemIcon className="text-4xl text-red-500" />,
       title: "Problemáticas",
       number: data.problematicas,
-      link: "/problems",
+      link: "/private/problems",
       detalles: [
         { label: "Publicadas", value: data.publicadas },
         { label: "No publicadas", value: data.noPublicadas },
