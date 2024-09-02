@@ -2,9 +2,13 @@ import { Card } from "@/components/ui/table/cards";
 import { useState, useEffect } from "react";
 import { getDashboard } from "@/services/public.service";
 import { Link } from "react-router-dom";
-import { InstiucionIcon, ProblemIcon, SolicitudIcon, UserIcon } from "@/assets/Icons";
+import {
+  InstiucionIcon,
+  ProblemIcon,
+  SolicitudIcon,
+  UserIcon,
+} from "@/assets/Icons";
 import { DashboardEndpoint, DashboardCard } from "@/models/Dashboard.model";
-
 
 function useDashboardData() {
   const [data, setData] = useState<DashboardEndpoint>({
@@ -44,7 +48,7 @@ export function Dashboard() {
       icon: <ProblemIcon className="text-4xl text-red-500" />,
       title: "Problemáticas",
       number: data.problematicas,
-      link: "/problems",
+      link: "/private/problems/all",
       detalles: [
         { label: "Publicadas", value: data.publicadas },
         { label: "No publicadas", value: data.noPublicadas },
