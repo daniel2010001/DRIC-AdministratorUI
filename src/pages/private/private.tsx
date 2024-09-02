@@ -12,7 +12,7 @@ export const Private = () => {
   return (
     <PrivateLayout>
       <RoutesWithNotFound>
-        <Route path="/" element={<Navigate to={PrivateRoutes.HOME} />} />
+        <Route path="/" element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
         <Route path={PrivateRoutes.HOME} index element={<Home />} />
         <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} />
         <Route path={PrivateRoutes.PROBLEMS + "/*"} element={<Problems />} />
