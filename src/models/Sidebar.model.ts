@@ -46,8 +46,12 @@ export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
     icon: DocumentListIcon,
     options: [
       {
-        title: "Lista de Problemáticas",
+        title: "Lista de problemáticas",
         link: PrivateRoutes.PROBLEMS,
+      },
+      {
+        title: "Lista de solicitudes",
+        link: `${PrivateRoutes.PROBLEMS}/${PrivateRoutes.REQUESTS}`,
       },
       {
         title: "Formulario",

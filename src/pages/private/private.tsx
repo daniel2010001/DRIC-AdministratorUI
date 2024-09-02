@@ -6,7 +6,7 @@ import { Navigate, Route } from "react-router-dom";
 
 const Home = lazy(() => import("../Home/PrivateHome"));
 const Dashboard = lazy(() => import("../Dashboard/Dashboard"));
-const Problems = lazy(() => import("../Problem/problems"));
+const ProblemsRoutes = lazy(() => import("../Problem/problems-routes"));
 
 export const Private = () => {
   return (
@@ -15,7 +15,10 @@ export const Private = () => {
         <Route path="/" element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
         <Route path={PrivateRoutes.HOME} index element={<Home />} />
         <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} />
-        <Route path={PrivateRoutes.PROBLEMS + "/*"} element={<Problems />} />
+        <Route
+          path={PrivateRoutes.PROBLEMS + "/*"}
+          element={<ProblemsRoutes />}
+        />
       </RoutesWithNotFound>
     </PrivateLayout>
   );
