@@ -46,6 +46,17 @@ export const BodyTable = <T,>({
     );
   };
 
+  const renderActionsRequest = (id: string) => {
+    return (
+      <Link
+        to={`../${PrivateRoutes.PROBLEM_VIEW}/${id}`}
+        className="underline underline-offset-2 text-blue-600"
+      >
+        Ver
+      </Link>
+    );
+  };
+
   const changeStatus = (id: number, status: string) => {
     const newStatus = status === "Publicado" ? "No publicado" : "Publicado";
     setVisibleRowsInit((prevRows) =>
@@ -101,6 +112,8 @@ export const BodyTable = <T,>({
                     : headCell.property === "updatedAt" ||
                       headCell.property === "publishedAt"
                     ? new Date(value as string).toLocaleDateString()
+                    : headCell.isRequest
+                    ? renderActionsRequest((row as { id: string })["id"])
                     : String(value)}
                 </TableCell>
               );
