@@ -49,10 +49,10 @@ export const BodyTable = <T,>({
   const renderActionsRequest = (id: string) => {
     return (
       <Link
-        to={`../${PrivateRoutes.PROBLEM_VIEW}/${id}`}
+        to={`../${PrivateRoutes.PROBLEM_EDIT}/${id}`}
         className="underline underline-offset-2 text-blue-600"
       >
-        Ver
+        Revisar
       </Link>
     );
   };
