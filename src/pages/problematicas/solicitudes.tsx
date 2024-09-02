@@ -17,12 +17,14 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     disablePadding: true,
     align: "left",
     minWidth: "auto",
+    isOrder: false,
   },
   {
     property: "title",
     label: "Títuto",
     numeric: false,
     disablePadding: false,
+    isOrder: true,
   },
   {
     property: "applicant",
@@ -30,24 +32,28 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     numeric: false,
     disablePadding: false,
     align: "left",
+    isOrder: true,
   },
   {
     property: "updatedAt",
     label: "Actualizado",
     numeric: false,
     disablePadding: false,
+    isOrder: true,
   },
   {
     property: "publishedAt",
     label: "Publicado",
     numeric: false,
     disablePadding: false,
+    isOrder: true,
   },
   {
     property: "user",
     label: "Becario",
     numeric: false,
     disablePadding: false,
+    isOrder: true,
   },
   {
     property: "actions",
@@ -55,6 +61,7 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     numeric: false,
     disablePadding: false,
     isRequest: true,
+    isOrder: true,
   },
 ];
 
@@ -85,7 +92,6 @@ export const Solicitudes = () => {
 
   return (
     <div className="container mx-auto py-10">
-      <div>Solicitudes</div>
       <Table headCells={headCells} rows={rows} title="Solicitudes" />
     </div>
   );
