@@ -100,4 +100,6 @@ export const inicialProblem: Problem = {
   validate: false,
   applicant: inicialApplicant,
   careers: [],
+  active: false,
+  validate: false,
 };

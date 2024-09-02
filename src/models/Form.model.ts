@@ -1,5 +1,3 @@
-import { ProblemFormTemplate } from "../pages/ProblemForm/models/ProblemForm.model";
-
 /**
  * Interfaz para las opciones de un combobox
  */
