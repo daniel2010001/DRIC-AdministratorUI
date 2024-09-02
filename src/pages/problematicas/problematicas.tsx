@@ -13,16 +13,18 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
   {
     property: "id",
     label: "ID",
-    numeric: true,
-    disablePadding: true,
+    numeric: false,
+    disablePadding: false,
     align: "left",
     minWidth: "auto",
+    isOrder: false,
   },
   {
     property: "title",
     label: "Títuto",
     numeric: false,
     disablePadding: false,
+    isOrder: true,
   },
   {
     property: "applicant",
@@ -30,18 +32,21 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     numeric: false,
     disablePadding: false,
     align: "left",
+    isOrder: true,
   },
   {
     property: "updatedAt",
     label: "Actualizado",
     numeric: false,
     disablePadding: false,
+    isOrder: true,
   },
   {
     property: "publishedAt",
     label: "Publicado",
     numeric: false,
     disablePadding: false,
+    isOrder: true,
   },
   {
     property: "estado",
@@ -49,12 +54,14 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     numeric: false,
     disablePadding: false,
     isStatus: true,
+    isOrder: true,
   },
   {
     property: "actions",
     label: "Acciones",
     numeric: false,
     disablePadding: false,
+    isOrder: false,
     isAction: true,
   },
 ];
@@ -77,6 +84,8 @@ export const Problematicas = () => {
       actions: "ver, editar",
     };
   });
+
+  console.log(problems);
 
   return (
     <div className="container mx-auto py-10">
