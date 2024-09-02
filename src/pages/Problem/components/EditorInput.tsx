@@ -28,7 +28,7 @@ export const EditorInput = ({
     editorProps: {
       attributes: {
         class: clsx(
-          "!min-h-16 h-auto bg-white dark:bg-dark-secondary",
+          "!min-h-16 h-auto bg-white dark:bg-dark-secondary outline-none",
           className
         ),
       },

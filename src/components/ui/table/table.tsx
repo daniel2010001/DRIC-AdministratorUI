@@ -104,7 +104,7 @@ export const Table = <T extends { [key: string]: string | number }>({
         </Paper>
         <FormControlLabel
           control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Achatar tabla"
+          label="Reducir celdas"
         />
       </Box>
     </div>
