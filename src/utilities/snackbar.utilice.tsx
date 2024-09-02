@@ -1,4 +1,3 @@
-import CustomSnackbarProvider from "@/components/Snackbar/Snackbar.component";
 import { ProviderContext, useSnackbar, VariantType } from "notistack";
 
 let useSnackbarRef: ProviderContext;

@@ -4,7 +4,7 @@ import { Applicant } from "@/models";
 import { getApplicants, getCareers, searchProblem } from "@/services";
 import { SnackbarUtilities } from "@/utilities";
 import { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { crearteEditTemplate, createEditEndpoint } from "./adapters";
 import {
   FormField,
@@ -21,6 +21,7 @@ import {
 import { updateProblem } from "./services";
 
 export function EditProblem() {
+  const navigate = useNavigate();
   const { loading, callEndpoint: callProblem } = useFetchAndLoader();
   const { callEndpoint: callApplicant } = useFetchAndLoader();
   const { callEndpoint: callCareers } = useFetchAndLoader();
@@ -71,20 +72,27 @@ export function EditProblem() {
   };
 
   const handleSubmit = (data: EditProblemTemplate) => {
-    updateProblem(idProblem, createEditEndpoint(data)).then((data) => {
-      SnackbarUtilities.success(
-        "La problemática ha sido actualizada correctamente"
-      );
-    });
+    updateProblem(idProblem, createEditEndpoint(data))
+      .then((data) => {
+        SnackbarUtilities.success(
+          "La problemática ha sido actualizada correctamente"
+        );
+        navigate("..");
+      })
+      .catch(() => {
+        SnackbarUtilities.error("Error al actualizar la problemática");
+      });
   };
 
-  if (!loading && !defaultValues.title) return <Navigate to=".." />;
+  if (!loading && !defaultValues.title) {
+    SnackbarUtilities.error("No se encontró la problemática");
+    return <Navigate to=".." />;
+  }
 
   return (
     <div className="mx-auto max-w-screen-lg border-2 border-light-primary dark:border-dark-primary rounded-lg bg-light-secondary dark:bg-dark-secondary">
       <h1 className="font-semibold text-xl md:text-2xl md:max-w-screen-md mx-auto p-8 pb-0 text-center text-light-primary dark:text-dark-primary">
-        FORMULARIO DE PROBLEMATICAS PARA EL DESARROLLO DE UN PROYECTO DE TESIS O
-        PROYECTO DE GRADO
+        FORMULARIO DE EDICI&Oacute;N DE PROBLEM&Aacute;TICA
       </h1>
 
       <FormWrapper<EditProblemTemplate>

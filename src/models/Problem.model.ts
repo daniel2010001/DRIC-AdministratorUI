@@ -4,6 +4,8 @@ import {
   Career,
   CareerEndpoint,
   inicialApplicant,
+  User,
+  UserEndpoint,
 } from "@/models";
 
 /**
@@ -38,6 +40,10 @@ export interface Problem {
   careers: Career[];
 }
 
+export interface ProblemRequest extends Problem {
+  user: User;
+}
+
 /**
  * Interfaz para las Problemáticas recividos desde la API
  */
@@ -69,6 +75,10 @@ export interface ProblemEndpoint {
   carreras: CareerEndpoint[];
 }
 
+export interface ProblemRequestEnpoint extends ProblemEndpoint {
+  usuario: UserEndpoint;
+}
+
 export const inicialProblem: Problem = {
   id: 0,
   title: "",
@@ -86,6 +96,8 @@ export const inicialProblem: Problem = {
   publishedAt: new Date(),
   updatedAt: new Date(),
   createdAt: new Date(),
+  active: false,
+  validate: false,
   applicant: inicialApplicant,
   careers: [],
 };

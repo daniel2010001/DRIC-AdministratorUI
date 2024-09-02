@@ -2,9 +2,14 @@ import { Card } from "@/components/ui/table/cards";
 import { useState, useEffect } from "react";
 import { getDashboard } from "@/services/public.service";
 import { Link } from "react-router-dom";
-import { InstiucionIcon, ProblemIcon, SolicitudIcon, UserIcon } from "@/assets/Icons";
+import {
+  InstiucionIcon,
+  ProblemIcon,
+  SolicitudIcon,
+  UserIcon,
+} from "@/assets/Icons";
 import { DashboardEndpoint, DashboardCard } from "@/models/Dashboard.model";
-
+import { PrivateRoutes } from "@/models";
 
 function useDashboardData() {
   const [data, setData] = useState<DashboardEndpoint>({
@@ -44,7 +49,7 @@ export function Dashboard() {
       icon: <ProblemIcon className="text-4xl text-red-500" />,
       title: "Problemáticas",
       number: data.problematicas,
-      link: "/private/problems",
+      link: `../${PrivateRoutes.PROBLEMS}`,
       detalles: [
         { label: "Publicadas", value: data.publicadas },
         { label: "No publicadas", value: data.noPublicadas },
@@ -54,6 +59,7 @@ export function Dashboard() {
       icon: <SolicitudIcon className="text-4xl text-yellow-400" />,
       title: "Solicitudes pendientes",
       number: data.solicitudes,
+      link: `../${PrivateRoutes.PROBLEMS}/${PrivateRoutes.REQUESTS}`,
     },
     {
       icon: <UserIcon className="text-4xl text-cyan-800" />,

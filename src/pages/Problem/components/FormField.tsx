@@ -30,7 +30,7 @@ export const FormField = <T extends Object>({
     "block w-full mt-1 py-1.5 px-3 sm:text-sm sm:leading-6 h-auto",
     "rounded-md border-[1px] shadow-sm ring-1 ring-inset ring-gray-300 font-medium",
     "focus:ring-2 focus:ring-inset focus:ring-indigo-400 dark:focus:ring-indigo-400",
-    "bg-ligth-secondary text-ligth-primary border-light-primary dark:bg-dark-secondary dark:text-dark-primary"
+    "bg-ligth-secondary text-ligth-primary border-light-primary dark:bg-dark-secondary dark:text-dark-primary outline-none"
   );
   clsx("sm:col-span-3 sm:col-span-6 col-span-full");
   return (
@@ -59,7 +59,7 @@ export const FormField = <T extends Object>({
           config.type === "textarea" ? (
             <Textarea
               {...field}
-              className={clsx(className, "min-h-16 h-auto")}
+              className={clsx(className, "min-h-16 h-autooutline-none")}
             />
           ) : config.type === "editor" ? (
             <EditorInput

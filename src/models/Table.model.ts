@@ -55,4 +55,5 @@ export interface HeadCell<T> {
   minWidth?: string;
   isAction?: boolean;
   isStatus?: boolean;
+  isRequest?: boolean;
 }
