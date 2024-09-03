@@ -1,5 +1,7 @@
 import clsx from "clsx";
 
+import { IptuLogo } from "@/assets/img/iptu";
+import { IptuLogo as IptuLogoLight } from "@/assets/img/iptu-light";
 import UmssLogo from "../../assets/img/LogoUmss.png";
 import LogoApp from "../../assets/img/iptu.png";
 
@@ -10,7 +12,7 @@ interface HeaderProps {
 export function Header({ toggleSidebar }: HeaderProps) {
   return (
     <nav
-      className={clsx("fixed top-0 h-16 z-50 w-full bg-[#5c74a4] shadow-lg")}
+      className={clsx("fixed top-0 h-16 z-50 w-full bg-[#253868] shadow-lg")}
     >
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
@@ -36,13 +38,14 @@ export function Header({ toggleSidebar }: HeaderProps) {
                 />
               </svg>
             </button>
-
             <img src={UmssLogo} alt="UMSS Logo" className="md:h-12 h-8 ml-4" />
-            <img
+            {/* <IptuLogo className="md:h-8 h-8 ml-4 md:ml-6 bg-white" /> */}
+            <IptuLogoLight className="md:h-8 h-8 ml-4 md:ml-6" />
+            {/* <img
               src={LogoApp}
               alt="Logo App"
               className="md:h-8 h-8 ml-4 md:ml-6"
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -51,4 +54,3 @@ export function Header({ toggleSidebar }: HeaderProps) {
 }
 
 export default Header;
-
