@@ -1,41 +1,16 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+
+import UmssLogo from "../../assets/img/LogoUmss.png";
+import LogoApp from "../../assets/img/iptu.png";
 
 interface HeaderProps {
   toggleSidebar: () => void;
 }
 
 export function Header({ toggleSidebar }: HeaderProps) {
-  const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const userTheme = localStorage.getItem("theme");
-    const osPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    if (userTheme === "dark" || (!userTheme && osPrefersDark)) {
-      document.body.classList.add("dark");
-      setIsDarkMode(true);
-    } else {
-      document.body.classList.remove("dark");
-      setIsDarkMode(false);
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    document.body.classList.toggle("dark", newTheme);
-    localStorage.setItem("theme", newTheme ? "dark" : "light");
-  };
-
   return (
     <nav
-      className={clsx(
-        "fixed top-0 h-16 z-50 w-full bg-white border-b border-gray-200",
-        "dark:bg-gray-800 dark:border-gray-700"
-      )}
+      className={clsx("fixed top-0 h-16 z-50 w-full bg-[#5c74a4] shadow-lg")}
     >
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
@@ -43,11 +18,7 @@ export function Header({ toggleSidebar }: HeaderProps) {
             <button
               type="button"
               data-hover="true"
-              className={clsx(
-                "inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden",
-                "hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200",
-                "dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              )}
+              className="inline-flex items-center p-2 text-sm text-white rounded-lg lg:hidden hover:bg-back-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
               onClick={toggleSidebar}
             >
               <span className="sr-only">Open sidebar</span>
@@ -66,12 +37,12 @@ export function Header({ toggleSidebar }: HeaderProps) {
               </svg>
             </button>
 
-            <button
-              onClick={toggleTheme}
-              className="mx-2 p-2 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-            >
-              Cambiar a {isDarkMode ? "Claro" : "Oscuro"}
-            </button>
+            <img src={UmssLogo} alt="UMSS Logo" className="md:h-12 h-8 ml-4" />
+            <img
+              src={LogoApp}
+              alt="Logo App"
+              className="md:h-8 h-8 ml-4 md:ml-6"
+            />
           </div>
         </div>
       </div>
@@ -80,3 +51,4 @@ export function Header({ toggleSidebar }: HeaderProps) {
 }
 
 export default Header;
+

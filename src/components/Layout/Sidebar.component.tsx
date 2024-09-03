@@ -13,9 +13,7 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const [openDropdowns, setOpenDropdowns] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const [openDropdowns, setOpenDropdowns] = useState<{ [key: string]: boolean }>({});
 
   const handleClickOutside = (event: any) => {
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -24,10 +22,27 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
   };
 
   const toggleDropdown = (title: string) => {
-    setOpenDropdowns((prevState) => ({
-      ...prevState,
-      [title]: !prevState[title],
-    }));
+    if (openDropdowns[title]) {
+      const items = document.querySelectorAll(`#dropdown-${title.replace(/\s+/g, '-')}-example li`);
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.remove('visible');
+          item.classList.add('hiding');
+        }, index * 200);
+      });
+      
+      setTimeout(() => {
+        setOpenDropdowns((prevState) => ({
+          ...prevState,
+          [title]: false,
+        }));
+      }, items.length * 100 + 500);
+    } else {
+      setOpenDropdowns((prevState) => ({
+        ...prevState,
+        [title]: true,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -35,18 +50,30 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    Object.keys(openDropdowns).forEach((key) => {
+      if (openDropdowns[key]) {
+        const items = document.querySelectorAll(`#dropdown-${key.replace(/\s+/g, '-')}-example li`);
+        items.forEach((item, index) => {
+          item.classList.remove('hiding');
+          setTimeout(() => {
+            item.classList.add('visible');
+          }, index * 100);
+        });
+      }
+    });
+  }, [openDropdowns]);
 
   const iconClassName = clsx(
     "flex-shrink-0 w-5 h-5 transition duration-75",
-    "text-gray-500 group-hover:text-gray-900",
-    "dark:text-gray-400 dark:group-hover:text-white"
+    "text-white group-hover:text-white"
   );
 
   const sidebarOptionClassName = clsx(
-    "flex items-center w-full text-base p-2 text-gray-900",
-    "hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
-    "group transition duration-75 rounded-lg"
+    "flex items-center w-full text-base p-2 text-white",
+    "hover:bg-gray-500 group transition duration-75 rounded-lg"
   );
 
   const dispatch = useDispatch();
@@ -61,12 +88,11 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
       ref={sidebarRef}
       className={clsx(
         "fixed top-0 left-0 z-40 w-64 h-screen pt-20 border-r",
-        "bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700",
-        "transition-transform lg:translate-x-0",
+        "bg-[#253868] border-gray-200 transition-transform lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
-      <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+      <div className="h-full px-3 pb-4 overflow-y-auto bg-[#253868]">
         <ul className="space-y-2 font-medium">
           {SidebarOptions.map((option, index) => (
             <li key={index}>
@@ -84,9 +110,12 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
                     <DropdownIcon className="w-3 h-3 m-2" />
                   </button>
                   {openDropdowns[option.title] && (
-                    <ul id="dropdown-example" className="py-2 space-y-2">
+                    <ul
+                      id={`dropdown-${option.title.replace(/\s+/g, '-')}-example`}
+                      className={clsx("py-2 space-y-2 dropdown-menu")}
+                    >
                       {option.options.map((dropdownOption, dropdownIndex) => (
-                        <li key={dropdownIndex}>
+                        <li key={dropdownIndex} className="dropdown-option">
                           <Link
                             to={dropdownOption.link}
                             className={clsx(sidebarOptionClassName, "pl-11")}
