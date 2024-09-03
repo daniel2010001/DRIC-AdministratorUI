@@ -1,4 +1,4 @@
-export { default as EditProblem } from "./EditProblem";
-export { default as ProblemForm } from "./ProblemForm";
-export { default as Problems } from "./problems";
-export { default as ViewProblem } from "./ViewProblem";
+export * from "./EditProblem";
+export * from "./ProblemForm";
+export * from "./problems-routes";
+export * from "./ViewProblem";

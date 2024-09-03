@@ -4,6 +4,8 @@ import {
   ProblemEndpoint,
   UserEndpoint,
   DashboardEndpoint,
+  ProblemRequest,
+  ProblemRequestEnpoint,
 } from "@/models";
 import { loadAbort } from "@/utilities";
 import axios, { AxiosResponse } from "axios";
@@ -61,6 +63,23 @@ export const getProblemsTable = (): AxiosCall<ProblemEndpoint[]> => {
   const controller = loadAbort();
   return {
     call: axios.get(api + "/problematicas/tabla", {
+      signal: controller.signal,
+    }),
+    controller,
+  };
+};
+
+/**
+ * Función para obtener las problematicas
+ * @returns Objeto con la petición de axios y el controller de aborto
+ */
+
+export const getProblemsRequestsTable = (): AxiosCall<
+  ProblemRequestEnpoint[]
+> => {
+  const controller = loadAbort();
+  return {
+    call: axios.get(api + "/problematicas/solicitudes", {
       signal: controller.signal,
     }),
     controller,

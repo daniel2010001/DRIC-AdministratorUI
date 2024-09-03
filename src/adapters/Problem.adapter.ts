@@ -1,6 +1,12 @@
-import { ProblemEndpoint, Problem } from "@/models";
+import {
+  ProblemEndpoint,
+  Problem,
+  ProblemRequestEnpoint,
+  ProblemRequest,
+} from "@/models";
 import { createCustomApplicant } from "./Applicant.adapter";
 import { createCustomCareer } from "./Career.adapter";
+import { createCustomUser } from "./User.adapter";
 
 /**
  * Función para adaptar una problemática recibida desde la API
@@ -39,4 +45,15 @@ export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
   };
 
   return formatProblematic;
+};
+
+export const createCustomProblemRequest = (
+  problematicRequest: ProblemRequestEnpoint
+): ProblemRequest => {
+  const formatProblematicRequest: ProblemRequest = {
+    ...createCustomProblem(problematicRequest),
+    user: createCustomUser(problematicRequest.usuario),
+  };
+
+  return formatProblematicRequest;
 };

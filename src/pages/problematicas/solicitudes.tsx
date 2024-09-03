@@ -1,9 +1,9 @@
 /* NO TOCAR esto, porque se rompe xd */
 import { useState } from "react";
-import { Problem } from "@/models";
+import { Problem, ProblemRequest, User } from "@/models";
 import { useAsync, useFetchAndLoader } from "@/hooks";
-import { getProblemsTable } from "@/services";
-import { createCustomProblem } from "@/adapters";
+import { getProblemsRequestsTable } from "@/services";
+import { createCustomProblem, createCustomProblemRequest } from "@/adapters";
 import { HeadCell } from "@/models/Table.model";
 import { Table } from "@/components/ui/table/table";
 
@@ -13,8 +13,8 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
   {
     property: "id",
     label: "ID",
-    numeric: false,
-    disablePadding: false,
+    numeric: true,
+    disablePadding: true,
     align: "left",
     minWidth: "auto",
     isOrder: false,
@@ -49,11 +49,10 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     isOrder: true,
   },
   {
-    property: "estado",
-    label: "Estado",
+    property: "user",
+    label: "Becario",
     numeric: false,
     disablePadding: false,
-    isStatus: true,
     isOrder: true,
   },
   {
@@ -61,37 +60,41 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
     label: "Acciones",
     numeric: false,
     disablePadding: false,
-    isOrder: false,
-    isAction: true,
+    isRequest: true,
+    isOrder: true,
   },
 ];
 
-export const Problematicas = () => {
+export const Solicitudes = () => {
   const { callEndpoint } = useFetchAndLoader();
-  const [problems, setProblems] = useState<Problem[]>([]);
+  const [problemsRequests, setProblemsResquests] = useState<ProblemRequest[]>(
+    []
+  );
 
-  const loadProblems = async () => callEndpoint(getProblemsTable());
-  useAsync(loadProblems, (data) => setProblems(data.map(createCustomProblem)));
+  const loadProblems = async () => callEndpoint(getProblemsRequestsTable());
+  useAsync(loadProblems, (data) =>
+    setProblemsResquests(data.map(createCustomProblemRequest))
+  );
 
-  const rows: { [key: string]: string | number }[] = problems.map((problem) => {
-    return {
-      id: problem.id,
-      title: problem.title,
-      applicant: problem.applicant.name,
-      updatedAt: problem.updatedAt.toDateString(),
-      publishedAt: problem.publishedAt.toDateString(),
-      estado: problem.active ? "Publicado" : "No publicado",
-      actions: "ver, editar",
-    };
-  });
-
-  console.log(problems);
+  const rows: { [key: string]: string | number }[] = problemsRequests.map(
+    (requests) => {
+      return {
+        id: requests.id,
+        title: requests.title,
+        applicant: requests.applicant.name,
+        updatedAt: requests.updatedAt.toDateString(),
+        publishedAt: requests.publishedAt.toDateString(),
+        user: requests.user.username,
+        actions: "Revisar",
+      };
+    }
+  );
 
   return (
     <div className="container mx-auto py-10">
-      <Table headCells={headCells} rows={rows} title="Problemas" />
+      <Table headCells={headCells} rows={rows} title="Solicitudes" />
     </div>
   );
 };
 
-export default Problematicas;
+export default Solicitudes;
