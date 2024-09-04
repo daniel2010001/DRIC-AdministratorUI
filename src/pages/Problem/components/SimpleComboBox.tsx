@@ -1,4 +1,4 @@
-import { DropdownIcon, CheckIcon } from "@/assets/Icons";
+import { CheckIcon, CloseIcon, DropdownIcon } from "@/assets/Icons";
 import { ComboBoxOption } from "@/models";
 import {
   Combobox,
@@ -93,6 +93,12 @@ export const SimpleComboBox = ({
                     )}
                   >
                     {option.shortName.toUpperCase()}
+                    <ComboboxOption
+                      value={option}
+                      className="ms-2 size-4 rounded-lg border-0 border-solid border-light-primary dark:border-dark-primary hover:text-red-500 cursor-pointer"
+                    >
+                      <CloseIcon />
+                    </ComboboxOption>
                   </li>
                 )) || <></>
             )}
