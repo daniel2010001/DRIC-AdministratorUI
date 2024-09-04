@@ -34,7 +34,6 @@ export function ProblemForm() {
     (data) => {
       setApplicants(data.map(createCustomApplicant));
       handleChangeApplicant();
-      setDefaultValues((prev) => ({ ...prev, applicant: null }));
     }
   );
   useAsync(
@@ -44,9 +43,9 @@ export function ProblemForm() {
         ...prev,
         careers: { ...prev.careers, options: data.map(createCustomCareer) },
       }));
-      setDefaultValues((prev) => ({ ...prev, careers: [] }));
     }
   );
+
   useEffect(() => {
     handleChangeApplicant();
   }, [isInstitute, applicants]);

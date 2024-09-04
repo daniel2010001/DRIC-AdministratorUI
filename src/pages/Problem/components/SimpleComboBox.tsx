@@ -8,7 +8,7 @@ import {
   ComboboxOptions,
 } from "@headlessui/react";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SimpleComboBoxProps {
   value: any;
@@ -33,6 +33,10 @@ export const SimpleComboBox = ({
       : options.filter((option: { name: string }) => {
           return option.name.toLowerCase().includes(query.toLowerCase());
         });
+
+  useEffect(() => {
+    onChange(multiple ? [] : (null as any));
+  }, [options, multiple]);
 
   return (
     <Combobox
