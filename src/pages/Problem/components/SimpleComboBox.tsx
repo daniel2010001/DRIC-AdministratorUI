@@ -35,8 +35,8 @@ export const SimpleComboBox = ({
         });
 
   useEffect(() => {
-    onChange(multiple ? [] : (null as any));
-  }, [options, multiple]);
+    if (options.length > 0) onChange(multiple ? [] : (null as any));
+  }, [options, multiple, onChange]);
 
   return (
     <Combobox

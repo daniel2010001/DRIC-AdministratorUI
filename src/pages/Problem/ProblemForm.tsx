@@ -27,7 +27,6 @@ export function ProblemForm() {
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
-  const [defaultValues, setDefaultValues] = useState(inicialProblemForm);
 
   useAsync(
     async () => callApplicants(getApplicants()),
@@ -86,7 +85,7 @@ export function ProblemForm() {
       <FormWrapper<ProblemFormTemplate>
         onSubmit={handleSubmit}
         formConfig={problemFormConfig}
-        defaultValues={defaultValues}
+        defaultValues={inicialProblemForm}
       >
         {formLayout.map((section) => (
           <FormSection

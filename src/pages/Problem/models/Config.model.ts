@@ -8,13 +8,13 @@ export const editProblemConfig: {
   [K in keyof EditProblemTemplate]: FieldConfig;
 } = {
   title: {
-    label: "TÍTULO DE LA PROBLEMÁTICA:",
+    label: "TÍTULO DE LA PROBLEMÁTICA",
     type: "text",
     maxLength: 80,
     required: true,
   },
   careers: {
-    label: "CARRERA:",
+    label: "CARRERA",
     type: "combobox",
     minLength: 1,
     maxLength: 3,
@@ -22,18 +22,18 @@ export const editProblemConfig: {
     required: true,
   },
   approach: {
-    label: "PLANTEAMIENTO DEL PROBLEMA:",
+    label: "PLANTEAMIENTO DEL PROBLEMA",
     type: "textarea",
     maxLength: 255,
     required: true,
   },
   causes: {
-    label: "CAUSAS QUE PRODUCE EL PROBLEMA:",
+    label: "CAUSAS QUE PRODUCE EL PROBLEMA",
     type: "editor",
     required: true,
   },
   effects: {
-    label: "EFECTOS QUE CAUSA EL PROBLEMA:",
+    label: "EFECTOS QUE CAUSA EL PROBLEMA",
     type: "editor",
     required: true,
   },
@@ -62,7 +62,7 @@ export const editProblemConfig: {
     required: true,
   },
   applicant: {
-    label: "NOMBRE DE LA INSTITUCIÓN O MUNICIPIO:",
+    label: "NOMBRE DE LA INSTITUCIÓN O MUNICIPIO",
     type: "combobox",
     required: true,
   },
@@ -73,18 +73,18 @@ export const editProblemConfig: {
     required: true,
   },
   contact: {
-    label: "CONTACTO DE LA INSTITUCIÓN:",
+    label: "CONTACTO DE LA INSTITUCIÓN",
     type: "text",
     required: true,
   },
   phone: {
-    label: "TELÉFONO INSTITUCIONAL:",
+    label: "TELÉFONO INSTITUCIONAL",
     type: "tel",
     maxLength: 10,
     required: true,
   },
   cellPhone: {
-    label: "TELÉFONO CELLULAR:",
+    label: "TELÉFONO CELLULAR",
     type: "tel",
     maxLength: 10,
     required: true,
@@ -99,7 +99,7 @@ export const problemFormConfig: {
 } = {
   ...editProblemConfig,
   isPublic: {
-    label: "PUBLICAR PROBLEMÁTICA EN LA PÁGINA DE PROBLEMÁTICAS:",
+    label: "PUBLICAR PROBLEMÁTICA EN LA PÁGINA DE PROBLEMÁTICAS",
     type: "checkbox",
   },
 };

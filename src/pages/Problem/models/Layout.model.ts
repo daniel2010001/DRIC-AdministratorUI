@@ -8,7 +8,7 @@ export const formLayout: FormSectionProps<ProblemFormTemplate>[] = [
   {
     title: "DATOS GENERALES",
     description:
-      "Por favor, ingrese los datos verídicos en los siguientes campos:",
+      "Por favor, ingrese los datos verídicos en los siguientes campos.",
     inputs: [
       { key: "title", colSpan: 2 },
       { key: "careers", colSpan: 2 },
