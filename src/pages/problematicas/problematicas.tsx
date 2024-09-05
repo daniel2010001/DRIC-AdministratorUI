@@ -89,7 +89,7 @@ export const Problematicas = () => {
 
   return (
     <div className="container mx-auto py-10">
-      <Table headCells={headCells} rows={rows} title="Problemas" />
+      <Table headCells={headCells} rows={rows} title="Listado de problemáticas" />
     </div>
   );
 };

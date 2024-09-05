@@ -73,7 +73,7 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
 
   const sidebarOptionClassName = clsx(
     "flex items-center w-full text-base p-2 text-white",
-    "hover:bg-gray-500 group transition duration-75 rounded-lg"
+    "hover:bg-gray-500 group transition duration-75 rounded-sm"
   );
 
   const dispatch = useDispatch();
@@ -88,11 +88,11 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
       ref={sidebarRef}
       className={clsx(
         "fixed top-0 left-0 z-40 w-64 h-screen pt-20 border-r",
-        "bg-[#253868] border-gray-200 transition-transform lg:translate-x-0",
+        "bg-[#0F172A] border-gray-200 transition-transform lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
-      <div className="h-full px-3 pb-4 overflow-y-auto bg-[#253868]">
+      <div className="h-full px-3 pb-4 overflow-y-auto bg-[#0F172A]">
         <ul className="space-y-2 font-medium">
           {SidebarOptions.map((option, index) => (
             <li key={index}>
