@@ -106,7 +106,7 @@ export const Solicitudes = () => {
         className="mb-4"
         searchFunction={SearchChange}
         width="w-full"
-        height="h-10"
+        height="h-12"
       />
 
     <div className="container mx-auto py-10 ">
