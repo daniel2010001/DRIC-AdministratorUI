@@ -29,8 +29,8 @@ export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
     when: problematic.cuando,
 
     contact: problematic.contacto,
-    phone: problematic.telefono.toString(),
-    cellPhone: problematic.telefono_institucional.toString(),
+    phone: problematic.telefono,
+    cellPhone: problematic.telefono_institucional,
     zone: problematic.zona,
 
     publishedAt: new Date(problematic.publicado),

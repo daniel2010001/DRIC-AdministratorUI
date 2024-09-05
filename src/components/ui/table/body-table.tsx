@@ -25,8 +25,6 @@ export const BodyTable = <T,>({
     setVisibleRowsInit(visibleRows);
   }, [visibleRows]);
 
-  console.log(visibleRowsInit);
-
   const renderActions = (id: number) => {
     return (
       <>

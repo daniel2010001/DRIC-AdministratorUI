@@ -6,13 +6,14 @@ import { getProblemsTable } from "@/services";
 import { createCustomProblem } from "@/adapters";
 import { HeadCell } from "@/models/Table.model";
 import { Table } from "@/components/ui/table/table";
+import Search from "@/components/ui/table/search";
 
 type ProblemTable = { [key: string]: string | number };
 
 const headCells: readonly HeadCell<ProblemTable>[] = [
   {
-    property: "id",
-    label: "ID",
+    property: "index",
+    label: "",
     numeric: false,
     disablePadding: false,
     align: "left",
@@ -69,27 +70,56 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
 export const Problematicas = () => {
   const { callEndpoint } = useFetchAndLoader();
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const SearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
 
   const loadProblems = async () => callEndpoint(getProblemsTable());
   useAsync(loadProblems, (data) => setProblems(data.map(createCustomProblem)));
 
-  const rows: { [key: string]: string | number }[] = problems.map((problem) => {
-    return {
-      id: problem.id,
-      title: problem.title,
-      applicant: problem.applicant.name,
-      updatedAt: problem.updatedAt.toDateString(),
-      publishedAt: problem.publishedAt.toDateString(),
-      estado: problem.active ? "Publicado" : "No publicado",
-      actions: "ver, editar",
-    };
+  const filteredProblems = problems.filter((problem) => {
+    const lowerSearchTerm = searchTerm.toLowerCase();
+
+    const title = problem.title?.toLowerCase() || "";
+    const applicantName = problem.applicant?.name?.toLowerCase() || "";
+    const estado = problem.active ? "publicado" : "no publicado";
+    return (
+      title.includes(lowerSearchTerm) ||
+      applicantName.includes(lowerSearchTerm) ||
+      estado.includes(lowerSearchTerm)
+    );
   });
 
-  console.log(problems);
+  const rows: { [key: string]: string | number }[] = filteredProblems.map(
+    (problem) => {
+      const index = problems.indexOf(problem) + 1;
+      return {
+        index: index,
+        id: problem.id,
+        title: problem.title,
+        applicant: problem.applicant.name,
+        updatedAt: problem.updatedAt.toDateString(),
+        publishedAt: problem.publishedAt.toDateString(),
+        estado: problem.active ? "Publicado" : "No publicado",
+        actions: "ver, editar",
+      };
+    }
+  );
 
   return (
     <div className="container mx-auto py-10">
-      <Table headCells={headCells} rows={rows} title="Problemas" />
+      <div className="text-2xl font-medium text-gray-800 mb-4">
+        Listado de problemáticas
+      </div>
+      <Search
+        className="mb-4"
+        searchFunction={SearchChange}
+        width="w-full"
+        height="h-12"
+      />
+      <Table headCells={headCells} rows={rows} />
     </div>
   );
 };

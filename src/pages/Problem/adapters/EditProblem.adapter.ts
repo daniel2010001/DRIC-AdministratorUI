@@ -42,8 +42,8 @@ export const createEditEndpoint = (editTemplate: EditProblemTemplate) => {
     id_solicitante: editTemplate.applicant?.id || 0,
     zona: editTemplate.zone,
     contacto: editTemplate.contact,
-    telefono: parseInt(editTemplate.cellPhone),
-    telefono_institucional: parseInt(editTemplate.phone),
+    telefono: editTemplate.cellPhone,
+    telefono_institucional: editTemplate.phone,
   };
 
   return formatFormEndpointTemplate;

@@ -95,6 +95,10 @@ const applyFieldConfigToSchema = <T>(
     );
   }
 
+  if (config.type === "optional" && schema instanceof Yup.StringSchema) {
+    configuredSchema = (configuredSchema as Yup.StringSchema).nullable().notRequired();
+  };
+
   return configuredSchema;
 };
 
