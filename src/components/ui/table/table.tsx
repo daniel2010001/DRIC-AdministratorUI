@@ -24,8 +24,6 @@ export const Table = <T extends { [key: string]: string | number }>({
   rows,
   title,
 }: EnhancedTableProps<T>) => {
-  console.log(">>>", rows);
-
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof T>(""); // Provide a default value for orderBy
   const [page, setPage] = useState(0);
