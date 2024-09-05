@@ -49,7 +49,7 @@ export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
         link: `${PrivateRoutes.PROBLEMS}/${PrivateRoutes.REQUESTS}`,
       },
       {
-        title: "Formulario",
+        title: "Registrar problemática",
         link: `${PrivateRoutes.PROBLEMS}/${PrivateRoutes.PROBLEM_FORM}`,
       },
     ],
