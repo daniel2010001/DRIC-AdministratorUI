@@ -91,8 +91,8 @@ export const Solicitudes = () => {
   );
 
   return (
-    <div className="container mx-auto py-10">
-      <Table headCells={headCells} rows={rows} title="Solicitudes" />
+    <div className="container mx-auto py-10 ">
+      <Table headCells={headCells} rows={rows} title="Listado de solicitudes pendientes" />
     </div>
   );
 };
