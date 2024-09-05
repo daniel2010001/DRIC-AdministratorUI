@@ -100,6 +100,7 @@ export const Solicitudes = () => {
   );
 
   return (
+
     <div className="container mx-auto py-10">
       <Search
         className="mb-4"
@@ -107,7 +108,10 @@ export const Solicitudes = () => {
         width="w-full"
         height="h-10"
       />
-      <Table headCells={headCells} rows={rows} title="Solicitudes" />
+
+    <div className="container mx-auto py-10 ">
+      <Table headCells={headCells} rows={rows} title="Listado de solicitudes pendientes" />
+    </div>
     </div>
   );
 };

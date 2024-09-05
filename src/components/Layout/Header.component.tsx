@@ -12,7 +12,7 @@ interface HeaderProps {
 export function Header({ toggleSidebar }: HeaderProps) {
   return (
     <nav
-      className={clsx("fixed top-0 h-16 z-50 w-full bg-[#253868] shadow-lg")}
+      className={clsx("fixed top-0 h-16 z-50 w-full bg-[#0F172A] shadow-lg")}
     >
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">

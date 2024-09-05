@@ -104,16 +104,16 @@ export const Problematicas = () => {
     };
   });
 
-
   return (
     <div className="container mx-auto py-10">
+
       <Search
         className="mb-4"
         searchFunction={SearchChange}
         width="w-full"
         height="h-12"
       />
-      <Table headCells={headCells} rows={rows} title="Problemas" />
+      <Table headCells={headCells} rows={rows} title="Listado de problemáticas" />
     </div>
   );
 };
