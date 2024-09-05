@@ -6,6 +6,7 @@ import { getProblemsRequestsTable } from "@/services";
 import { createCustomProblem, createCustomProblemRequest } from "@/adapters";
 import { HeadCell } from "@/models/Table.model";
 import { Table } from "@/components/ui/table/table";
+import Search from "@/components/ui/table/search";
 
 type ProblemTable = { [key: string]: string | number };
 
@@ -70,13 +71,26 @@ export const Solicitudes = () => {
   const [problemsRequests, setProblemsResquests] = useState<ProblemRequest[]>(
     []
   );
+  const [searchTerm, setSearchTerm] = useState("");
 
+  const SearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
   const loadProblems = async () => callEndpoint(getProblemsRequestsTable());
   useAsync(loadProblems, (data) =>
     setProblemsResquests(data.map(createCustomProblemRequest))
   );
 
-  const rows: { [key: string]: string | number }[] = problemsRequests.map(
+  const filteredRows = problemsRequests.filter(
+    (requests) =>
+      requests.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      requests.applicant.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      requests.user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const rows: { [key: string]: string | number }[] = filteredRows.map(
     (requests) => {
       return {
         id: requests.id,
@@ -91,8 +105,18 @@ export const Solicitudes = () => {
   );
 
   return (
-    <div className="container mx-auto py-10 ">
-      <Table headCells={headCells} rows={rows} title="Listado de solicitudes pendientes" />
+    <div className="container mx-auto py-10">
+      <div className="text-2xl font-medium text-gray-800 mb-4">
+        Listado de solicitudes pendientes
+      </div>
+      <Search
+        className="mb-4"
+        searchFunction={SearchChange}
+        width="w-full"
+        height="h-12"
+      />
+
+      <Table headCells={headCells} rows={rows} />
     </div>
   );
 };
