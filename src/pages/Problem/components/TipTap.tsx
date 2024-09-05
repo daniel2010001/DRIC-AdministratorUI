@@ -17,10 +17,7 @@ export const TipTap = ({ content, className }: TipTapProps) => {
     content,
     editorProps: {
       attributes: {
-        class: clsx(
-          "!min-h-16 h-auto bg-white dark:bg-dark-secondary",
-          className
-        ),
+        class: clsx("h-auto", className),
       },
     },
   });

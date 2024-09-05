@@ -57,10 +57,7 @@ export const FormField = <T extends Object>({
         control={control}
         render={({ field }) =>
           config.type === "textarea" ? (
-            <Textarea
-              {...field}
-              className={clsx(className, "min-h-16 h-autooutline-none")}
-            />
+            <Textarea {...field} className={clsx(className, "min-h-16")} />
           ) : config.type === "editor" ? (
             <EditorInput
               content={field.value}
@@ -72,8 +69,8 @@ export const FormField = <T extends Object>({
               value={field.value}
               onChange={field.onChange}
               options={config.options || []}
-              className={className}
               multiple={config.multiple}
+              className={className}
             />
           ) : config.type === "checkbox" ? (
             <Checkbox
@@ -87,14 +84,7 @@ export const FormField = <T extends Object>({
               <CheckIcon className="invisible size-4 group-data-[checked]:visible fill-transparent" />
             </Checkbox>
           ) : (
-            <Input
-              {...field}
-              type={config.type}
-              className={className}
-              onChange={(e) => {
-                field.onChange(e.target.value.toUpperCase());
-              }}
-            />
+            <Input {...field} type={config.type} className={className} />
           )
         }
       />

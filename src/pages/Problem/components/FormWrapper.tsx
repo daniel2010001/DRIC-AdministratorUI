@@ -1,12 +1,12 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldConfig } from "@/models";
 import { createObjectSchema } from "@/pages/Problem/utilities";
-import { ReactNode, useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ReactNode, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 interface FormWrapperProps<T> {
-  onSubmit: (data: T) => void;
+  onSubmit: (data: T) => Promise<void>;
   formConfig: { [K in keyof T]: FieldConfig };
   defaultValues: T;
   children: ReactNode;
@@ -18,6 +18,7 @@ export const FormWrapper = <T extends Object>({
   defaultValues,
   children,
 }: FormWrapperProps<T>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const schemaObject = createObjectSchema<T>(formConfig, defaultValues);
   const methods = useForm({
     resolver: yupResolver(schemaObject),
@@ -29,7 +30,10 @@ export const FormWrapper = <T extends Object>({
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit((data) => {
+          setIsSubmitting(true);
+          onSubmit(data).then(() => setIsSubmitting(false));
+        })}
         className="px-4 pb-6 max-w-7xl mx-auto sm:px-6 sm:pb-8 md:px-8"
       >
         {children}
@@ -43,6 +47,7 @@ export const FormWrapper = <T extends Object>({
             Cancelar
           </Link>
           <button
+            disabled={isSubmitting}
             type="submit"
             className="rounded-md bg-[#093958] hover:bg-[#34617a] px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >

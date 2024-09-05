@@ -19,7 +19,10 @@ export const AuthGuard = () => {
         dispatch(createAuth(auth));
         return <Navigate to={PrivateRoutes.PRIVATE} />;
       })
-      .catch(() => clearLocalStore());
+      .catch(() => {
+        clearLocalStore();
+        return <Navigate to={PublicRoutes.LOGIN} />;
+      });
   } else return <Navigate to={PublicRoutes.LOGIN} />;
 };
 

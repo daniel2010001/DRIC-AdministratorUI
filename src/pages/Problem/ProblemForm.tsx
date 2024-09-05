@@ -27,14 +27,12 @@ export function ProblemForm() {
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
-  const [defaultValues, setDefaultValues] = useState(inicialProblemForm);
 
   useAsync(
     async () => callApplicants(getApplicants()),
     (data) => {
       setApplicants(data.map(createCustomApplicant));
       handleChangeApplicant();
-      setDefaultValues((prev) => ({ ...prev, applicant: null }));
     }
   );
   useAsync(
@@ -44,7 +42,6 @@ export function ProblemForm() {
         ...prev,
         careers: { ...prev.careers, options: data.map(createCustomCareer) },
       }));
-      setDefaultValues((prev) => ({ ...prev, careers: [] }));
     }
   );
   useEffect(() => {
@@ -64,17 +61,15 @@ export function ProblemForm() {
     }));
   };
 
-  const handleSubmit = (data: ProblemFormTemplate) => {
-    createProblem(createFormEndpoint(data))
+  const handleSubmit = async (data: ProblemFormTemplate) => {
+    await createProblem(createFormEndpoint(data))
       .then(() => {
         SnackbarUtilities.success(
           "La problemática ha sido creada correctamente"
         );
         navigate("..");
       })
-      .catch(() => {
-        SnackbarUtilities.error("Error al crear la problemática");
-      });
+      .catch(() => SnackbarUtilities.error("Error al crear la problemática"));
   };
 
   return (
@@ -87,7 +82,7 @@ export function ProblemForm() {
       <FormWrapper<ProblemFormTemplate>
         onSubmit={handleSubmit}
         formConfig={problemFormConfig}
-        defaultValues={defaultValues}
+        defaultValues={inicialProblemForm}
       >
         {formLayout.map((section) => (
           <FormSection
@@ -103,7 +98,13 @@ export function ProblemForm() {
                   ...formConfig[input.key],
                   label: (
                     <>
-                      {formConfig[input.key].label}
+                      <span>
+                        {formConfig[input.key].label}
+                        {formConfig[input.key].required && (
+                          <span className="text-rose-600 mx-1">*</span>
+                        )}
+                        :
+                      </span>
                       {input.key === "applicant" && (
                         <ToggleWithText
                           isOn={isInstitute}
