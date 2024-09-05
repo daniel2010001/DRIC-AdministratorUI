@@ -28,7 +28,7 @@ export const Table = <T extends { [key: string]: string | number }>({
   const [orderBy, setOrderBy] = useState<keyof T>(""); // Provide a default value for orderBy
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (event: MouseEvent<unknown>, property: keyof T) => {
     const isAsc = orderBy === property && order === "asc";
@@ -94,7 +94,7 @@ export const Table = <T extends { [key: string]: string | number }>({
             </TableMUI>
           </TableContainer>
           <PaginationTable
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[10, 25, 100]}
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
