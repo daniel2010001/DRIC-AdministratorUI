@@ -51,7 +51,6 @@ export interface HeadCell<T> {
   label: string;
   numeric: boolean;
   disablePadding: boolean;
-  // isOrder default values is true
   isOrder: boolean;
   align?: "right" | "center" | "left";
   minWidth?: string;

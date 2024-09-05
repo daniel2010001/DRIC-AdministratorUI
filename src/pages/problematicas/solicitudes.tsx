@@ -11,8 +11,8 @@ type ProblemTable = { [key: string]: string | number };
 
 const headCells: readonly HeadCell<ProblemTable>[] = [
   {
-    property: "id",
-    label: "ID",
+    property: "index",
+    label: " #",
     numeric: true,
     disablePadding: true,
     align: "left",
@@ -37,13 +37,6 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
   {
     property: "updatedAt",
     label: "Actualizado",
-    numeric: false,
-    disablePadding: false,
-    isOrder: true,
-  },
-  {
-    property: "publishedAt",
-    label: "Publicado",
     numeric: false,
     disablePadding: false,
     isOrder: true,
@@ -78,12 +71,13 @@ export const Solicitudes = () => {
 
   const rows: { [key: string]: string | number }[] = problemsRequests.map(
     (requests) => {
+      const index = problemsRequests.indexOf(requests) + 1;
       return {
+        index: index,
         id: requests.id,
         title: requests.title,
         applicant: requests.applicant.name,
         updatedAt: requests.updatedAt.toDateString(),
-        publishedAt: requests.publishedAt.toDateString(),
         user: requests.user.username,
         actions: "Revisar",
       };
