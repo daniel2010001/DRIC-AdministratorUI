@@ -32,11 +32,6 @@ export interface SidebarDropdown {
  */
 export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
   {
-    title: "Inicio",
-    icon: HomeIcon,
-    link: PrivateRoutes.HOME,
-  },
-  {
     title: "Panel de control",
     icon: DashboardIcon,
     link: PrivateRoutes.DASHBOARD,

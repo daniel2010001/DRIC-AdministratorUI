@@ -62,8 +62,8 @@ export interface ProblemEndpoint {
 
   zona: string;
   contacto: string;
-  telefono: number;
-  telefono_institucional: number;
+  telefono: string;
+  telefono_institucional: string;
   publicado: string;
   actualizado: string;
   creado: string;

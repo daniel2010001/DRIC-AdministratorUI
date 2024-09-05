@@ -12,8 +12,8 @@ type ProblemTable = { [key: string]: string | number };
 
 const headCells: readonly HeadCell<ProblemTable>[] = [
   {
-    property: "id",
-    label: "ID",
+    property: "index",
+    label: "",
     numeric: false,
     disablePadding: false,
     align: "left",
@@ -94,7 +94,9 @@ export const Problematicas = () => {
 
   const rows: { [key: string]: string | number }[] = filteredProblems.map(
     (problem) => {
+      const index = problems.indexOf(problem) + 1;
       return {
+        index: index,
         id: problem.id,
         title: problem.title,
         applicant: problem.applicant.name,
