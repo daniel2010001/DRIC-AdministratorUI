@@ -44,7 +44,6 @@ export function ProblemForm() {
       }));
     }
   );
-
   useEffect(() => {
     handleChangeApplicant();
   }, [isInstitute, applicants]);
@@ -62,17 +61,15 @@ export function ProblemForm() {
     }));
   };
 
-  const handleSubmit = (data: ProblemFormTemplate) => {
-    createProblem(createFormEndpoint(data))
+  const handleSubmit = async (data: ProblemFormTemplate) => {
+    await createProblem(createFormEndpoint(data))
       .then(() => {
         SnackbarUtilities.success(
           "La problemática ha sido creada correctamente"
         );
         navigate("..");
       })
-      .catch(() => {
-        SnackbarUtilities.error("Error al crear la problemática");
-      });
+      .catch(() => SnackbarUtilities.error("Error al crear la problemática"));
   };
 
   return (
@@ -101,7 +98,13 @@ export function ProblemForm() {
                   ...formConfig[input.key],
                   label: (
                     <>
-                      {formConfig[input.key].label}
+                      <span>
+                        {formConfig[input.key].label}
+                        {formConfig[input.key].required && (
+                          <span className="text-rose-600 mx-1">*</span>
+                        )}
+                        :
+                      </span>
                       {input.key === "applicant" && (
                         <ToggleWithText
                           isOn={isInstitute}

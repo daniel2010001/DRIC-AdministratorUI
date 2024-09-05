@@ -23,7 +23,7 @@ import { updateProblem } from "./services";
 export function EditProblem() {
   const navigate = useNavigate();
   const { loading, callEndpoint: callProblem } = useFetchAndLoader();
-  const { callEndpoint: callApplicant } = useFetchAndLoader();
+  const { callEndpoint: callApplicants } = useFetchAndLoader();
   const { callEndpoint: callCareers } = useFetchAndLoader();
   const idProblem = useParams().id || 0;
   const [isInstitute, setIsInstitute] = useState(false);
@@ -39,7 +39,7 @@ export function EditProblem() {
     }
   );
   useAsync(
-    async () => callApplicant(getApplicants()),
+    async () => callApplicants(getApplicants()),
     (data) => {
       setApplicants(data.map(createCustomApplicant));
       handleChangeApplicant();
@@ -71,17 +71,17 @@ export function EditProblem() {
     }));
   };
 
-  const handleSubmit = (data: EditProblemTemplate) => {
-    updateProblem(idProblem, createEditEndpoint(data))
-      .then((data) => {
+  const handleSubmit = async (data: EditProblemTemplate) => {
+    await updateProblem(idProblem, createEditEndpoint(data))
+      .then(() => {
         SnackbarUtilities.success(
           "La problemática ha sido actualizada correctamente"
         );
         navigate("..");
       })
-      .catch(() => {
-        SnackbarUtilities.error("Error al actualizar la problemática");
-      });
+      .catch(() =>
+        SnackbarUtilities.error("Error al actualizar la problemática")
+      );
   };
 
   if (!loading && !defaultValues.title) {
@@ -114,7 +114,13 @@ export function EditProblem() {
                   ...formConfig[input.key],
                   label: (
                     <>
-                      {formConfig[input.key].label}
+                      <span>
+                        {formConfig[input.key].label}
+                        {formConfig[input.key].required && (
+                          <span className="text-rose-600 mx-1">*</span>
+                        )}
+                        :
+                      </span>
                       {input.key === "applicant" && (
                         <ToggleWithText
                           isOn={isInstitute}
