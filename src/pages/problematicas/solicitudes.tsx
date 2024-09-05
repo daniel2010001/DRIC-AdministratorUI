@@ -13,7 +13,7 @@ type ProblemTable = { [key: string]: string | number };
 const headCells: readonly HeadCell<ProblemTable>[] = [
   {
     property: "index",
-    label: " #",
+    label: "",
     numeric: true,
     disablePadding: true,
     align: "left",
