@@ -6,7 +6,7 @@ import { getProblemsTable } from "@/services";
 import { createCustomProblem } from "@/adapters";
 import { HeadCell } from "@/models/Table.model";
 import { Table } from "@/components/ui/table/table";
-import Search  from "@/components/ui/table/search";
+import Search from "@/components/ui/table/search";
 
 type ProblemTable = { [key: string]: string | number };
 
@@ -82,8 +82,8 @@ export const Problematicas = () => {
   const filteredProblems = problems.filter((problem) => {
     const lowerSearchTerm = searchTerm.toLowerCase();
 
-    const title = problem.title?.toLowerCase() || '';
-    const applicantName = problem.applicant?.name?.toLowerCase() || '';
+    const title = problem.title?.toLowerCase() || "";
+    const applicantName = problem.applicant?.name?.toLowerCase() || "";
     const estado = problem.active ? "publicado" : "no publicado";
     return (
       title.includes(lowerSearchTerm) ||
@@ -92,28 +92,32 @@ export const Problematicas = () => {
     );
   });
 
-  const rows: { [key: string]: string | number }[] = filteredProblems.map((problem) => {
-    return {
-      id: problem.id,
-      title: problem.title,
-      applicant: problem.applicant.name,
-      updatedAt: problem.updatedAt.toDateString(),
-      publishedAt: problem.publishedAt.toDateString(),
-      estado: problem.active ? "Publicado" : "No publicado",
-      actions: "ver, editar",
-    };
-  });
+  const rows: { [key: string]: string | number }[] = filteredProblems.map(
+    (problem) => {
+      return {
+        id: problem.id,
+        title: problem.title,
+        applicant: problem.applicant.name,
+        updatedAt: problem.updatedAt.toDateString(),
+        publishedAt: problem.publishedAt.toDateString(),
+        estado: problem.active ? "Publicado" : "No publicado",
+        actions: "ver, editar",
+      };
+    }
+  );
 
   return (
     <div className="container mx-auto py-10">
-
+      <div className="text-2xl font-medium text-gray-800 mb-4">
+        Listado de problemáticas
+      </div>
       <Search
         className="mb-4"
         searchFunction={SearchChange}
         width="w-full"
         height="h-12"
       />
-      <Table headCells={headCells} rows={rows} title="Listado de problemáticas" />
+      <Table headCells={headCells} rows={rows} />
     </div>
   );
 };

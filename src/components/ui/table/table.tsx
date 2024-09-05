@@ -16,13 +16,11 @@ import { TableContainer } from "@mui/material";
 interface EnhancedTableProps<T extends { [key: string]: string | number }> {
   headCells: readonly HeadCell<T>[];
   rows: T[];
-  title: string;
 }
 
 export const Table = <T extends { [key: string]: string | number }>({
   headCells,
   rows,
-  title,
 }: EnhancedTableProps<T>) => {
   console.log(">>>", rows);
 
@@ -64,15 +62,7 @@ export const Table = <T extends { [key: string]: string | number }>({
   }, [order, orderBy, page, rowsPerPage, rows]);
 
   return (
-    <div className="container mx-auto py-10">
-      <Typography
-        sx={{ flex: "1 1 100%" }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
-        {title}
-      </Typography>
+    <div className="container mx-auto">
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <TableContainer>

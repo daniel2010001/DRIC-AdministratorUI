@@ -68,7 +68,9 @@ const headCells: readonly HeadCell<ProblemTable>[] = [
 
 export const Solicitudes = () => {
   const { callEndpoint } = useFetchAndLoader();
-  const [problemsRequests, setProblemsResquests] = useState<ProblemRequest[]>( [] );
+  const [problemsRequests, setProblemsResquests] = useState<ProblemRequest[]>(
+    []
+  );
   const [searchTerm, setSearchTerm] = useState("");
 
   const SearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,10 +81,13 @@ export const Solicitudes = () => {
     setProblemsResquests(data.map(createCustomProblemRequest))
   );
 
-  const filteredRows = problemsRequests.filter((requests) =>
-    requests.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    requests.applicant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    requests.user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredRows = problemsRequests.filter(
+    (requests) =>
+      requests.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      requests.applicant.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      requests.user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const rows: { [key: string]: string | number }[] = filteredRows.map(
@@ -100,8 +105,10 @@ export const Solicitudes = () => {
   );
 
   return (
-
     <div className="container mx-auto py-10">
+      <div className="text-2xl font-medium text-gray-800 mb-4">
+        Listado de solicitudes pendientes
+      </div>
       <Search
         className="mb-4"
         searchFunction={SearchChange}
@@ -109,9 +116,7 @@ export const Solicitudes = () => {
         height="h-12"
       />
 
-    <div className="container mx-auto py-10 ">
-      <Table headCells={headCells} rows={rows} title="Listado de solicitudes pendientes" />
-    </div>
+      <Table headCells={headCells} rows={rows} />
     </div>
   );
 };
