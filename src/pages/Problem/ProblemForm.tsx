@@ -27,14 +27,12 @@ export function ProblemForm() {
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(problemFormConfig);
-  const [defaultValues, setDefaultValues] = useState(inicialProblemForm);
 
   useAsync(
     async () => callApplicants(getApplicants()),
     (data) => {
       setApplicants(data.map(createCustomApplicant));
       handleChangeApplicant();
-      setDefaultValues((prev) => ({ ...prev, applicant: null }));
     }
   );
   useAsync(
@@ -44,9 +42,9 @@ export function ProblemForm() {
         ...prev,
         careers: { ...prev.careers, options: data.map(createCustomCareer) },
       }));
-      setDefaultValues((prev) => ({ ...prev, careers: [] }));
     }
   );
+
   useEffect(() => {
     handleChangeApplicant();
   }, [isInstitute, applicants]);
@@ -87,7 +85,7 @@ export function ProblemForm() {
       <FormWrapper<ProblemFormTemplate>
         onSubmit={handleSubmit}
         formConfig={problemFormConfig}
-        defaultValues={defaultValues}
+        defaultValues={inicialProblemForm}
       >
         {formLayout.map((section) => (
           <FormSection

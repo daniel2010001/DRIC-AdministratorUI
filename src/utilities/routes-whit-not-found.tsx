@@ -1,4 +1,6 @@
+import { LoadingFallback } from "@/components/Fallback";
 import { NotFound } from "@/pages/NotFound";
+import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
 interface Props {
@@ -6,8 +8,10 @@ interface Props {
 }
 
 export const RoutesWithNotFound = ({ children }: Props) => (
-  <Routes>
-    {children}
-    <Route path="*" element={<NotFound />} />
-  </Routes>
+  <Suspense fallback={<LoadingFallback />}>
+    <Routes>
+      {children}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </Suspense>
 );

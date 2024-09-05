@@ -1,4 +1,4 @@
-export const ListOrderedIcon = (props: React.SVGProps<SVGSVGElement>) => (
+export const OrderedListIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"
