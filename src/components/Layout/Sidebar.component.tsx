@@ -32,7 +32,7 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
         setTimeout(() => {
           item.classList.remove("visible");
           item.classList.add("hiding");
-        }, index * 200);
+        }, index * 10);
       });
 
       setTimeout(() => {
@@ -40,7 +40,7 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
           ...prevState,
           [title]: false,
         }));
-      }, items.length * 100 + 500);
+      }, items.length * 10 + 100);
     } else {
       setOpenDropdowns((prevState) => ({
         ...prevState,
@@ -66,7 +66,7 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
           item.classList.remove("hiding");
           setTimeout(() => {
             item.classList.add("visible");
-          }, index * 100);
+          }, index * 10);
         });
       }
     });

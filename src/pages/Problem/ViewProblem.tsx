@@ -46,7 +46,7 @@ export function ViewProblem() {
         </h1>
         <span className="text-sm text-light-secondary dark:text-dark-secondary ms-auto">
           Actualizado el{" "}
-          {formatDate_dddd_DD_MMMM_YYYY(new Date(problem.createdAt))}
+          {formatDate_dddd_DD_MMMM_YYYY(new Date(problem.updatedAt))}
         </span>
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-4 border-b border-light-secondary dark:border-dark-secondary pb-4 md:pb-12 mt-4 md:mt-8 md:grid-cols-3">
@@ -220,7 +220,7 @@ export function ViewProblem() {
                 </Label>
                 <div className="col-span-1 pb-2">
                   <p className="text-light-primary dark:text-dark-primary break-words whitespace-pre-wrap">
-                    {problem.cellPhone}
+                    {problem.phone}
                   </p>
                 </div>
               </Field>
@@ -241,7 +241,7 @@ export function ViewProblem() {
 
         <span className="text-sm text-light-secondary dark:text-dark-secondary ms-auto mt-4">
           Actualizado el{" "}
-          {formatDate_dddd_DD_MMMM_YYYY(new Date(problem.createdAt))}
+          {formatDate_dddd_DD_MMMM_YYYY(new Date(problem.updatedAt))}
         </span>
         <div className="flex justify-between">
           <Link
