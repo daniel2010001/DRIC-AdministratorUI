@@ -10,7 +10,7 @@ export * from "./HomeIcon";
 export * from "./InstitucionIcon";
 export * from "./ItalicIcon";
 export * from "./ListIcon";
-export * from "./ListOrderedIcon";
+export * from "./OrderedListIcon";
 export * from "./LogoutIcon";
 export * from "./ProblemIcon";
 export * from "./SolicitudIcon";
