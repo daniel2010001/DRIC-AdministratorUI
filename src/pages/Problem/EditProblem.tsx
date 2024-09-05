@@ -22,21 +22,22 @@ import { updateProblem } from "./services";
 
 export function EditProblem() {
   const navigate = useNavigate();
-  const { loading, callEndpoint: callProblem } = useFetchAndLoader();
-  const { callEndpoint: callApplicants } = useFetchAndLoader();
-  const { callEndpoint: callCareers } = useFetchAndLoader();
+  const { loading: loadingProblem, callEndpoint: callProblem } =
+    useFetchAndLoader();
+  const { loading: loadingApplicants, callEndpoint: callApplicants } =
+    useFetchAndLoader();
+  const { loading: loadingCareers, callEndpoint: callCareers } =
+    useFetchAndLoader();
   const idProblem = useParams().id || 0;
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [formConfig, setFormConfig] = useState(editProblemConfig);
   const [defaultValues, setDefaultValues] = useState(inicialEditProblem);
+  const [problem, setProblem] = useState(inicialEditProblem);
 
   useAsync(
     async () => callProblem(searchProblem(idProblem)),
-    (data) => {
-      setDefaultValues(crearteEditTemplate(data));
-      setIsInstitute(data.solicitante.tipo_solicitante === "INSTITUCION");
-    }
+    (data) => setProblem(crearteEditTemplate(data))
   );
   useAsync(
     async () => callApplicants(getApplicants()),
@@ -47,16 +48,17 @@ export function EditProblem() {
   );
   useAsync(
     async () => callCareers(getCareers()),
-    (data) => {
+    (data) =>
       setFormConfig((prev) => ({
         ...prev,
         careers: { ...prev.careers, options: data.map(createCustomCareer) },
-      }));
-    }
+      }))
   );
-  useEffect(() => {
-    handleChangeApplicant();
-  }, [isInstitute, applicants]);
+  useEffect(() => handleChangeApplicant(), [isInstitute]);
+  useEffect(
+    () => setDefaultValues(problem),
+    [loadingApplicants, loadingCareers]
+  );
 
   const handleChangeApplicant = () => {
     setFormConfig((prev) => ({
@@ -84,7 +86,7 @@ export function EditProblem() {
       );
   };
 
-  if (!loading && !defaultValues.title) {
+  if (!loadingProblem && !problem.title) {
     SnackbarUtilities.error("No se encontró la problemática");
     return <Navigate to=".." />;
   }
