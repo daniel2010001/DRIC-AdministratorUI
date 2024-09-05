@@ -101,7 +101,13 @@ export function ProblemForm() {
                   ...formConfig[input.key],
                   label: (
                     <>
-                      {formConfig[input.key].label}
+                      <span>
+                        {formConfig[input.key].label}
+                        {formConfig[input.key].required && (
+                          <span className="text-rose-600 mx-1">*</span>
+                        )}
+                        :
+                      </span>
                       {input.key === "applicant" && (
                         <ToggleWithText
                           isOn={isInstitute}
