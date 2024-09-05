@@ -14,3 +14,4 @@ export * from "./ProblemIcon";
 export * from "./SolicitudIcon";
 export * from "./UsersIcon";
 export * from "./InstitucionIcon";
+export * from "./SearchIcon";
