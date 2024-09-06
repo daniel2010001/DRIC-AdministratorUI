@@ -22,11 +22,11 @@ import { updateProblem } from "./services";
 
 export function EditProblem() {
   const navigate = useNavigate();
-  const { loading: loadingProblem, callEndpoint: callProblem } =
-    useFetchAndLoader();
   const { loading: loadingApplicants, callEndpoint: callApplicants } =
     useFetchAndLoader();
   const { loading: loadingCareers, callEndpoint: callCareers } =
+    useFetchAndLoader();
+  const { loading: loadingProblem, callEndpoint: callProblem } =
     useFetchAndLoader();
   const idProblem = useParams().id || 0;
   const [isInstitute, setIsInstitute] = useState(false);
@@ -35,10 +35,6 @@ export function EditProblem() {
   const [defaultValues, setDefaultValues] = useState(inicialEditProblem);
   const [problem, setProblem] = useState(inicialEditProblem);
 
-  useAsync(
-    async () => callProblem(searchProblem(idProblem)),
-    (data) => setProblem(crearteEditTemplate(data))
-  );
   useAsync(
     async () => callApplicants(getApplicants()),
     (data) => {
@@ -54,10 +50,14 @@ export function EditProblem() {
         careers: { ...prev.careers, options: data.map(createCustomCareer) },
       }))
   );
+  useAsync(
+    async () => callProblem(searchProblem(idProblem)),
+    (data) => setProblem(crearteEditTemplate(data))
+  );
   useEffect(() => handleChangeApplicant(), [isInstitute]);
   useEffect(() => {
     if (!loadingApplicants && !loadingCareers) setDefaultValues(problem);
-  }, [loadingApplicants, loadingCareers]);
+  }, [loadingApplicants, loadingCareers, loadingProblem]);
 
   const handleChangeApplicant = () => {
     setFormConfig((prev) => ({
