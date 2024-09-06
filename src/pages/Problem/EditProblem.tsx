@@ -55,10 +55,9 @@ export function EditProblem() {
       }))
   );
   useEffect(() => handleChangeApplicant(), [isInstitute]);
-  useEffect(
-    () => setDefaultValues(problem),
-    [loadingApplicants, loadingCareers]
-  );
+  useEffect(() => {
+    if (!loadingApplicants && !loadingCareers) setDefaultValues(problem);
+  }, [loadingApplicants, loadingCareers]);
 
   const handleChangeApplicant = () => {
     setFormConfig((prev) => ({
