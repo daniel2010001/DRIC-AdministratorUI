@@ -80,14 +80,14 @@ export const editProblemConfig: {
   phone: {
     label: "TELÉFONO INSTITUCIONAL",
     type: "tel",
-    maxLength: 10,
+    maxLength: 8,
     required: true,
   },
   cellPhone: {
-    label: "TELÉFONO CELULAR:",
+    label: "TELÉFONO CELULAR",
     type: "optional",
-    maxLength: 10,
-    required: true,
+    maxLength: 8,
+    required: false,
   },
 };
 

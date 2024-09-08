@@ -1,24 +1,10 @@
 /**
- * Estado de autenticación
- */
-export interface AuthStore {
-  auth: boolean;
-  token: string;
-}
-
-/**
- * Inicial AuthStore
- */
-export const inicialAuth: AuthStore = {
-  auth: false,
-  token: "",
-};
-
-/**
  * Tipo de usuario
  */
 export const UserType = {
+  /** Usuario administrador */
   ADMINISTRADOR: "ADMINISTRADOR",
+  /** Usuario de becario */
   BECARIO: "BECARIO",
 } as const;
 
@@ -31,9 +17,13 @@ export type UserType = (typeof UserType)[keyof typeof UserType];
  * Usuario
  */
 export interface User {
+  /** Id del usuario */
   id: number;
+  /** Nombre de usuario */
   username: string;
+  /** Email del usuario */
   email: string;
+  /** Tipo de usuario */
   type: UserType;
 }
 

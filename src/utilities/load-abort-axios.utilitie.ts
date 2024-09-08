@@ -1,3 +1,1 @@
-export const loadAbort = () => {
-  return new AbortController();
-};
+export const loadAbort = () => new AbortController();

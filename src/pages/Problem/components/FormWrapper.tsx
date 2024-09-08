@@ -18,7 +18,6 @@ export const FormWrapper = <T extends Object>({
   defaultValues,
   children,
 }: FormWrapperProps<T>) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const schemaObject = createObjectSchema<T>(formConfig, defaultValues);
   const methods = useForm({
     resolver: yupResolver(schemaObject),
@@ -30,10 +29,7 @@ export const FormWrapper = <T extends Object>({
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit((data) => {
-          setIsSubmitting(true);
-          onSubmit(data).then(() => setIsSubmitting(false));
-        })}
+        onSubmit={methods.handleSubmit(onSubmit)}
         className="px-4 pb-6 max-w-7xl mx-auto sm:px-6 sm:pb-8 md:px-8"
       >
         {children}
@@ -47,7 +43,7 @@ export const FormWrapper = <T extends Object>({
             Cancelar
           </Link>
           <button
-            disabled={isSubmitting}
+            disabled={methods.formState.isSubmitting}
             type="submit"
             className="rounded-md bg-[#093958] hover:bg-[#34617a] px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >

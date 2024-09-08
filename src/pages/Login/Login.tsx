@@ -1,79 +1,57 @@
-import { createCustomUser } from "@/adapters";
+import { createCustomAuth, createCustomUser } from "@/adapters";
 import { Logo } from "@/assets";
-import { PrivateRoutes, UserType } from "@/models";
+import { AppStore, PrivateRoutes, UserType } from "@/models";
 import { createAuth, createUser, resetAuth, resetUser } from "@/redux/states";
-import { getUserProfile } from "@/services";
-import {
-  LocalStorageKeys,
-  SnackbarUtilities,
-  clearLocalStore,
-  getLocalStore,
-} from "@/utilities";
+import { SnackbarUtilities, clearLocalStore } from "@/utilities";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { loginService } from "./services";
+import { authService, getUserProfile } from "./services";
 
 export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isValid, setIsValid] = useState(false);
   // cerrar sesión si ya está autenticado
-  const auth = getLocalStore(LocalStorageKeys.AUTH);
-  if (auth?.auth) {
-    clearLocalStore();
-    dispatch(resetAuth());
-    dispatch(resetUser());
-  }
+  const auth = useSelector((store: AppStore) => store.auth);
+  useEffect(() => {
+    if (auth.isAuthed) {
+      dispatch(resetAuth());
+      dispatch(resetUser());
+      clearLocalStore();
+    }
+  }, []);
 
   const schema = Yup.object({
     username: Yup.string().required(),
     password: Yup.string().required(),
   });
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: { username: string; password: string }) => {
-    setIsValid(true);
-    loginService(data.username, data.password)
-      .then(({ data: authState }) => {
-        if (!authState.auth) {
-          SnackbarUtilities.error("Error al iniciar sesión");
-          return;
-        }
-        dispatch(createAuth(authState));
-        getUserProfile()
-          .then(({ data: userProfile }) => {
-            const user = createCustomUser(userProfile);
-            if (user.type === UserType.ADMINISTRADOR) {
-              SnackbarUtilities.success("Sesión iniciada correctamente");
-              dispatch(createUser(user));
-              navigate(PrivateRoutes.PRIVATE);
-            } else {
-              dispatch(resetAuth());
-              SnackbarUtilities.error(
-                "No tienes permisos para acceder a esta página"
-              );
-              setIsValid(false);
-              reset();
-            }
-          })
-          .catch(() => {
-            dispatch(resetAuth());
-            SnackbarUtilities.error("Error al iniciar sesión");
-            setIsValid(false);
-            window.location.reload();
-          });
-      })
-      .catch(() => {
-        SnackbarUtilities.error("Error al iniciar sesión");
-        setIsValid(false);
-        window.location.reload();
-      });
+  const requestError = (msg: string) => {
+    SnackbarUtilities.error(msg);
+    dispatch(resetAuth());
+    reset();
+  };
+
+  const onSubmit = async (data: { username: string; password: string }) => {
+    const auth = await authService(data.username, data.password)
+      .then((response) => createCustomAuth(response.data))
+      .catch(() => requestError("Error al iniciar sesión"));
+    if (!auth || !auth.isAuthed) return;
+    dispatch(createAuth(auth));
+    const user = await getUserProfile()
+      .then((response) => createCustomUser(response.data))
+      .catch(() => requestError("Error al obtener perfil de usuario"));
+    if (user && user.type === UserType.ADMINISTRADOR) {
+      SnackbarUtilities.success("Sesión iniciada correctamente");
+      dispatch(createUser(user));
+      navigate(PrivateRoutes.PRIVATE);
+    } else requestError("No tienes permisos para acceder a esta página");
   };
 
   return (
@@ -123,7 +101,7 @@ export function Login() {
 
             <div>
               <button
-                disabled={isValid}
+                disabled={formState.isSubmitting}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-[#093958] hover:bg-[#34617a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >

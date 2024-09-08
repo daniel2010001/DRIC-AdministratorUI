@@ -1,16 +1,18 @@
-import { AuthStore } from "@/models";
+import { LocalStorageKeys } from "@/models";
 import {
+  SnackbarUtilities,
   customAxiosError,
   getLocalStore,
-  LocalStorageKeys,
-  SnackbarUtilities,
 } from "@/utilities";
 import axios, { InternalAxiosRequestConfig } from "axios";
 
+/**
+ * Interceptor para la autenticación
+ */
 export const AxiosInterceptor = () => {
   const updateHeader = (request: InternalAxiosRequestConfig) => {
-    const authStore: AuthStore = getLocalStore(LocalStorageKeys.AUTH);
-    if (authStore?.auth) request.headers["x-access-token"] = authStore.token;
+    const auth = getLocalStore(LocalStorageKeys.AUTH);
+    if (auth?.isAuthed) request.headers["x-access-token"] = auth.token;
     request.headers["Content-Type"] = "application/json";
     return request;
   };

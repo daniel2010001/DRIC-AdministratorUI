@@ -46,7 +46,7 @@ export function ProblemForm() {
   );
   useEffect(() => {
     handleChangeApplicant();
-  }, [isInstitute]);
+  }, [isInstitute, applicants]);
 
   const handleChangeApplicant = () => {
     setFormConfig((prev) => ({

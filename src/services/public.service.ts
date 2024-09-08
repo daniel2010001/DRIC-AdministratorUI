@@ -1,10 +1,8 @@
 import {
   ApplicantEndpoint,
   CareerEndpoint,
-  ProblemEndpoint,
-  UserEndpoint,
   DashboardEndpoint,
-  ProblemRequest,
+  ProblemEndpoint,
   ProblemRequestEnpoint,
 } from "@/models";
 import { loadAbort } from "@/utilities";
@@ -14,7 +12,7 @@ import { AxiosCall } from "../models/AxiosCall.model";
 const api = import.meta.env.VITE_BACKEND;
 
 /**
- * Función para obtener los solicitantes
+ * Función para obtener los solicitantes con su control de aborto
  * @returns Objeto con la petición de axios y el controller de aborto
  */
 export const getApplicants = (): AxiosCall<ApplicantEndpoint[]> => {
@@ -28,7 +26,7 @@ export const getApplicants = (): AxiosCall<ApplicantEndpoint[]> => {
 };
 
 /**
- * Función para obtener las carreras
+ * Función para obtener las carreras con su control de aborto
  * @returns Objeto con la petición de axios y el controller de aborto
  */
 export const getCareers = (): AxiosCall<CareerEndpoint[]> => {
@@ -42,7 +40,7 @@ export const getCareers = (): AxiosCall<CareerEndpoint[]> => {
 };
 
 /**
- * Función para obtener las problematicas
+ * Función para obtener las problematicas con su control de aborto
  * @returns Objeto con la petición de axios y el controller de aborto
  */
 export const getProblems = (): AxiosCall<ProblemEndpoint[]> => {
@@ -56,7 +54,7 @@ export const getProblems = (): AxiosCall<ProblemEndpoint[]> => {
 };
 
 /**
- * Función para obtener las problematicas
+ * Función para obtener las problematicas con su control de aborto
  * @returns Objeto con la petición de axios y el controller de aborto
  */
 export const getProblemsTable = (): AxiosCall<ProblemEndpoint[]> => {
@@ -70,10 +68,9 @@ export const getProblemsTable = (): AxiosCall<ProblemEndpoint[]> => {
 };
 
 /**
- * Función para obtener las problematicas
+ * Función para obtener las problematicas con su control de aborto
  * @returns Objeto con la petición de axios y el controller de aborto
  */
-
 export const getProblemsRequestsTable = (): AxiosCall<
   ProblemRequestEnpoint[]
 > => {
@@ -87,7 +84,7 @@ export const getProblemsRequestsTable = (): AxiosCall<
 };
 
 /**
- * Función para obtener una problemática dado su id
+ * Función para obtener una problemática dado su id con su control de aborto
  * @param id Id de la problemática
  * @returns Objeto con la petición de axios y el controller de aborto
  */
@@ -104,7 +101,7 @@ export const searchProblem = (
 };
 
 /**
- * Función para la eliminación de una problemática
+ * Función para la eliminación de una problemática con su control de aborto
  * @param id Id de la problemática
  * @returns Objeto con la petición de axios y el controller de aborto
  */
@@ -119,13 +116,11 @@ export const deleteProblem = (id: string | number): AxiosCall<any> => {
 };
 
 /**
- * Función para obtener el perfil del usuario autenticado (sin token)
+ * Función para actualizar la publicación de una problemática
+ * @param id Id de la problemática
+ * @param published Indica si la problemática está publicada
  * @returns Objeto con la petición de axios y el controller de aborto
  */
-export const getUserProfile = (): Promise<AxiosResponse<UserEndpoint>> => {
-  return axios.get(api + "/usuarios/profile");
-};
-
 export const updateProblemPublished = (
   id: string | number,
   published: boolean
@@ -134,14 +129,6 @@ export const updateProblemPublished = (
     publicado: published,
   });
 };
-
-/* export const updateProblemStatus = (
-  id: string | number,
-  active: boolean
-): (() => Promise<AxiosResponse<ProblemEndpoint>>) => {
-  return () =>
-    axios.put(api + "/problematicas/estado/" + id, { activo: active });
-}; */
 
 /**
  * Servicio para obtener los datos del dashboard
