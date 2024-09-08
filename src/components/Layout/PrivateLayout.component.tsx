@@ -1,6 +1,5 @@
 import { ReactNode, useState } from "react";
 import { Header, Sidebar } from ".";
-import { Link } from "react-router-dom";
 
 export const PrivateLayout = ({ children }: { children: ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);

@@ -85,7 +85,7 @@ export const editProblemConfig: {
   },
   cellPhone: {
     label: "TELÉFONO CELULAR",
-    type: "optional",
+    type: "tel",
     maxLength: 8,
     required: false,
   },

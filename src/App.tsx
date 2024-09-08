@@ -5,10 +5,10 @@ import { BrowserRouter, Navigate, Route } from "react-router-dom";
 import { AuthGuard } from "./components/Guard";
 import CustomSnackbarProvider from "./components/Snackbar/Snackbar.component";
 import { PrivateRoutes, PublicRoutes } from "./models";
+import Private from "./pages/private/private";
 import store from "./redux/store";
 import { RoutesWithNotFound, SnackbarConfigurator } from "./utilities";
 
-const Private = lazy(() => import("./pages/private/private"));
 const Login = lazy(() => import("./pages/Login/Login"));
 
 function App() {
