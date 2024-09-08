@@ -7,6 +7,6 @@ export * from "./Form.model";
 export * from "./Problem.model";
 export * from "./routes";
 export * from "./Sidebar.model";
-export * from "./store.model";
+export * from "./storage.model";
 export * from "./Table.model";
 export * from "./User.model";

@@ -15,7 +15,7 @@ import { createCustomUser } from "./User.adapter";
  * @error Si el id del solicitante no es el mismo que el que indica la problemática se genera un error.
  */
 export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
-  const formatProblematic: Problem = {
+  return {
     id: problematic.id_problematica,
 
     title: problematic.titulo,
@@ -43,17 +43,19 @@ export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
     applicant: createCustomApplicant(problematic.solicitante),
     careers: problematic.carreras.map(createCustomCareer),
   };
-
-  return formatProblematic;
 };
 
+// mover a solicitudes/models
+/**
+ * Función para adaptar una solicitud de problemática recibida desde la API
+ * @param problematicRequest Solicitud de problemática recuperada de la API
+ * @returns Problemática formateada
+ */
 export const createCustomProblemRequest = (
   problematicRequest: ProblemRequestEnpoint
 ): ProblemRequest => {
-  const formatProblematicRequest: ProblemRequest = {
+  return {
     ...createCustomProblem(problematicRequest),
     user: createCustomUser(problematicRequest.usuario),
   };
-
-  return formatProblematicRequest;
 };

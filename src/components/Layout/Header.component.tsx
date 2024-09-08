@@ -1,9 +1,7 @@
 import clsx from "clsx";
 
-import { IptuLogo } from "@/assets/img/iptu";
 import { IptuLogo as IptuLogoLight } from "@/assets/img/iptu-light";
 import UmssLogo from "../../assets/img/LogoUmss.png";
-import LogoApp from "../../assets/img/iptu.png";
 
 interface HeaderProps {
   toggleSidebar: () => void;

@@ -5,7 +5,9 @@ import { Auth } from "./auth.model";
  * Enum para las claves de local storage
  */
 export const LocalStorageKeys = {
+  /** Clave para el estado del usuario */
   USER: "user",
+  /** Clave para el estado de la autenticación */
   AUTH: "auth",
 } as const;
 
@@ -17,9 +19,9 @@ type LocalStorageKeysType = {
 };
 
 /**
- * Configuración de la store
+ * Configuración del almacenamiento de la app
  */
-export interface AppStore extends LocalStorageKeysType {
+export interface AppStorage extends LocalStorageKeysType {
   /** Estado del usuario en la store */
   user: User;
   /** Estado de la autenticación en la store */

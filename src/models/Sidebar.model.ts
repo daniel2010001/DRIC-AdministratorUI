@@ -1,12 +1,15 @@
-import { DashboardIcon, DocumentListIcon, HomeIcon } from "@/assets/Icons";
+import { DashboardIcon, DocumentListIcon } from "@/assets/Icons";
 import { PrivateRoutes } from "./routes";
 
 /**
  * Interfaz para opciones de la barra lateral
  */
 export interface SidebarOption {
+  /** Título de la opción */
   title: string;
+  /** Icono de la opción */
   icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  /** Enlace de la opción */
   link: string;
 }
 
@@ -14,7 +17,9 @@ export interface SidebarOption {
  * Interfaz para opciones de dropdown de la barra lateral
  */
 export interface SidebarDropdownOption {
+  /** Título de la opción */
   title: string;
+  /** Enlace de la opción */
   link: string;
 }
 
@@ -22,8 +27,11 @@ export interface SidebarDropdownOption {
  * Interfaz para dropdown de la barra lateral
  */
 export interface SidebarDropdown {
+  /** Título del dropdown */
   title: string;
+  /** Icono del dropdown */
   icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  /** Opciones del dropdown */
   options: SidebarDropdownOption[];
 }
 

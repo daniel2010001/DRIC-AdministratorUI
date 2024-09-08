@@ -1,7 +1,7 @@
 import { createCustomProblem } from "@/adapters";
 import { BackArrowIcon } from "@/assets/Icons/back-arrow-icon";
 import { useAsync, useFetchAndLoader } from "@/hooks";
-import { inicialProblem } from "@/models";
+import { ApplicantType, inicialProblem } from "@/models";
 import { searchProblem } from "@/services";
 import { SnackbarUtilities, formatDate_dddd_DD_MMMM_YYYY } from "@/utilities";
 import { Field, Label } from "@headlessui/react";
@@ -179,7 +179,7 @@ export function ViewProblem() {
             <Field className="col-span-full grid grid-cols-1 gap-x-8 md:gap-y-4 md:grid-cols-3">
               <Label className="flex justify-between text-sm font-medium leading-6">
                 NOMBRE{" "}
-                {problem.applicant.type === "INSTITUCION"
+                {problem.applicant.type === ApplicantType.INSTITUCION
                   ? "DE LA INSTITUCIÓN"
                   : "DEL MUNICIPIO"}
                 :

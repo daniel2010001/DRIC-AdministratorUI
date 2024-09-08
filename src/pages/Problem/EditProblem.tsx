@@ -1,6 +1,6 @@
 import { createCustomApplicant, createCustomCareer } from "@/adapters";
 import { useAsync, useFetchAndLoader } from "@/hooks";
-import { Applicant } from "@/models";
+import { Applicant, ApplicantType } from "@/models";
 import { getApplicants, getCareers, searchProblem } from "@/services";
 import { SnackbarUtilities } from "@/utilities";
 import { useEffect, useState } from "react";
@@ -66,7 +66,8 @@ export function EditProblem() {
         ...prev.applicant,
         options: applicants.filter(
           (applicant) =>
-            applicant.type === (isInstitute ? "INSTITUCION" : "MUNICIPIO")
+            applicant.type ===
+            (isInstitute ? ApplicantType.INSTITUCION : ApplicantType.MUNICIPIO)
         ),
       },
     }));

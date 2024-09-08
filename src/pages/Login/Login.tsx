@@ -1,6 +1,6 @@
 import { createCustomAuth, createCustomUser } from "@/adapters";
 import { Logo } from "@/assets";
-import { AppStore, PrivateRoutes, UserType } from "@/models";
+import { AppStorage, PrivateRoutes, UserType } from "@/models";
 import { createAuth, createUser, resetAuth, resetUser } from "@/redux/states";
 import { SnackbarUtilities, clearLocalStore } from "@/utilities";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,7 +15,7 @@ export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // cerrar sesión si ya está autenticado
-  const auth = useSelector((store: AppStore) => store.auth);
+  const auth = useSelector((store: AppStorage) => store.auth);
   useEffect(() => {
     if (auth.isAuthed) {
       dispatch(resetAuth());

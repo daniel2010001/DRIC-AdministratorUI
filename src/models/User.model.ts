@@ -6,6 +6,8 @@ export const UserType = {
   ADMINISTRADOR: "ADMINISTRADOR",
   /** Usuario de becario */
   BECARIO: "BECARIO",
+  /** Usuario no autenticado */
+  NO_AUTH: "NO_AUTH",
 } as const;
 
 /**
@@ -34,7 +36,7 @@ export const inicialUser: User = {
   id: 0,
   username: "",
   email: "",
-  type: "BECARIO",
+  type: UserType.NO_AUTH,
 };
 
 /**
@@ -44,15 +46,5 @@ export interface UserEndpoint {
   id_usuario: number;
   nombre_usuario: string;
   email_usuario: string;
-  tipo_usuario: UserType;
+  tipo_usuario: UserType | string;
 }
-
-/**
- * Inicial UserEndpoint
- */
-export const inicialEndpointUser: UserEndpoint = {
-  id_usuario: 0,
-  nombre_usuario: "",
-  email_usuario: "",
-  tipo_usuario: "BECARIO",
-};

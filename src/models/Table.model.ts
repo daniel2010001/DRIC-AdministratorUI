@@ -6,7 +6,7 @@ import { Applicant } from "./Applicant.model";
 export interface TableHeader {
   id: number;
   title: string;
-  institución: string;
+  institution: string;
   publishedAt: Date;
   updatedAt: Date;
   createdAt: Date;

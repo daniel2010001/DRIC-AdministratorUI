@@ -1,15 +1,29 @@
 import { ComboBoxOption } from ".";
 
+export const ApplicantType = {
+  INSTITUCION: "INSTITUCION",
+  MUNICIPIO: "MUNICIPIO",
+} as const;
+
+export type ApplicantType = (typeof ApplicantType)[keyof typeof ApplicantType];
+
 /**
  * Interfaz de los Solicitantes adaptada para el front end.
  */
 export interface Applicant extends ComboBoxOption {
+  /** Identificador del Solicitante */
   id: number;
+  /** Nombre del Solicitante */
   name: string;
+  /** Nombre corto del Solicitante */
   shortName: string;
+  /** Jurisdicción del Solicitante */
   jurisdiction: string;
-  type: "INSTITUCION" | "MUNICIPIO";
+  /** Tipo del Solicitante */
+  type: ApplicantType;
+  /** Fecha de creación */
   createdAt: Date;
+  /** Fecha de actualización */
   updatedAt: Date;
 }
 
@@ -21,7 +35,7 @@ export interface ApplicantEndpoint {
   nombre_solicitante: string;
   nombre_corto_sigla: string;
   jurisdiccion: string;
-  tipo_solicitante: "INSTITUCION" | "MUNICIPIO";
+  tipo_solicitante: ApplicantType | string;
   createdAt: string;
   updatedAt: string;
 }
@@ -34,20 +48,7 @@ export const inicialApplicant: Applicant = {
   name: "",
   shortName: "",
   jurisdiction: "",
-  type: "INSTITUCION",
+  type: ApplicantType.INSTITUCION,
   createdAt: new Date(),
   updatedAt: new Date(),
-};
-
-/**
- * Default EndpointApplicant
- */
-export const inicialEndpointApplicant: ApplicantEndpoint = {
-  id_solicitante: 0,
-  nombre_solicitante: "",
-  nombre_corto_sigla: "",
-  jurisdiccion: "",
-  tipo_solicitante: "INSTITUCION",
-  createdAt: "",
-  updatedAt: "",
 };

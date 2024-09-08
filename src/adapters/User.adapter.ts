@@ -1,10 +1,16 @@
-import { User, UserEndpoint } from "@/models";
+import { User, UserEndpoint, UserType } from "@/models";
 
-export const createCustomUser = (userEnpoint: UserEndpoint): User => {
+/**
+ * Función para adaptar un usuario recibido desde la API
+ * @param userEndpoint Usuario recibido desde la API
+ * @returns Usuario formateado
+ */
+export const createCustomUser = (userEndpoint: UserEndpoint): User => {
+  const userType = UserType[userEndpoint.tipo_usuario as keyof typeof UserType];
   return {
-    id: userEnpoint.id_usuario,
-    username: userEnpoint.nombre_usuario,
-    email: userEnpoint.email_usuario,
-    type: userEnpoint.tipo_usuario,
+    id: userEndpoint.id_usuario,
+    username: userEndpoint.nombre_usuario,
+    email: userEndpoint.email_usuario,
+    type: userType ? userType : UserType.NO_AUTH,
   };
 };

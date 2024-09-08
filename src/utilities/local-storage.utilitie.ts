@@ -1,13 +1,13 @@
-import { AppStore } from "@/models";
+import { AppStorage } from "@/models";
 
 /**
  * Guarda un valor en LocalStorage
  * @param key Clave de LocalStorage
  * @param value Valor a guardar
  */
-export const setLocalStore = <K extends keyof AppStore>(
+export const setLocalStore = <K extends keyof AppStorage>(
   key: K,
-  value: AppStore[K]
+  value: AppStorage[K]
 ): void => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
@@ -21,13 +21,13 @@ export const setLocalStore = <K extends keyof AppStore>(
  * @param key Clave de LocalStorage
  * @returns Valor de LocalStorageKey
  */
-export const getLocalStore = <K extends keyof AppStore>(
+export const getLocalStore = <K extends keyof AppStorage>(
   key: K
-): AppStore[K] | undefined => {
+): AppStorage[K] | undefined => {
   try {
     const value = localStorage.getItem(key);
     if (!value) return undefined;
-    const parsedValue = JSON.parse(value) as AppStore[K];
+    const parsedValue = JSON.parse(value) as AppStorage[K];
     return parsedValue;
   } catch (error) {
     console.error(error);
@@ -39,9 +39,9 @@ export const getLocalStore = <K extends keyof AppStore>(
  * @param key Clave de LocalStorage
  * @returns Valor eliminado
  */
-export const removeLocalStore = <K extends keyof AppStore>(
+export const removeLocalStore = <K extends keyof AppStorage>(
   key: K
-): AppStore[K] | undefined => {
+): AppStorage[K] | undefined => {
   try {
     const item = getLocalStore(key);
     localStorage.removeItem(key as string);
