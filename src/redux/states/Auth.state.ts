@@ -1,6 +1,6 @@
-import { LocalStorageKeys, inicialAuth } from "@/models";
+import { Auth, LocalStorageKeys, inicialAuth } from "@/models";
 import { getLocalStore, removeLocalStore, setLocalStore } from "@/utilities";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const authSlice = createSlice({
   name: LocalStorageKeys.AUTH,
@@ -12,7 +12,7 @@ export const authSlice = createSlice({
      * @param action Acción de crear un nuevo estado de autenticación
      * @returns Nuevo estado de autenticación
      */
-    createAuth: (state, action) => {
+    createAuth: (state: Auth, action: PayloadAction<Auth>) => {
       setLocalStore(LocalStorageKeys.AUTH, action.payload);
       return action.payload;
     },
@@ -22,8 +22,8 @@ export const authSlice = createSlice({
      * @param action Acción de actualizar un estado de autenticación
      * @returns Nuevo estado de autenticación
      */
-    updateAuth: (state, action) => {
-      const result = { ...state, ...action.payload };
+    updateAuth: (state: Auth, action: PayloadAction<Auth>) => {
+      const result = { ...state, ...action.payload } as Auth;
       setLocalStore(LocalStorageKeys.AUTH, result);
       return result;
     },

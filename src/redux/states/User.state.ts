@@ -1,6 +1,6 @@
-import { LocalStorageKeys, inicialUser } from "@/models";
+import { LocalStorageKeys, User, inicialUser } from "@/models";
 import { getLocalStore, removeLocalStore, setLocalStore } from "@/utilities";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
   name: LocalStorageKeys.USER,
@@ -12,7 +12,7 @@ export const userSlice = createSlice({
      * @param action Acción de crear un nuevo estado de usuario
      * @returns Nuevo estado de usuario
      */
-    createUser: (state, action) => {
+    createUser: (state: User, action: PayloadAction<User>) => {
       setLocalStore(LocalStorageKeys.USER, action.payload);
       return action.payload;
     },
@@ -22,8 +22,8 @@ export const userSlice = createSlice({
      * @param action Acción de actualizar un estado de usuario
      * @returns Nuevo estado de usuario
      */
-    updateUser: (state, action) => {
-      const result = { ...state, ...action.payload };
+    updateUser: (state: User, action: PayloadAction<User>) => {
+      const result = { ...state, ...action.payload } as User;
       setLocalStore(LocalStorageKeys.USER, result);
       return result;
     },
