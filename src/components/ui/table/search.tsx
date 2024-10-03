@@ -1,10 +1,19 @@
 import { SearchIcon } from "@/assets/Icons";
 
-const Search = ({
-  className,
+import { ChangeEventHandler } from "react";
+
+interface SearchProps {
+  className?: string;
+  searchFunction: ChangeEventHandler<HTMLInputElement>;
+  width?: string;
+  height?: string;
+}
+
+const Search: React.FC<SearchProps> = ({
+  className = "",
   searchFunction,
-  width,
-  height,
+  width = "",
+  height = "",
 }) => {
   return (
     <div className={`buscador ${className}`}>
