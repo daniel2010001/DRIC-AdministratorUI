@@ -6,11 +6,14 @@ import { User, UserEndpoint, UserType } from "@/models";
  * @returns Usuario formateado
  */
 export const createCustomUser = (userEndpoint: UserEndpoint): User => {
-  const userType = UserType[userEndpoint.tipo_usuario as keyof typeof UserType];
+  console.log(userEndpoint);
+  const userType = Object.keys(UserType).find(
+    (key) => UserType[key as keyof typeof UserType] === userEndpoint.tipo_usuario
+  );
   return {
     id: userEndpoint.id_usuario,
     username: userEndpoint.nombre_usuario,
     email: userEndpoint.email_usuario,
-    type: userType ? userType : UserType.NO_AUTH,
+    type: userType ? UserType[userType as keyof typeof UserType] : UserType.NO_AUTH,
   };
 };
