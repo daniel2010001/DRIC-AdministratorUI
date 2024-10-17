@@ -19,6 +19,7 @@ export interface EditProblemTemplate {
   contactPosition: string;
   contactName: string;
   cellPhone: string;
+  validate: boolean;
 }
 
 /** Interfaz para el formulario de edición de problemáticas para la API */
@@ -40,6 +41,7 @@ export interface EditProblemEndpoint {
   contacto_cargo: string;
   contacto_nombre: string;
   telefono: string;
+  validado: boolean;
 }
 
 /** Inicial EditProblem */
@@ -59,4 +61,5 @@ export const inicialEditProblem: EditProblemTemplate = {
   cellPhone: "",
   phone: "",
   contactName: "",
+  validate: false,
 };

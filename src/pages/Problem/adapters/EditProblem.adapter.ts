@@ -19,6 +19,7 @@ export const crearteEditTemplate = (editTemplate: ProblemEndpoint): EditProblemT
     cellPhone: editTemplate.telefono.toString(),
     phone: editTemplate.telefono_institucional.toString(),
     contactName: editTemplate.contacto_nombre,
+    validate: editTemplate.validado,
   };
 };
 
@@ -44,5 +45,6 @@ export const createEditEndpoint = (editTemplate: EditProblemTemplate): EditProbl
     contacto_nombre: editTemplate.contactName,
     telefono: editTemplate.cellPhone,
     telefono_institucional: editTemplate.phone,
+    validado: editTemplate.validate,
   };
 };

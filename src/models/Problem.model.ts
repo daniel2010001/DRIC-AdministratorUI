@@ -44,7 +44,6 @@ export interface Problem {
  * Interfaz para las Problemáticas recividos desde la API
  */
 export interface ProblemRequest extends Problem {
-  /** Usuario que creó la Problemática */
   user: User;
 }
 

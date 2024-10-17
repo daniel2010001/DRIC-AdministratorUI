@@ -94,7 +94,7 @@ export const editProblemConfig: {
     label: "TELÉFONO CELULAR DEL CONTACTO",
     type: "tel",
     maxLength: 8,
-    required: false,
+    required: true,
   },
 };
 
