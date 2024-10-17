@@ -6,28 +6,15 @@ import { SnackbarUtilities } from "@/utilities";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { crearteEditTemplate, createEditEndpoint } from "./adapters";
-import {
-  FormField,
-  FormSection,
-  FormWrapper,
-  ToggleWithText,
-} from "./components";
-import {
-  EditProblemTemplate,
-  editLayout,
-  editProblemConfig,
-  inicialEditProblem,
-} from "./models";
+import { FormField, FormSection, FormWrapper, ToggleWithText } from "./components";
+import { EditProblemTemplate, editLayout, editProblemConfig, inicialEditProblem } from "./models";
 import { updateProblem } from "./services";
 
 export function EditProblem() {
   const navigate = useNavigate();
-  const { loading: loadingApplicants, callEndpoint: callApplicants } =
-    useFetchAndLoader();
-  const { loading: loadingCareers, callEndpoint: callCareers } =
-    useFetchAndLoader();
-  const { loading: loadingProblem, callEndpoint: callProblem } =
-    useFetchAndLoader();
+  const { loading: loadingApplicants, callEndpoint: callApplicants } = useFetchAndLoader();
+  const { loading: loadingCareers, callEndpoint: callCareers } = useFetchAndLoader();
+  const { loading: loadingProblem, callEndpoint: callProblem } = useFetchAndLoader();
   const idProblem = useParams().id || 0;
   const [isInstitute, setIsInstitute] = useState(false);
   const [applicants, setApplicants] = useState<Applicant[]>([]);
@@ -66,8 +53,7 @@ export function EditProblem() {
         ...prev.applicant,
         options: applicants.filter(
           (applicant) =>
-            applicant.type ===
-            (isInstitute ? ApplicantType.INSTITUCION : ApplicantType.MUNICIPIO)
+            applicant.type === (isInstitute ? ApplicantType.INSTITUCION : ApplicantType.MUNICIPIO)
         ),
       },
     }));
@@ -76,14 +62,10 @@ export function EditProblem() {
   const handleSubmit = async (data: EditProblemTemplate) => {
     await updateProblem(idProblem, createEditEndpoint(data))
       .then(() => {
-        SnackbarUtilities.success(
-          "La problemática ha sido actualizada correctamente"
-        );
+        SnackbarUtilities.success("La problemática ha sido actualizada correctamente");
         navigate("..");
       })
-      .catch(() =>
-        SnackbarUtilities.error("Error al actualizar la problemática")
-      );
+      .catch(() => SnackbarUtilities.error("Error al actualizar la problemática"));
   };
 
   if (!loadingProblem && !problem.title) {
@@ -101,13 +83,10 @@ export function EditProblem() {
         onSubmit={handleSubmit}
         formConfig={editProblemConfig}
         defaultValues={defaultValues}
+        labelButton={`${!problem.validate ? "Validar y " : ""}Guardar`}
       >
         {editLayout.map((section) => (
-          <FormSection
-            key={section.title}
-            title={section.title}
-            description={section.description}
-          >
+          <FormSection key={section.title} title={section.title} description={section.description}>
             {section.inputs.map((input) => (
               <FormField<EditProblemTemplate>
                 key={input.key}

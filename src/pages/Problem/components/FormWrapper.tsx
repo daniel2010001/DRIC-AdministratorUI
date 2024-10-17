@@ -10,6 +10,7 @@ interface FormWrapperProps<T> {
   formConfig: { [K in keyof T]: FieldConfig };
   defaultValues: T;
   children: ReactNode;
+  labelButton?: string;
 }
 
 export const FormWrapper = <T extends Object>({
@@ -17,6 +18,7 @@ export const FormWrapper = <T extends Object>({
   formConfig,
   defaultValues,
   children,
+  labelButton = "Guardar",
 }: FormWrapperProps<T>) => {
   const schemaObject = createObjectSchema<T>(formConfig, defaultValues);
   const methods = useForm({
@@ -35,11 +37,7 @@ export const FormWrapper = <T extends Object>({
         {children}
 
         <div className="mt-6 flex items-center justify-end gap-x-6 ">
-          <Link
-            to={"../solicitudes"}
-            type="button"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
+          <Link to={".."} type="button" className="text-sm font-semibold leading-6 text-gray-900">
             Cancelar
           </Link>
           <button
@@ -47,7 +45,7 @@ export const FormWrapper = <T extends Object>({
             type="submit"
             className="rounded-md bg-[#093958] hover:bg-[#34617a] px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Guardar
+            {labelButton}
           </button>
         </div>
       </form>
