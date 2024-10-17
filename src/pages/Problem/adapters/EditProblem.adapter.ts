@@ -2,9 +2,7 @@ import { createCustomApplicant, createCustomCareer } from "@/adapters";
 import { EditProblemEndpoint, EditProblemTemplate } from "../models";
 import { ProblemEndpoint } from "@/models";
 
-export const crearteEditTemplate = (
-  editTemplate: ProblemEndpoint
-): EditProblemTemplate => {
+export const crearteEditTemplate = (editTemplate: ProblemEndpoint): EditProblemTemplate => {
   return {
     title: editTemplate.titulo,
     careers: editTemplate.carreras.map(createCustomCareer),
@@ -17,9 +15,10 @@ export const crearteEditTemplate = (
     when: editTemplate.cuando,
     applicant: createCustomApplicant(editTemplate.solicitante),
     zone: editTemplate.zona,
-    contact: editTemplate.contacto,
+    contactPosition: editTemplate.contacto_nombre,
     cellPhone: editTemplate.telefono.toString(),
     phone: editTemplate.telefono_institucional.toString(),
+    contactName: editTemplate.contacto_nombre,
   };
 };
 
@@ -28,9 +27,7 @@ export const crearteEditTemplate = (
  * @param editTemplate Plantilla del formulario para crear nuevas problemáticas
  * @returns Plantilla formateada
  */
-export const createEditEndpoint = (
-  editTemplate: EditProblemTemplate
-): EditProblemEndpoint => {
+export const createEditEndpoint = (editTemplate: EditProblemTemplate): EditProblemEndpoint => {
   return {
     titulo: editTemplate.title,
     id_carrera: editTemplate.careers.map((career) => career.id),
@@ -43,7 +40,8 @@ export const createEditEndpoint = (
     cuando: editTemplate.when,
     id_solicitante: editTemplate.applicant?.id || 0,
     zona: editTemplate.zone,
-    contacto: editTemplate.contact,
+    contacto_cargo: editTemplate.contactPosition,
+    contacto_nombre: editTemplate.contactName,
     telefono: editTemplate.cellPhone,
     telefono_institucional: editTemplate.phone,
   };

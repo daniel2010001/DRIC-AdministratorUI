@@ -24,7 +24,8 @@ export interface Problem {
   when: string;
 
   zone: string;
-  contact: string;
+  contactPosition: string;
+  contactName: string;
   cellPhone: string;
   phone: string;
 
@@ -64,7 +65,8 @@ export interface ProblemEndpoint {
   cuando: string;
 
   zona: string;
-  contacto: string;
+  contacto_nombre: string;
+  contacto_cargo: string;
   telefono: string;
   telefono_institucional: string;
   publicado: string;
@@ -93,7 +95,7 @@ export const inicialProblem: Problem = {
   why: "",
   when: "",
   zone: "",
-  contact: "",
+  contactPosition: "",
   cellPhone: "",
   phone: "",
   publishedAt: new Date(),
@@ -103,4 +105,5 @@ export const inicialProblem: Problem = {
   validate: false,
   applicant: inicialApplicant,
   careers: [],
+  contactName: "",
 };

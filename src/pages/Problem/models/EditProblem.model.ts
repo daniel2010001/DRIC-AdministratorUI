@@ -1,8 +1,6 @@
 import { Applicant, Career, inicialApplicant, inicialCareer } from "@/models";
 
-/**
- * Interfaz para el formulario de edición de las problemáticas
- */
+/** Interfaz para el formulario de edición de las problemáticas */
 export interface EditProblemTemplate {
   title: string;
   careers: Career[];
@@ -17,14 +15,13 @@ export interface EditProblemTemplate {
 
   applicant: Applicant | null;
   zone: string;
-  contact: string;
-  cellPhone: string;
   phone: string;
+  contactPosition: string;
+  contactName: string;
+  cellPhone: string;
 }
 
-/**
- * Interfaz para el formulario de edición de problemáticas para la API
- */
+/** Interfaz para el formulario de edición de problemáticas para la API */
 export interface EditProblemEndpoint {
   titulo: string;
   id_carrera: number[];
@@ -39,14 +36,13 @@ export interface EditProblemEndpoint {
 
   id_solicitante: number;
   zona: string;
-  contacto: string;
-  telefono: string;
   telefono_institucional: string;
+  contacto_cargo: string;
+  contacto_nombre: string;
+  telefono: string;
 }
 
-/**
- * Inicial EditProblem
- */
+/** Inicial EditProblem */
 export const inicialEditProblem: EditProblemTemplate = {
   title: "",
   careers: [inicialCareer],
@@ -59,7 +55,8 @@ export const inicialEditProblem: EditProblemTemplate = {
   when: "",
   applicant: inicialApplicant,
   zone: "",
-  contact: "",
+  contactPosition: "",
   cellPhone: "",
   phone: "",
+  contactName: "",
 };
