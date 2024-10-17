@@ -72,9 +72,16 @@ export const editProblemConfig: {
     maxLength: 150,
     required: true,
   },
-  contact: {
-    label: "CONTACTO DE LA INSTITUCIÓN",
+  contactPosition: {
+    label: "CARGO DEL CONTACTO",
     type: "text",
+    maxLength: 150,
+    required: true,
+  },
+  contactName: {
+    label: "NOMBRE DEL CONTACTO",
+    type: "text",
+    maxLength: 150,
     required: true,
   },
   phone: {
@@ -84,7 +91,7 @@ export const editProblemConfig: {
     required: true,
   },
   cellPhone: {
-    label: "TELÉFONO CELULAR",
+    label: "TELÉFONO CELULAR DEL CONTACTO",
     type: "tel",
     maxLength: 8,
     required: false,

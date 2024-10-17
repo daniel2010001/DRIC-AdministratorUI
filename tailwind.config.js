@@ -46,7 +46,6 @@ export default {
           '@apply text-dark-secondary bg-dark-secondary border-dark-secondary': {},
         },
       };
-
       addComponents(themes);
     },
   ],

@@ -1,9 +1,4 @@
-import {
-  ProblemEndpoint,
-  Problem,
-  ProblemRequestEnpoint,
-  ProblemRequest,
-} from "@/models";
+import { ProblemEndpoint, Problem, ProblemRequestEnpoint, ProblemRequest } from "@/models";
 import { createCustomApplicant } from "./Applicant.adapter";
 import { createCustomCareer } from "./Career.adapter";
 import { createCustomUser } from "./User.adapter";
@@ -28,7 +23,8 @@ export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
     why: problematic.para_que,
     when: problematic.cuando,
 
-    contact: problematic.contacto,
+    contactPosition: problematic.contacto_cargo,
+    contactName: problematic.contacto_nombre,
     phone: problematic.telefono,
     cellPhone: problematic.telefono_institucional,
     zone: problematic.zona,
