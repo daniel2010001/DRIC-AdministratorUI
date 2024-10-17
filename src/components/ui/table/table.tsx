@@ -51,6 +51,9 @@ export const Table = <T extends { [key: string]: string | number }>({
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = useMemo(() => {
+    if (page * rowsPerPage > rows.length) {
+      setPage(0); 
+    }
     return stableSort(rows, getComparator(order, orderBy)).slice(
       page * rowsPerPage,
       page * rowsPerPage + rowsPerPage
