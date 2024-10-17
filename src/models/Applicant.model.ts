@@ -3,6 +3,7 @@ import { ComboBoxOption } from ".";
 export const ApplicantType = {
   INSTITUCION: "INSTITUCION",
   MUNICIPIO: "MUNICIPIO",
+  UNKNOWN: "UNKNOWN",
 } as const;
 
 export type ApplicantType = (typeof ApplicantType)[keyof typeof ApplicantType];
