@@ -15,7 +15,7 @@ export const crearteEditTemplate = (editTemplate: ProblemEndpoint): EditProblemT
     when: editTemplate.cuando,
     applicant: createCustomApplicant(editTemplate.solicitante),
     zone: editTemplate.zona,
-    contactPosition: editTemplate.contacto_nombre,
+    contactPosition: editTemplate.contacto_cargo,
     cellPhone: editTemplate.telefono.toString(),
     phone: editTemplate.telefono_institucional.toString(),
     contactName: editTemplate.contacto_nombre,
