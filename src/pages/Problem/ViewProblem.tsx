@@ -106,6 +106,18 @@ export function ViewProblem() {
                 />
               </div>
             </Field>
+
+            <Field className="col-span-full grid grid-cols-1 gap-x-8 md:gap-y-4 md:grid-cols-3">
+              <Label className="flex justify-between text-sm font-medium leading-6">
+                EFECTOS QUE PRODUCE EL PROBLEMA:
+              </Label>
+              <div className="col-span-2 pb-2">
+                <TipTap
+                  content={problem.effects}
+                  className="text-light-primary dark:text-dark-primary break-words whitespace-pre-wrap"
+                />
+              </div>
+            </Field>
           </div>
         </div>
 
