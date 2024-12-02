@@ -1,14 +1,22 @@
-export const PublicRoutes = {
-  LOGIN: "/login",
-};
+/**
+ * Enumeración de las rutas públicas
+ */
+export enum PublicRoutes {
+  /** Ruta principal */
+  LOGIN = "/login",
+}
 
-export const PrivateRoutes = {
-  PRIVATE: "/private",
-  HOME: "home",
-  DASHBOARD: "dashboard",
-  PROBLEMS: "problems",
-  PROBLEM_ALL: "all",
-  PROBLEM_VIEW: "view",
-  PROBLEM_EDIT: "edit",
-  PROBLEM_FORM: "new",
-};
+/**
+ * Enumeración de las rutas privadas
+ */
+export enum PrivateRoutes {
+  PRIVATE = "/private",
+  HOME = "home",
+  DASHBOARD = "panel-de-control",
+  PROBLEMS = "problemas",
+  REQUESTS = "solicitudes",
+  PROBLEM_ALL = "todos",
+  PROBLEM_VIEW = "ver",
+  PROBLEM_EDIT = "editar",
+  PROBLEM_FORM = "nuevo",
+}

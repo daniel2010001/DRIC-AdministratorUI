@@ -6,7 +6,7 @@ import { Applicant } from "./Applicant.model";
 export interface TableHeader {
   id: number;
   title: string;
-  institución: string;
+  institution: string;
   publishedAt: Date;
   updatedAt: Date;
   createdAt: Date;
@@ -51,8 +51,10 @@ export interface HeadCell<T> {
   label: string;
   numeric: boolean;
   disablePadding: boolean;
+  isOrder: boolean;
   align?: "right" | "center" | "left";
   minWidth?: string;
   isAction?: boolean;
   isStatus?: boolean;
+  isRequest?: boolean;
 }

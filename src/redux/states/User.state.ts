@@ -1,20 +1,37 @@
-import { User, inicialUser } from "@/models";
-import { setLocalStore, removeLocalStore, LocalStorageKeys } from "@/utilities";
-import { createSlice } from "@reduxjs/toolkit";
+import { LocalStorageKeys, User, inicialUser } from "@/models";
+import { getLocalStore, removeLocalStore, setLocalStore } from "@/utilities";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
   name: LocalStorageKeys.USER,
-  initialState: inicialUser,
+  initialState: getLocalStore(LocalStorageKeys.USER) || inicialUser,
   reducers: {
-    createUser: (state, action) => {
-      setLocalStore<User>(LocalStorageKeys.USER, action.payload);
+    /**
+     * Crear un nuevo estado de usuario
+     * @param state Estado actual
+     * @param action Acción de crear un nuevo estado de usuario
+     * @returns Nuevo estado de usuario
+     */
+    createUser: (state: User, action: PayloadAction<User>) => {
+      setLocalStore(LocalStorageKeys.USER, action.payload);
       return action.payload;
     },
-    updateUser: (state, action) => {
-      const result = { ...state, ...action.payload };
-      setLocalStore<User>(LocalStorageKeys.USER, result);
+    /**
+     * Actualizar un estado de usuario
+     * @param state Estado actual
+     * @param action Acción de actualizar un estado de usuario
+     * @returns Nuevo estado de usuario
+     */
+    updateUser: (state: User, action: PayloadAction<User>) => {
+      const result = { ...state, ...action.payload } as User;
+      setLocalStore(LocalStorageKeys.USER, result);
       return result;
     },
+    /**
+     * Borrar un estado de usuario
+     * @param state Estado actual
+     * @returns Nuevo estado de usuario
+     */
     resetUser: () => {
       removeLocalStore(LocalStorageKeys.USER);
       return inicialUser;

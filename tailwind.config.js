@@ -11,8 +11,8 @@ export default {
         'jacques': ['"Jacques Francois Shadow"', 'serif'],
       },
       backgroundColor: {
-        'light-primary': '#f7f7f7',
-        'light-secondary': '#dedede',
+        'light-primary': '#F4FDFF',
+        'light-secondary': '#E1ECFA',
         'dark-primary': '#3c3c3c',
         'dark-secondary': '#4c4c4c',
       },
@@ -46,7 +46,6 @@ export default {
           '@apply text-dark-secondary bg-dark-secondary border-dark-secondary': {},
         },
       };
-
       addComponents(themes);
     },
   ],

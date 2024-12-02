@@ -2,8 +2,8 @@ import { createCustomApplicant, createCustomCareer } from "@/adapters";
 import { EditProblemEndpoint, EditProblemTemplate } from "../models";
 import { ProblemEndpoint } from "@/models";
 
-export const crearteEditTemplate = (editTemplate: ProblemEndpoint) => {
-  const formatEditTemplate: EditProblemTemplate = {
+export const crearteEditTemplate = (editTemplate: ProblemEndpoint): EditProblemTemplate => {
+  return {
     title: editTemplate.titulo,
     careers: editTemplate.carreras.map(createCustomCareer),
     approach: editTemplate.planteamiento,
@@ -15,12 +15,12 @@ export const crearteEditTemplate = (editTemplate: ProblemEndpoint) => {
     when: editTemplate.cuando,
     applicant: createCustomApplicant(editTemplate.solicitante),
     zone: editTemplate.zona,
-    contact: editTemplate.contacto,
+    contactPosition: editTemplate.contacto_nombre,
     cellPhone: editTemplate.telefono.toString(),
     phone: editTemplate.telefono_institucional.toString(),
+    contactName: editTemplate.contacto_nombre,
+    validate: editTemplate.validado,
   };
-
-  return formatEditTemplate;
 };
 
 /**
@@ -28,8 +28,8 @@ export const crearteEditTemplate = (editTemplate: ProblemEndpoint) => {
  * @param editTemplate Plantilla del formulario para crear nuevas problemáticas
  * @returns Plantilla formateada
  */
-export const createEditEndpoint = (editTemplate: EditProblemTemplate) => {
-  const formatFormEndpointTemplate: EditProblemEndpoint = {
+export const createEditEndpoint = (editTemplate: EditProblemTemplate): EditProblemEndpoint => {
+  return {
     titulo: editTemplate.title,
     id_carrera: editTemplate.careers.map((career) => career.id),
     planteamiento: editTemplate.approach,
@@ -41,10 +41,10 @@ export const createEditEndpoint = (editTemplate: EditProblemTemplate) => {
     cuando: editTemplate.when,
     id_solicitante: editTemplate.applicant?.id || 0,
     zona: editTemplate.zone,
-    contacto: editTemplate.contact,
-    telefono: parseInt(editTemplate.cellPhone),
-    telefono_institucional: parseInt(editTemplate.phone),
+    contacto_cargo: editTemplate.contactPosition,
+    contacto_nombre: editTemplate.contactName,
+    telefono: editTemplate.cellPhone,
+    telefono_institucional: editTemplate.phone,
+    validado: editTemplate.validate,
   };
-
-  return formatFormEndpointTemplate;
 };

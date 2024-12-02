@@ -1,6 +1,7 @@
-import { ProblemEndpoint, Problem } from "@/models";
+import { ProblemEndpoint, Problem, ProblemRequestEnpoint, ProblemRequest } from "@/models";
 import { createCustomApplicant } from "./Applicant.adapter";
 import { createCustomCareer } from "./Career.adapter";
+import { createCustomUser } from "./User.adapter";
 
 /**
  * Función para adaptar una problemática recibida desde la API
@@ -9,7 +10,7 @@ import { createCustomCareer } from "./Career.adapter";
  * @error Si el id del solicitante no es el mismo que el que indica la problemática se genera un error.
  */
 export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
-  const formatProblematic: Problem = {
+  return {
     id: problematic.id_problematica,
 
     title: problematic.titulo,
@@ -22,9 +23,10 @@ export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
     why: problematic.para_que,
     when: problematic.cuando,
 
-    contact: problematic.contacto,
-    phone: problematic.telefono.toString(),
-    cellPhone: problematic.telefono_institucional.toString(),
+    contactPosition: problematic.contacto_cargo,
+    contactName: problematic.contacto_nombre,
+    phone: problematic.telefono,
+    cellPhone: problematic.telefono_institucional,
     zone: problematic.zona,
 
     publishedAt: new Date(problematic.publicado),
@@ -37,6 +39,19 @@ export const createCustomProblem = (problematic: ProblemEndpoint): Problem => {
     applicant: createCustomApplicant(problematic.solicitante),
     careers: problematic.carreras.map(createCustomCareer),
   };
+};
 
-  return formatProblematic;
+// mover a solicitudes/models
+/**
+ * Función para adaptar una solicitud de problemática recibida desde la API
+ * @param problematicRequest Solicitud de problemática recuperada de la API
+ * @returns Problemática formateada
+ */
+export const createCustomProblemRequest = (
+  problematicRequest: ProblemRequestEnpoint
+): ProblemRequest => {
+  return {
+    ...createCustomProblem(problematicRequest),
+    user: createCustomUser(problematicRequest.usuario),
+  };
 };

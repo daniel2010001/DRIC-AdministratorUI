@@ -1,20 +1,37 @@
-import { AuthStore, inicialAuth } from "@/models";
-import { setLocalStore, removeLocalStore, LocalStorageKeys } from "@/utilities";
-import { createSlice } from "@reduxjs/toolkit";
+import { Auth, LocalStorageKeys, inicialAuth } from "@/models";
+import { getLocalStore, removeLocalStore, setLocalStore } from "@/utilities";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const authSlice = createSlice({
   name: LocalStorageKeys.AUTH,
-  initialState: inicialAuth,
+  initialState: getLocalStore(LocalStorageKeys.AUTH) || inicialAuth,
   reducers: {
-    createAuth: (state, action) => {
-      setLocalStore<AuthStore>(LocalStorageKeys.AUTH, action.payload);
+    /**
+     * Crear un nuevo estado de autenticación
+     * @param state Estado actual
+     * @param action Acción de crear un nuevo estado de autenticación
+     * @returns Nuevo estado de autenticación
+     */
+    createAuth: (state: Auth, action: PayloadAction<Auth>) => {
+      setLocalStore(LocalStorageKeys.AUTH, action.payload);
       return action.payload;
     },
-    updateAuth: (state, action) => {
-      const result = { ...state, ...action.payload };
-      setLocalStore<AuthStore>(LocalStorageKeys.AUTH, result);
+    /**
+     * Actualizar un estado de autenticación
+     * @param state Estado actual
+     * @param action Acción de actualizar un estado de autenticación
+     * @returns Nuevo estado de autenticación
+     */
+    updateAuth: (state: Auth, action: PayloadAction<Auth>) => {
+      const result = { ...state, ...action.payload } as Auth;
+      setLocalStore(LocalStorageKeys.AUTH, result);
       return result;
     },
+    /**
+     * Borrar un estado de autenticación
+     * @param state Estado actual
+     * @returns Nuevo estado de autenticación
+     */
     resetAuth: () => {
       removeLocalStore(LocalStorageKeys.AUTH);
       return inicialAuth;

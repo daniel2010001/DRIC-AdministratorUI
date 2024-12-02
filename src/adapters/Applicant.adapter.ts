@@ -1,22 +1,21 @@
-import { ApplicantEndpoint, Applicant } from "@/models";
+import { Applicant, ApplicantEndpoint, ApplicantType } from "@/models";
 
 /**
  * Función para adaptar un Solicitante recibido desde la API
- * @param applicant Solicitante recibido desde la API
+ * @param applicantEndpoint Solicitante recibido desde la API
  * @returns Solicitante formateado
  */
-export const createCustomApplicant = (
-  applicant: ApplicantEndpoint
-): Applicant => {
-  const formatInstitute: Applicant = {
-    id: applicant.id_solicitante,
-    name: applicant.nombre_solicitante,
-    shortName: applicant.nombre_corto_sigla,
-    jurisdiction: applicant.jurisdiccion,
-    type: applicant.tipo_solicitante,
-    createdAt: new Date(applicant.createdAt),
-    updatedAt: new Date(applicant.updatedAt),
+export const createCustomApplicant = (applicantEndpoint: ApplicantEndpoint): Applicant => {
+  const type = Object.keys(ApplicantType).find(
+    (key) => ApplicantType[key as keyof typeof ApplicantType] === applicantEndpoint.tipo_solicitante
+  );
+  return {
+    id: applicantEndpoint.id_solicitante,
+    name: applicantEndpoint.nombre_solicitante,
+    shortName: applicantEndpoint.nombre_corto_sigla,
+    jurisdiction: applicantEndpoint.jurisdiccion,
+    type: type ? ApplicantType[type as keyof typeof ApplicantType] : ApplicantType.UNKNOWN,
+    createdAt: new Date(applicantEndpoint.createdAt),
+    updatedAt: new Date(applicantEndpoint.updatedAt),
   };
-
-  return formatInstitute;
 };

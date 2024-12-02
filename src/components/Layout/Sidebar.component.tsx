@@ -24,10 +24,29 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
   };
 
   const toggleDropdown = (title: string) => {
-    setOpenDropdowns((prevState) => ({
-      ...prevState,
-      [title]: !prevState[title],
-    }));
+    if (openDropdowns[title]) {
+      const items = document.querySelectorAll(
+        `#dropdown-${title.replace(/\s+/g, "-")}-example li`
+      );
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.remove("visible");
+          item.classList.add("hiding");
+        }, index * 10);
+      });
+
+      setTimeout(() => {
+        setOpenDropdowns((prevState) => ({
+          ...prevState,
+          [title]: false,
+        }));
+      }, items.length * 10 + 100);
+    } else {
+      setOpenDropdowns((prevState) => ({
+        ...prevState,
+        [title]: true,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -35,18 +54,32 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    Object.keys(openDropdowns).forEach((key) => {
+      if (openDropdowns[key]) {
+        const items = document.querySelectorAll(
+          `#dropdown-${key.replace(/\s+/g, "-")}-example li`
+        );
+        items.forEach((item, index) => {
+          item.classList.remove("hiding");
+          setTimeout(() => {
+            item.classList.add("visible");
+          }, index * 10);
+        });
+      }
+    });
+  }, [openDropdowns]);
 
   const iconClassName = clsx(
     "flex-shrink-0 w-5 h-5 transition duration-75",
-    "text-gray-500 group-hover:text-gray-900",
-    "dark:text-gray-400 dark:group-hover:text-white"
+    "text-white group-hover:text-white"
   );
 
   const sidebarOptionClassName = clsx(
-    "flex items-center w-full text-base p-2 text-gray-900",
-    "hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
-    "group transition duration-75 rounded-lg"
+    "flex items-center w-full text-base p-2 text-white",
+    "hover:bg-gray-500 group transition duration-75 rounded-sm"
   );
 
   const dispatch = useDispatch();
@@ -61,51 +94,58 @@ export function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
       ref={sidebarRef}
       className={clsx(
         "fixed top-0 left-0 z-40 w-64 h-screen pt-20 border-r",
-        "bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700",
-        "transition-transform lg:translate-x-0",
+        "bg-[#0F172A] border-gray-200 transition-transform lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
-      <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-        <ul className="space-y-2 font-medium">
-          {SidebarOptions.map((option, index) => (
-            <li key={index}>
-              {"options" in option ? (
-                <>
-                  <button
-                    type="button"
-                    className={sidebarOptionClassName}
-                    onClick={() => toggleDropdown(option.title)}
-                  >
+      <div className="h-full px-3 pb-4 overflow-y-auto bg-[#0F172A]">
+        <ul className="space-y-2 font-medium flex flex-col justify-between h-full">
+          <div>
+            {SidebarOptions.map((option, index) => (
+              <li key={index}>
+                {"options" in option ? (
+                  <>
+                    <button
+                      type="button"
+                      className={sidebarOptionClassName}
+                      onClick={() => toggleDropdown(option.title)}
+                    >
+                      <option.icon className={iconClassName} />
+                      <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                        {option.title}
+                      </span>
+                      <DropdownIcon className="w-3 h-3 m-2" />
+                    </button>
+                    {openDropdowns[option.title] && (
+                      <ul
+                        id={`dropdown-${option.title.replace(
+                          /\s+/g,
+                          "-"
+                        )}-example`}
+                        className={clsx("py-2 space-y-2 dropdown-menu")}
+                      >
+                        {option.options.map((dropdownOption, dropdownIndex) => (
+                          <li key={dropdownIndex} className="dropdown-option">
+                            <Link
+                              to={dropdownOption.link}
+                              className={clsx(sidebarOptionClassName, "pl-11")}
+                            >
+                              {dropdownOption.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                ) : (
+                  <Link to={option.link} className={sidebarOptionClassName}>
                     <option.icon className={iconClassName} />
-                    <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
-                      {option.title}
-                    </span>
-                    <DropdownIcon className="w-3 h-3 m-2" />
-                  </button>
-                  {openDropdowns[option.title] && (
-                    <ul id="dropdown-example" className="py-2 space-y-2">
-                      {option.options.map((dropdownOption, dropdownIndex) => (
-                        <li key={dropdownIndex}>
-                          <Link
-                            to={dropdownOption.link}
-                            className={clsx(sidebarOptionClassName, "pl-11")}
-                          >
-                            {dropdownOption.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </>
-              ) : (
-                <Link to={option.link} className={sidebarOptionClassName}>
-                  <option.icon className={iconClassName} />
-                  <span className="ms-3">{option.title}</span>
-                </Link>
-              )}
-            </li>
-          ))}
+                    <span className="ms-3">{option.title}</span>
+                  </Link>
+                )}
+              </li>
+            ))}
+          </div>
           <li className="flex items-center">
             <button
               type="button"

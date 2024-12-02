@@ -6,7 +6,7 @@ import { CareerEndpoint, Career } from "@/models";
  * @returns Carrera formateada
  */
 export const createCustomCareer = (career: CareerEndpoint): Career => {
-  const formatCarrera: Career = {
+  return {
     id: career.id_carrera,
     name: career.nombre_carrera,
     shortName: career.nombre_corto,
@@ -14,6 +14,4 @@ export const createCustomCareer = (career: CareerEndpoint): Career => {
     createdAt: new Date(career.createdAt),
     updatedAt: new Date(career.updatedAt),
   };
-
-  return formatCarrera;
 };

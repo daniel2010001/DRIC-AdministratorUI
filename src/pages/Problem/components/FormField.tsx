@@ -30,7 +30,7 @@ export const FormField = <T extends Object>({
     "block w-full mt-1 py-1.5 px-3 sm:text-sm sm:leading-6 h-auto",
     "rounded-md border-[1px] shadow-sm ring-1 ring-inset ring-gray-300 font-medium",
     "focus:ring-2 focus:ring-inset focus:ring-indigo-400 dark:focus:ring-indigo-400",
-    "bg-ligth-secondary text-ligth-primary border-light-primary dark:bg-dark-secondary dark:text-dark-primary"
+    "bg-ligth-secondary text-ligth-primary border-light-primary dark:bg-dark-secondary dark:text-dark-primary outline-none"
   );
   clsx("sm:col-span-3 sm:col-span-6 col-span-full");
   return (
@@ -57,10 +57,7 @@ export const FormField = <T extends Object>({
         control={control}
         render={({ field }) =>
           config.type === "textarea" ? (
-            <Textarea
-              {...field}
-              className={clsx(className, "min-h-16 h-auto")}
-            />
+            <Textarea {...field} className={clsx(className, "min-h-16")} />
           ) : config.type === "editor" ? (
             <EditorInput
               content={field.value}
@@ -72,8 +69,8 @@ export const FormField = <T extends Object>({
               value={field.value}
               onChange={field.onChange}
               options={config.options || []}
-              className={className}
               multiple={config.multiple}
+              className={className}
             />
           ) : config.type === "checkbox" ? (
             <Checkbox
@@ -87,14 +84,7 @@ export const FormField = <T extends Object>({
               <CheckIcon className="invisible size-4 group-data-[checked]:visible fill-transparent" />
             </Checkbox>
           ) : (
-            <Input
-              {...field}
-              type={config.type}
-              className={className}
-              onChange={(e) => {
-                field.onChange(e.target.value.toUpperCase());
-              }}
-            />
+            <Input {...field} type={config.type} className={className} />
           )
         }
       />

@@ -6,14 +6,10 @@ interface FormSectionProps {
   children: React.ReactNode;
 }
 
-export const FormSection: React.FC<FormSectionProps> = ({
-  title,
-  description,
-  children,
-}) => {
+export const FormSection: React.FC<FormSectionProps> = ({ title, description, children }) => {
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b pb-12 mt-12 md:grid-cols-3">
-      <div className="">
+    <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b pb-12 mt-12 md:grid-cols-3 border-light-primary dark:border-dark-primary">
+      <div className="sm:col-span-1 col-span-full">
         <h2 className="text-base font-semibold leading-7 grid-cols-4 text-ligth-primary dark:text-dark-primary">
           {title}
         </h2>

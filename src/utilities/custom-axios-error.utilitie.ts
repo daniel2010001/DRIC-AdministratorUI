@@ -1,3 +1,4 @@
+/** Tipo para asociar un valor con una clave */
 type TypeWithKey<T> = { [key: string]: T };
 
 /**

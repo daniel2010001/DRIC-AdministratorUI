@@ -21,9 +21,7 @@ export const TableHeader = <T,>(props: EnhancedTableProps<T>) => {
             style={{ minWidth: headCell.minWidth ? headCell.minWidth : "auto" }}
             sortDirection={orderBy === headCell.property ? order : false}
           >
-            {headCell.isAction ? (
-              headCell.label
-            ) : (
+            {headCell.isOrder ? (
               <TableSortLabel
                 active={orderBy === headCell.property}
                 direction={orderBy === headCell.property ? order : "asc"}
@@ -38,6 +36,8 @@ export const TableHeader = <T,>(props: EnhancedTableProps<T>) => {
                   </span>
                 ) : null}
               </TableSortLabel>
+            ) : (
+              headCell.label
             )}
           </TableCell>
         ))}

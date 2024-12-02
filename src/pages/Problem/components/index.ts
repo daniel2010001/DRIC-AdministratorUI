@@ -1,3 +1,4 @@
+export * from "./editor-button";
 export { default as EditorInput } from "./EditorInput";
 export { default as FormField } from "./FormField";
 export { default as FormSection } from "./FormSection";

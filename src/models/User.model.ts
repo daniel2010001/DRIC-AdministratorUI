@@ -1,37 +1,50 @@
-export interface AuthStore {
-  auth: boolean;
-  token: string;
-}
+/**
+ * Tipo de usuario
+ */
+export const UserType = {
+  /** Usuario administrador */
+  ADMINISTRADOR: "ADMINISTRADOR",
+  /** Usuario de becario */
+  BECARIO: "BECARIO",
+  /** Usuario no autenticado */
+  NO_AUTH: "NO_AUTH",
+} as const;
 
-export const inicialAuth: AuthStore = {
-  auth: false,
-  token: "",
-};
+/**
+ * Tipo de usuario
+ */
+export type UserType = (typeof UserType)[keyof typeof UserType];
 
+/**
+ * Usuario
+ */
 export interface User {
+  /** Id del usuario */
   id: number;
+  /** Nombre de usuario */
   username: string;
+  /** Email del usuario */
   email: string;
-  type: string;
+  /** Tipo de usuario */
+  type: UserType;
 }
 
+/**
+ * Inicial User
+ */
 export const inicialUser: User = {
   id: 0,
   username: "",
   email: "",
-  type: "",
+  type: UserType.NO_AUTH,
 };
 
+/**
+ * Usuario de la API
+ */
 export interface UserEndpoint {
   id_usuario: number;
   nombre_usuario: string;
   email_usuario: string;
-  tipo_usuario: string;
+  tipo_usuario: UserType | string;
 }
-
-export const inicialEndpointUser: UserEndpoint = {
-  id_usuario: 0,
-  nombre_usuario: "",
-  email_usuario: "",
-  tipo_usuario: "",
-};

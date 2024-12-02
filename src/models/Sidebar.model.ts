@@ -1,12 +1,15 @@
-import { DashboardIcon, DocumentListIcon, HomeIcon } from "@/assets/Icons";
+import { DashboardIcon, DocumentListIcon } from "@/assets/Icons";
 import { PrivateRoutes } from "./routes";
 
 /**
  * Interfaz para opciones de la barra lateral
  */
 export interface SidebarOption {
+  /** Título de la opción */
   title: string;
+  /** Icono de la opción */
   icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  /** Enlace de la opción */
   link: string;
 }
 
@@ -14,7 +17,9 @@ export interface SidebarOption {
  * Interfaz para opciones de dropdown de la barra lateral
  */
 export interface SidebarDropdownOption {
+  /** Título de la opción */
   title: string;
+  /** Enlace de la opción */
   link: string;
 }
 
@@ -22,8 +27,11 @@ export interface SidebarDropdownOption {
  * Interfaz para dropdown de la barra lateral
  */
 export interface SidebarDropdown {
+  /** Título del dropdown */
   title: string;
+  /** Icono del dropdown */
   icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  /** Opciones del dropdown */
   options: SidebarDropdownOption[];
 }
 
@@ -31,11 +39,6 @@ export interface SidebarDropdown {
  * Barra lateral con opciones y dropdowns
  */
 export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
-  {
-    title: "Inicio",
-    icon: HomeIcon,
-    link: PrivateRoutes.HOME,
-  },
   {
     title: "Panel de control",
     icon: DashboardIcon,
@@ -46,11 +49,15 @@ export const SidebarOptions: (SidebarOption | SidebarDropdown)[] = [
     icon: DocumentListIcon,
     options: [
       {
-        title: "Lista de Problemáticas",
+        title: "Lista de problemáticas",
         link: PrivateRoutes.PROBLEMS,
       },
       {
-        title: "Formulario",
+        title: "Lista de solicitudes",
+        link: `${PrivateRoutes.PROBLEMS}/${PrivateRoutes.REQUESTS}`,
+      },
+      {
+        title: "Registrar problemática",
         link: `${PrivateRoutes.PROBLEMS}/${PrivateRoutes.PROBLEM_FORM}`,
       },
     ],

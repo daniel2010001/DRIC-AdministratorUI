@@ -1,8 +1,6 @@
-import { createTheme } from "@mui/material/styles";
 import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import TableMUI from "@mui/material/Table";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
@@ -16,19 +14,17 @@ import { TableContainer } from "@mui/material";
 interface EnhancedTableProps<T extends { [key: string]: string | number }> {
   headCells: readonly HeadCell<T>[];
   rows: T[];
-  title: string;
 }
 
 export const Table = <T extends { [key: string]: string | number }>({
   headCells,
   rows,
-  title,
 }: EnhancedTableProps<T>) => {
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof T>(headCells[0].property);
+  const [orderBy, setOrderBy] = useState<keyof T>(""); // Provide a default value for orderBy
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (event: MouseEvent<unknown>, property: keyof T) => {
     const isAsc = orderBy === property && order === "asc";
@@ -55,6 +51,9 @@ export const Table = <T extends { [key: string]: string | number }>({
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = useMemo(() => {
+    if (page * rowsPerPage > rows.length) {
+      setPage(0); 
+    }
     return stableSort(rows, getComparator(order, orderBy)).slice(
       page * rowsPerPage,
       page * rowsPerPage + rowsPerPage
@@ -62,15 +61,7 @@ export const Table = <T extends { [key: string]: string | number }>({
   }, [order, orderBy, page, rowsPerPage, rows]);
 
   return (
-    <div className="container mx-auto py-10">
-      <Typography
-        sx={{ flex: "1 1 100%" }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
-        {title}
-      </Typography>
+    <div className="container mx-auto">
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <TableContainer>
@@ -94,7 +85,7 @@ export const Table = <T extends { [key: string]: string | number }>({
             </TableMUI>
           </TableContainer>
           <PaginationTable
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[10, 25, 100]}
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
@@ -104,7 +95,7 @@ export const Table = <T extends { [key: string]: string | number }>({
         </Paper>
         <FormControlLabel
           control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Achatar tabla"
+          label="Reducir celdas"
         />
       </Box>
     </div>

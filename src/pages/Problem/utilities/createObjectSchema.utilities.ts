@@ -66,12 +66,12 @@ const applyFieldConfigToSchema = <T>(
     if (schema instanceof Yup.StringSchema) {
       configuredSchema = (configuredSchema as Yup.StringSchema).max(
         config.maxLength,
-        `El tamaño máximo es de ${config.maxLength}`
+        `El tamaño máximo de caracteres es de ${config.maxLength}`
       );
     } else if (schema instanceof Yup.ArraySchema) {
       configuredSchema = (configuredSchema as Yup.ArraySchema<any, any>).max(
         config.maxLength,
-        `El número máximo de elementos es de ${config.maxLength}`
+        `El número máximo de carreras es de ${config.maxLength}`
       );
     }
   }
@@ -79,12 +79,12 @@ const applyFieldConfigToSchema = <T>(
     if (schema instanceof Yup.StringSchema) {
       configuredSchema = (configuredSchema as Yup.StringSchema).min(
         config.minLength,
-        `El tamaño mínimo es de ${config.minLength}`
+        `El tamaño mínimo de caracteres es de ${config.minLength}`
       );
     } else if (schema instanceof Yup.ArraySchema) {
       configuredSchema = (configuredSchema as Yup.ArraySchema<any, any>).min(
         config.minLength,
-        `El número mínimo de elementos es de ${config.minLength}`
+        `El número mínimo de carreras es de ${config.minLength}`
       );
     }
   }
@@ -94,6 +94,10 @@ const applyFieldConfigToSchema = <T>(
       "Ingrese un número de teléfono válido"
     );
   }
+
+  if (config.type === "optional" && schema instanceof Yup.StringSchema) {
+    configuredSchema = (configuredSchema as Yup.StringSchema).nullable().notRequired();
+  };
 
   return configuredSchema;
 };

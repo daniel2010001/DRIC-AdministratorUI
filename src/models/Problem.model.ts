@@ -4,6 +4,8 @@ import {
   Career,
   CareerEndpoint,
   inicialApplicant,
+  User,
+  UserEndpoint,
 } from "@/models";
 
 /**
@@ -11,7 +13,6 @@ import {
  */
 export interface Problem {
   id: number;
-
   title: string;
   approach: string;
   causes: string;
@@ -23,7 +24,8 @@ export interface Problem {
   when: string;
 
   zone: string;
-  contact: string;
+  contactPosition: string;
+  contactName: string;
   cellPhone: string;
   phone: string;
 
@@ -36,6 +38,13 @@ export interface Problem {
 
   applicant: Applicant;
   careers: Career[];
+}
+
+/**
+ * Interfaz para las Problemáticas recividos desde la API
+ */
+export interface ProblemRequest extends Problem {
+  user: User;
 }
 
 /**
@@ -55,9 +64,10 @@ export interface ProblemEndpoint {
   cuando: string;
 
   zona: string;
-  contacto: string;
-  telefono: number;
-  telefono_institucional: number;
+  contacto_nombre: string;
+  contacto_cargo: string;
+  telefono: string;
+  telefono_institucional: string;
   publicado: string;
   actualizado: string;
   creado: string;
@@ -67,6 +77,10 @@ export interface ProblemEndpoint {
 
   solicitante: ApplicantEndpoint;
   carreras: CareerEndpoint[];
+}
+
+export interface ProblemRequestEnpoint extends ProblemEndpoint {
+  usuario: UserEndpoint;
 }
 
 export const inicialProblem: Problem = {
@@ -80,12 +94,15 @@ export const inicialProblem: Problem = {
   why: "",
   when: "",
   zone: "",
-  contact: "",
+  contactPosition: "",
   cellPhone: "",
   phone: "",
   publishedAt: new Date(),
   updatedAt: new Date(),
   createdAt: new Date(),
+  active: false,
+  validate: false,
   applicant: inicialApplicant,
   careers: [],
+  contactName: "",
 };
